@@ -2,6 +2,9 @@
 
 namespace App\Http\Controllers;
 
+use App\Models\Post;
+use Illuminate\Auth\Events\Registered;
+use Illuminate\Http\RedirectResponse;
 use Illuminate\Http\Request;
 
 class PostController extends Controller
@@ -25,9 +28,16 @@ class PostController extends Controller
     /**
      * Store a newly created resource in storage.
      */
-    public function store(Request $request)
+    public function store(Request $request): RedirectResponse
     {
-        //
+        $post = Post::create([
+            'title' => $request->title,
+            'description' => $request->description,
+        ]);
+
+        event(new Registered($post));
+
+        return redirect(route('dashboard', absolute: false));
     }
 
     /**

@@ -8,10 +8,9 @@ use Illuminate\Database\Eloquent\Model;
 class Industry extends Model
 {
     use HasFactory;
-    
-    
-    protected $fillable = ["name"];
-    
+
+    protected $fillable = ['name'];
+
     public function companies()
     {
         return $this->hasMany(Company::class);

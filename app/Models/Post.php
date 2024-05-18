@@ -8,15 +8,15 @@ use Illuminate\Database\Eloquent\Model;
 class Post extends Model
 {
     use HasFactory;
-    
+
     protected $fillable = [
-        "title",
-        "description",
-        "modality",
-        "salary_range",
-        "company_id"
+        'title',
+        'description',
+        'modality',
+        'salary_range',
+        'company_id',
     ];
-    
+
     public function company()
     {
         return $this->hasOne(Company::class);

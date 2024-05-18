@@ -4,13 +4,15 @@ namespace App\Http\Controllers;
 
 use App\Models\Company;
 use Illuminate\Http\Request;
-
+use Illuminate\Support\Facades\Auth;
+use Illuminate\Support\Facades\Log;
 
 class CompanyController extends Controller
 {
     public function index()
     {
         $companies = Company::all();
+
         return view('companies.index', compact('companies'));
     }
 
@@ -27,7 +29,6 @@ class CompanyController extends Controller
     {
         $validated = $request->validate([
             'name' => 'required|string|max:255',
-            'industry_id' => 'required|exists:industries,id',
             'description' => 'required|string',
             'location' => 'required|string|max:255',
             'logo' => 'nullable|image|mimes:jpg,jpeg,png|max:2048',
@@ -38,9 +39,12 @@ class CompanyController extends Controller
             $validated['logo'] = $path;
         }
 
+
+        $validated['creator_id'] = Auth::id(); // O usar $request->user()->id
+
         Company::create($validated);
 
-        return redirect()->route('companies.index');
+        return redirect()->route('dashboard');
     }
 
     public function edit(Company $company)
@@ -70,6 +74,7 @@ class CompanyController extends Controller
     public function destroy(Company $company)
     {
         $company->delete();
+
         return redirect()->route('companies.index');
     }
 }
