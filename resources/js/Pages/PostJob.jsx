@@ -1,6 +1,23 @@
 import {Head} from "@inertiajs/react";
+import {useEffect, useState} from "react";
 
 const JobPosting = ()  => {
+    const [industries, setIndustries] = useState([])
+    
+    useEffect(() => {
+        fetch('http://localhost:8000/industries').then(async response => setIndustries(await response.json())).catch(error => console.log(error))
+    }, [fetch, setIndustries])
+
+    const generateSalaryOptions = () => {
+        const options = [];
+        for (let i = 10000; i <= 500000; i += 10000) {
+            options.push(
+                <option key={i} value={i}>{i.toLocaleString()}</option>
+            );
+        }
+        return options;
+    };
+
     return (
         <>
             <Head title="4 days week jobs - Post job" />
@@ -8,7 +25,7 @@ const JobPosting = ()  => {
                 <div className="container mx-auto px-6">
                     <h2 className="text-3xl font-bold mb-6 text-gray-800 text-center">Post a Job</h2>
                     <div className="max-w-3xl mx-auto bg-white p-8 rounded-lg shadow-lg">
-                        <form action="#" method="POST" enctype="multipart/form-data">
+                        <form action="#" method="POST" encType="multipart/form-data">
                             <div className="mb-4">
                                 <label htmlFor="title" className="block text-gray-700 font-bold mb-2">Job Title</label>
                                 <input type="text" id="title" name="title" className="w-full px-4 py-2 border rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-600" required placeholder="Frontend Developer with React"/>
@@ -24,27 +41,37 @@ const JobPosting = ()  => {
                             <div className="mb-4">
                                 <label htmlFor="type" className="block text-gray-700 font-bold mb-2">Job Type</label>
                                 <select id="type" name="type" className="w-full px-4 py-2 border rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-600" required>
-                                    <option value="remote">Remote</option>
-                                    <option value="hybrid">Hybrid</option>
-                                    <option value="office">Office</option>
+                                    <option value="remote" onChange={() => setIsNonRemote(false)}>Remote</option>
+                                    <option value="hybrid" onChange={() => setIsNonRemote(true)}>Hybrid</option>
+                                    <option value="office" onChange={() => setIsNonRemote(true)}>Office</option>
                                 </select>
                             </div>
-        
+
                             <div className="mb-4">
-                                <label htmlFor="location" className="block text-gray-700 font-bold mb-2">Location</label>
-                                <input type="text" id="location" name="location" className="w-full px-4 py-2 border rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-600" required/>
+                                <label htmlFor="type" className="block text-gray-700 font-bold mb-2">Industry</label>
+                                <select id="type" name="type" className="w-full px-4 py-2 border rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-600" required>
+                                    {industries.map(industry => (
+                                        <option key={industry.id} value={industry.id}>{industry.name}</option>
+                                    ))}
+                                </select>
                             </div>
-        
-                            <div className="mb-4">
-                                <label htmlFor="min_salary" className="block text-gray-700 font-bold mb-2">Min. Salary</label>
-                                <input type="text" id="salary" name="min_salary" className="w-full px-4 py-2 border rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-600" required/>
+
+                            <div className="mb-4 flex space-x-4">
+                                <div className="w-1/2">
+                                    <label htmlFor="min_salary" className="block text-gray-700 font-bold mb-2">Min. Salary</label>
+                                    <select id="min_salary" name="min_salary" className="w-full px-4 py-2 border rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-600" required>
+                                        {generateSalaryOptions()}
+                                    </select>
+                                </div>
+
+                                <div className="w-1/2">
+                                    <label htmlFor="max_salary" className="block text-gray-700 font-bold mb-2">Max. Salary</label>
+                                    <select id="max_salary" name="max_salary" className="w-full px-4 py-2 border rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-600" required>
+                                        {generateSalaryOptions()}
+                                    </select>
+                                </div>
+
                             </div>
-                            
-                            <div className="mb-4">
-                                <label htmlFor="max_salary" className="block text-gray-700 font-bold mb-2">Max. Salary</label>
-                                <input type="text" id="salary" name="max_salary" className="w-full px-4 py-2 border rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-600" required/>
-                            </div>
-                            
                             <div className="mb-4 flex space-x-4">
                                 <div className="w-1/2">
                                     <label htmlFor="company_name" className="block text-gray-700 font-bold mb-2">Company Name</label>

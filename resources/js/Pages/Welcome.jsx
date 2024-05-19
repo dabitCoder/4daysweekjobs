@@ -8,13 +8,13 @@ export default function Index() {
             <section className="bg-blue-600 text-white py-20">
                 <div className="container mx-auto px-6 text-center">
                     <h1 className="text-5xl font-bold mb-2">Find Your Dream Job</h1>
-                    <p className="text-2xl mb-8">Discover companies with a 4-day work week</p>
+                    <p className="text-2xl mb-8">Discover Companies Offering More Free Time and a Better Work-Life Balance</p>
                     <Link href="/post-job" className="bg-white text-blue-600 px-6 py-3 rounded-full text-xl font-semibold">Post a Job</Link>
                 </div>
             </section>
             <section id="jobs" className="py-12">
                 <div className="container mx-auto px-6">
-                    <h2 className="text-3xl font-bold mb-6 text-gray-800 text-center">Latest Listings</h2>
+                    <h2 className="text-3xl font-bold mb-6 text-gray-800 text-center">Latest Jobs</h2>
                     <div className="grid gap-6 md:grid-cols-2 lg:grid-cols-3">
                         <div className="bg-white p-6 rounded-lg shadow-lg">
                             <h3 className="text-xl font-bold mb-2">Frontend Developer</h3>
