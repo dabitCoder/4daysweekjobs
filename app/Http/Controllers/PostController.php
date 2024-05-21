@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers;
 
+use App\Models\Company;
 use App\Models\Post;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Log;
@@ -34,6 +35,12 @@ class PostController extends Controller
             $validated["job_uuid"] = uuid_create();
             Post::create($validated);
 
+            if ($validated["company_name"]) {
+                Company::createCompany($validated);
+                Log::info("New company created");
+            }
+
+            Log::info('New job created.');
             return response()->json(['message' => 'Post created successfully'], 201);
         } catch (ValidationException $e) {
             Log::error('Error creating post: '.$e->getMessage());

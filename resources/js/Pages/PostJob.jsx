@@ -7,8 +7,8 @@ const JobPosting = ()  => {
         description: '',
         modality: 'remote',
         industry_id: '',
-        min_salary: '',
-        max_salary: '',
+        min_salary: 10_000,
+        max_salary: 10_000,
         company_name: ''
     });
 
