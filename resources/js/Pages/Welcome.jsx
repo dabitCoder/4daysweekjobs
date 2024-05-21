@@ -5,11 +5,21 @@ export default function Index() {
     return (
         <>
             <Head title="4 days week jobs" />
+            <header className="bg-white shadow-md">
+                <div className="container mx-auto px-6 flex justify-between items-center py-4">
+                    <Link href="/" className="text-3xl font-bold text-blue-600">4 Days Week Jobs</Link>
+                    <nav className="space-x-4">
+                    </nav>
+                    <div className="space-x-4">
+                        <Link href="/login" className="text-gray-700 hover:text-blue-600">Login</Link>
+                        <Link href="/post-job" className="bg-blue-600 text-white px-6 py-2 rounded-full hover:bg-blue-950">Post a Job</Link>
+                    </div>
+                </div>
+            </header>
             <section className="bg-blue-600 text-white py-20">
                 <div className="container mx-auto px-6 text-center">
                     <h1 className="text-5xl font-bold mb-2">Find Your Dream Job</h1>
                     <p className="text-2xl mb-8">Discover Companies Offering More Free Time and a Better Work-Life Balance</p>
-                    <Link href="/post-job" className="bg-white text-blue-600 px-6 py-3 rounded-full text-xl font-semibold">Post a Job</Link>
                 </div>
             </section>
             <section id="jobs" className="py-12">
