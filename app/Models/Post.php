@@ -13,12 +13,9 @@ class Post extends Model
         'title',
         'description',
         'modality',
-        'salary_range',
-        'company_id',
+        'industry',
+        'min_salary',
+        'max_salary',
+        'job_uuid'
     ];
-
-    public function company()
-    {
-        return $this->hasOne(Company::class);
-    }
 }

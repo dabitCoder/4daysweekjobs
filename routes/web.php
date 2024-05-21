@@ -15,9 +15,11 @@ Route::get('/', function () {
     ]);
 });
 
-Route::get('/post-job', function() {
+Route::get('/post-job', function () {
     return Inertia::render('PostJob');
 });
+
+Route::post('jobs', [\App\Http\Controllers\PostController::class, 'store'])->name('jobs.store');
 
 Route::get('/industries', [\App\Http\Controllers\IndustryController::class, 'index']);
 

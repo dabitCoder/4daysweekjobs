@@ -1,12 +1,29 @@
-import {Head} from "@inertiajs/react";
+import {Head, useForm} from "@inertiajs/react";
 import {useEffect, useState} from "react";
 
 const JobPosting = ()  => {
+    const { data, setData, post, processing, reset, errors } = useForm({
+        title: '',
+        description: '',
+        modality: 'remote',
+        industry_id: '',
+        min_salary: '',
+        max_salary: '',
+        company_name: ''
+    });
+
     const [industries, setIndustries] = useState([])
     
     useEffect(() => {
-        fetch('http://localhost:8000/industries').then(async response => setIndustries(await response.json())).catch(error => console.log(error))
+        fetch('http://localhost:8000/industries')
+            .then(async response => setIndustries(await response.json()))
+            .catch(error => console.log(error))
     }, [fetch, setIndustries])
+
+
+    const handleChangeInput = (field, value) => {
+        setData({...data, [field]: value})
+    }
 
     const generateSalaryOptions = () => {
         const options = [];
@@ -18,55 +35,63 @@ const JobPosting = ()  => {
         return options;
     };
 
+    const onSubmit = (e) => {
+        e.preventDefault()
+        post(route('jobs.store'), { onError: () => console.log(errors) });
+    }
+
+
     return (
         <>
             <Head title="4 days week jobs - Post job" />
-            <section className="py-12 bg-gray-50">
+            <section className="py-12 bg-gray-50 min-h-screen">
                 <div className="container mx-auto px-6">
-                    <h2 className="text-3xl font-bold mb-6 text-gray-800 text-center">Post a Job</h2>
+                    <h2 className="text-5xl font-bold mb-6 text-gray-800 text-center">Post a Job</h2>
                     <div className="max-w-3xl mx-auto bg-white p-8 rounded-lg shadow-lg">
-                        <form action="#" method="POST" encType="multipart/form-data">
+                        <form encType="multipart/form-data">
                             <div className="mb-4">
                                 <label htmlFor="title" className="block text-gray-700 font-bold mb-2">Job Title</label>
-                                <input type="text" id="title" name="title" className="w-full px-4 py-2 border rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-600" required placeholder="Frontend Developer with React"/>
+                                <input type="text"
+                                       id="title" name="title" className="w-full px-4 py-2 border rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-600"
+                                       required
+                                       onChange={e => handleChangeInput('title', e.target.value)}
+                                       placeholder="Frontend Developer with React"/>
                             </div>
         
                             <div className="mb-4">
                                 <label htmlFor="description" className="block text-gray-700 font-bold mb-2">Job Description</label>
                                 <textarea id="description" name="description" rows="5" className="w-full px-4 py-2 border rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-600" required
                                     placeholder="We are looking for a developer with at least 3 years of React..."
+                                    onChange={e => handleChangeInput('description', e.target.value)}
+
                                 ></textarea>
                             </div>
         
                             <div className="mb-4">
-                                <label htmlFor="type" className="block text-gray-700 font-bold mb-2">Job Type</label>
-                                <select id="type" name="type" className="w-full px-4 py-2 border rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-600" required>
-                                    <option value="remote" onChange={() => setIsNonRemote(false)}>Remote</option>
-                                    <option value="hybrid" onChange={() => setIsNonRemote(true)}>Hybrid</option>
-                                    <option value="office" onChange={() => setIsNonRemote(true)}>Office</option>
-                                </select>
-                            </div>
-
-                            <div className="mb-4">
-                                <label htmlFor="type" className="block text-gray-700 font-bold mb-2">Industry</label>
-                                <select id="type" name="type" className="w-full px-4 py-2 border rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-600" required>
-                                    {industries.map(industry => (
-                                        <option key={industry.id} value={industry.id}>{industry.name}</option>
-                                    ))}
+                                <label htmlFor="modality" className="block text-gray-700 font-bold mb-2">Job Modality</label>
+                                <select
+                                    onChange={e => handleChangeInput('modality', e.target.value)}
+                                    id="modality"
+                                    name="modality"
+                                    className="w-full px-4 py-2 border rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-600"
+                                >
+                                    <option value="remote">Remote</option>
+                                    <option value="hybrid">Hybrid</option>
+                                    <option value="office">Office</option>
                                 </select>
                             </div>
 
                             <div className="mb-4 flex space-x-4">
                                 <div className="w-1/2">
                                     <label htmlFor="min_salary" className="block text-gray-700 font-bold mb-2">Min. Salary</label>
-                                    <select id="min_salary" name="min_salary" className="w-full px-4 py-2 border rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-600" required>
+                                    <select onChange={e => handleChangeInput('min_salary', e.target.value)} id="min_salary" name="min_salary" className="w-full px-4 py-2 border rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-600" required>
                                         {generateSalaryOptions()}
                                     </select>
                                 </div>
 
                                 <div className="w-1/2">
                                     <label htmlFor="max_salary" className="block text-gray-700 font-bold mb-2">Max. Salary</label>
-                                    <select id="max_salary" name="max_salary" className="w-full px-4 py-2 border rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-600" required>
+                                    <select id="max_salary" onChange={e => handleChangeInput('max_salary', e.target.value)} name="max_salary" className="w-full px-4 py-2 border rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-600" required>
                                         {generateSalaryOptions()}
                                     </select>
                                 </div>
@@ -75,7 +100,14 @@ const JobPosting = ()  => {
                             <div className="mb-4 flex space-x-4">
                                 <div className="w-1/2">
                                     <label htmlFor="company_name" className="block text-gray-700 font-bold mb-2">Company Name</label>
-                                    <input type="text" id="company_name" name="company_name" className="w-full px-4 py-2 border rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-600" required/>
+                                    <input
+                                        type="text"
+                                        id="company_name"
+                                        name="company_name"
+                                        className="w-full px-4 py-2 border rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-600"
+                                        required
+                                        onChange={e => handleChangeInput('company_name', e.target.value)}
+                                    />
                                 </div>
                                 <div className="w-1/2">
                                     <label htmlFor="logo" className="block text-gray-700 font-bold mb-2">Company Logo</label>
@@ -83,7 +115,9 @@ const JobPosting = ()  => {
                                 </div>
                             </div>
                             <div className="text-center">
-                                <button type="submit" className="bg-blue-600 text-white px-6 py-3 rounded-full text-lg font-semibold hover:bg-blue-700 focus:outline-none focus:ring-2 focus:ring-blue-600">Post Job</button>
+                                <button type="submit"
+                                        onClick={onSubmit}
+                                        className="bg-blue-600 text-white px-6 py-3 rounded-full text-lg font-semibold hover:bg-blue-700 focus:outline-none focus:ring-2 focus:ring-blue-600">Post Job</button>
                             </div>
                         </form>
                     </div>

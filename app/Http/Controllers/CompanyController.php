@@ -5,7 +5,6 @@ namespace App\Http\Controllers;
 use App\Models\Company;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
-use Illuminate\Support\Facades\Log;
 
 class CompanyController extends Controller
 {
@@ -38,7 +37,6 @@ class CompanyController extends Controller
             $path = $request->file('logo')->store('logos', 'public');
             $validated['logo'] = $path;
         }
-
 
         $validated['creator_id'] = Auth::id(); // O usar $request->user()->id
 

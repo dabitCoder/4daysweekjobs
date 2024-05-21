@@ -14,7 +14,7 @@ class Company extends Model
         'description',
         'location',
         'logo',
-        'creator_id'
+        'creator_id',
     ];
 
     public function industry()

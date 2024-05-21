@@ -3,9 +3,10 @@
 namespace App\Http\Controllers;
 
 use App\Models\Post;
-use Illuminate\Auth\Events\Registered;
-use Illuminate\Http\RedirectResponse;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Log;
+use Illuminate\Validation\ValidationException;
+use Exception;
 
 class PostController extends Controller
 {
@@ -17,27 +18,30 @@ class PostController extends Controller
         //
     }
 
-    /**
-     * Show the form for creating a new resource.
-     */
-    public function create()
+    public function store(Request $request)
     {
-        //
-    }
+        try {
+            $validated = $request->validate([
+                'title' => 'required|string|max:255',
+                'description' => 'required|string',
+                'modality' => 'nullable|string|in:office,remote,hybrid',
+                'industry_id' => 'nullable|integer',
+                'min_salary' => 'nullable|numeric',
+                'max_salary' => 'nullable|numeric',
+                'company_name' => 'nullable|string|max:255'
+            ]);
 
-    /**
-     * Store a newly created resource in storage.
-     */
-    public function store(Request $request): RedirectResponse
-    {
-        $post = Post::create([
-            'title' => $request->title,
-            'description' => $request->description,
-        ]);
+            $validated["job_uuid"] = uuid_create();
+            Post::create($validated);
 
-        event(new Registered($post));
-
-        return redirect(route('dashboard', absolute: false));
+            return response()->json(['message' => 'Post created successfully'], 201);
+        } catch (ValidationException $e) {
+            Log::error('Error creating post: '.$e->getMessage());
+            return response()->json(['errors' => $e->errors()], 422);
+        } catch (Exception $e) {
+            Log::error('Error creating post: '.$e->getMessage());
+            return response()->json(['message' => 'An error occurred while creating the post'], 500);
+        }
     }
 
     /**
@@ -60,14 +64,6 @@ class PostController extends Controller
      * Update the specified resource in storage.
      */
     public function update(Request $request, string $id)
-    {
-        //
-    }
-
-    /**
-     * Remove the specified resource from storage.
-     */
-    public function destroy(string $id)
     {
         //
     }
