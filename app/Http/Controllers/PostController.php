@@ -27,6 +27,9 @@ class PostController extends Controller
                 'description' => 'required|string',
                 'modality' => 'nullable|string|in:office,remote,hybrid',
                 'industry_id' => 'nullable|integer',
+                'location' => 'nullable|string',
+                'role' => 'nullable|string|max:100',
+                'apply_url' => 'required|string',
                 'min_salary' => 'nullable|numeric',
                 'max_salary' => 'nullable|numeric',
                 'company_name' => 'nullable|string|max:255'
@@ -43,10 +46,10 @@ class PostController extends Controller
             Log::info('New job created.');
             return response()->json(['message' => 'Post created successfully'], 201);
         } catch (ValidationException $e) {
-            Log::error('Error creating post: '.$e->getMessage());
+            Log::error('Error creating post: ' . $e->getMessage());
             return response()->json(['errors' => $e->errors()], 422);
         } catch (Exception $e) {
-            Log::error('Error creating post: '.$e->getMessage());
+            Log::error('Error creating post: ' . $e->getMessage());
             return response()->json(['message' => 'An error occurred while creating the post'], 500);
         }
     }

@@ -16,6 +16,9 @@ class Post extends Model
         'industry',
         'min_salary',
         'max_salary',
+        'location',
+        'role',
+        'apply_url',
         'job_uuid'
     ];
 }
