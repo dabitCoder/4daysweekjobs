@@ -6,7 +6,6 @@ use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Support\Facades\Log;
 use Illuminate\Validation\ValidationException;
-use Exception;
 
 class Company extends Model
 {
@@ -42,6 +41,7 @@ class Company extends Model
             return self::create($validatedData);
         } catch (ValidationException $e) {
             Log::error('Error creating post: '.$e->getMessage());
+
             return response()->json(['errors' => $e->errors()], 422);
         }
     }

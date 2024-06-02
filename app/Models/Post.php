@@ -20,6 +20,6 @@ class Post extends Model
         'role',
         'apply_url',
         'job_uuid',
-        'is_active'
+        'is_active',
     ];
 }

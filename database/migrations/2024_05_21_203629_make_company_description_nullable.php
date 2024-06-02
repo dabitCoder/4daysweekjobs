@@ -12,7 +12,7 @@ return new class extends Migration
     public function up(): void
     {
         Schema::table('companies', function (Blueprint $table) {
-            $table->dropForeign(["creator_id"]);
+            $table->dropForeign(['creator_id']);
             $table->string('description')->nullable()->change();
             $table->string('location')->nullable()->change();
             $table->string('logo')->nullable()->change();
@@ -25,7 +25,7 @@ return new class extends Migration
      */
     public function down(): void
     {
-        Schema::table('companies', function(Blueprint $table) {
+        Schema::table('companies', function (Blueprint $table) {
             $table->string('description')->nullable(false)->change();
             $table->string('location')->nullable(false)->change();
             $table->string('logo')->nullable(false)->change();

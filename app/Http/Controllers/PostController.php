@@ -4,11 +4,12 @@ namespace App\Http\Controllers;
 
 use App\Models\Company;
 use App\Models\Post;
+use App\Models\User;
+use App\Services\UserManager;
+use Exception;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Log;
 use Illuminate\Validation\ValidationException;
-use Exception;
-use Inertia\Inertia;
 
 class PostController extends Controller
 {
@@ -22,36 +23,48 @@ class PostController extends Controller
 
     public function store(Request $request)
     {
-        try {
-            $validated = $request->validate([
-                'title' => 'required|string|max:255',
-                'description' => 'required|string',
-                'modality' => 'nullable|string|in:office,remote,hybrid',
-                'industry_id' => 'nullable|integer',
-                'location' => 'nullable|string',
-                'role' => 'nullable|string|max:100',
-                'apply_url' => 'required|string',
-                'min_salary' => 'nullable|numeric',
-                'max_salary' => 'nullable|numeric',
-                'company_name' => 'nullable|string|max:255'
-            ]);
+        if (!$request->email || ! $request->password) {
+            Log::error('Email and password for user creation were not informed');
+            return back()->withErrors(['errors' => 'Email or password not informed']);
+        } else {
+            try {
+                $userData = [
+                    "email" => $request->email,
+                    "name" => $request->username,
+                    "password" => $request->password,
+                    "password_confirmation" => $request->password_confirmation
+                ];
+                $validatedUser = UserManager::validateUser($userData);
 
-            $validated["job_uuid"] = uuid_create();
-            Post::create($validated);
+                if ($validatedUser) {
+                    UserManager::createUser($userData);
+                }
 
-            if ($validated["company_name"]) {
-                Company::createCompany($validated);
-                Log::info("New company created");
+                $validatedJob = $request->validate([
+                    'title' => 'required|string|max:255',
+                    'modality' => 'nullable|string|in:office,remote,hybrid',
+                    'location' => 'nullable|string',
+                    'role' => 'nullable|string|max:100',
+                    'apply_url' => 'required|string',
+                    'salary_range' => 'nullable|string',
+                    'company_name' => 'nullable|string|max:255',
+                ]);
+
+                $validatedJob['job_uuid'] = uuid_create();
+                Post::create($validatedJob);
+
+                if ($validatedJob['company_name']) {
+                    Company::createCompany($validatedJob);
+                    Log::info('New company created');
+                }
+                Log::info('New job created.');
+            } catch (ValidationException $e) {
+                Log::error('Error creating post: '.$e->getMessage());
+                return back()->withErrors($e->errors())->withInput();
+            } catch (Exception $e) {
+                Log::error('Error creating post: '.$e->getMessage());
+                return response()->json(['message' => 'An error occurred while creating the post'], 500);
             }
-
-            Log::info('New job created.');
-            return response()->json(['message' => 'Post created successfully'], 201);
-        } catch (ValidationException $e) {
-            Log::error('Error creating post: ' . $e->getMessage());
-            return back()->withErrors($e->errors())->withInput();
-        } catch (Exception $e) {
-            Log::error('Error creating post: ' . $e->getMessage());
-            return response()->json(['message' => 'An error occurred while creating the post'], 500);
         }
     }
 
