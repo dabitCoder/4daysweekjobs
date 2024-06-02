@@ -11,9 +11,8 @@ return new class extends Migration
      */
     public function up(): void
     {
-        Schema::table('posts', function(Blueprint $table){
-            $table->decimal('min_salary',9,3)->nullable(false);
-            $table->decimal('max_salary', 9,3)->nullable(false);
+        Schema::table('posts', function (Blueprint $table) {
+            $table->boolean('is_active')->default(false);
         });
     }
 
@@ -22,9 +21,8 @@ return new class extends Migration
      */
     public function down(): void
     {
-          Schema::table('posts', function(Blueprint $table){
-            $table->dropColumn('min_salary');
-            $table->dropColumn('max_salary');
+        Schema::table('posts', function (Blueprint $table) {
+            $table->dropColumn('is_active');
         });
     }
 };

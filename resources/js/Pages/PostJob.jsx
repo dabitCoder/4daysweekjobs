@@ -2,7 +2,7 @@ import {Head, useForm, Link} from "@inertiajs/react";
 import {useEffect, useState} from "react";
 
 const JobPosting = () => {
-    const {data, setData, post, processing, reset, errors} = useForm({
+      const { data, setData, post, processing, errors } = useForm({
         title: '',
         description: '',
         modality: 'remote',
@@ -14,18 +14,17 @@ const JobPosting = () => {
         company_name: ''
     });
 
-    const [industries, setIndustries] = useState([])
+      const [industries, setIndustries] = useState([]);
 
     useEffect(() => {
         fetch('http://localhost:8000/industries')
             .then(async response => setIndustries(await response.json()))
-            .catch(error => console.log(error))
-    }, [fetch, setIndustries])
-
+            .catch(async error => await error.json());
+    }, [setIndustries]);
 
     const handleChangeInput = (field, value) => {
-        setData({...data, [field]: value})
-    }
+        setData({...data, [field]: value});
+    };
 
     const generateSalaryOptions = () => {
         const options = [];
@@ -38,9 +37,11 @@ const JobPosting = () => {
     };
 
     const onSubmit = (e) => {
-        e.preventDefault()
-        post(route('jobs.store'), {onError: () => console.log(errors)});
-    }
+        e.preventDefault();
+        post(route('jobs.store'), {
+            onError: () => console.log("errorrrrrrrrrrrrrrr")
+        });
+    };
 
 
     return (
@@ -61,7 +62,7 @@ const JobPosting = () => {
                 <div className="container mx-auto px-6">
                     <h2 className="text-5xl font-bold mb-6 text-gray-800 text-center">Post a Job</h2>
                     <div className="max-w-3xl mx-auto bg-white p-8 rounded-lg shadow-lg">
-                        <form encType="multipart/form-data">
+                        <form encType="multipart/form-data" onSubmit={onSubmit}>
                             <div className="mb-4">
                                 <label htmlFor="title" className="block text-gray-700 font-bold mb-2">Title <span
                                     className="text-red-500">*</span></label>
@@ -71,6 +72,8 @@ const JobPosting = () => {
                                        required
                                        onChange={e => handleChangeInput('title', e.target.value)}
                                        placeholder="Frontend Developer with React"/>
+                               {errors.title ? <span className="text-red-600">{errors.title}</span> : null }
+
                             </div>
 
                             <div className="mb-4">
@@ -84,6 +87,8 @@ const JobPosting = () => {
                                           onChange={e => handleChangeInput('description', e.target.value)}
 
                                 ></textarea>
+                                {errors.description ? <span className="text-red-600">{errors.description}</span> : null }
+
                             </div>
 
                             <div className="mb-4">
@@ -95,6 +100,7 @@ const JobPosting = () => {
                                        required
                                        onChange={e => handleChangeInput('role', e.target.value)}
                                        placeholder="Lead Developer"/>
+                               {errors.role ? <span className="text-red-600">{errors.role}</span> : null }
                             </div>
 
                             <div className="mb-4">
@@ -110,6 +116,8 @@ const JobPosting = () => {
                                     <option value="hybrid">Hybrid</option>
                                     <option value="office">Office</option>
                                 </select>
+                                {errors.modality ? <span className="text-red-600">{errors.modality}</span> : null }
+
                             </div>
 
                             <div className="mb-4 flex space-x-4">
@@ -147,8 +155,9 @@ const JobPosting = () => {
                                     name="apply_url"
                                     className="w-full px-4 py-2 border rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-600"
                                     required
-                                    onChange={e => handleChangeInput('apply_ulr', e.target.value)}
+                                    onChange={e => handleChangeInput('apply_url', e.target.value)}
                                 />
+                                {errors.apply_url ? <span className="text-red-600">{errors.apply_url}</span> : null }
                             </div>
                             <div className="mb-4 flex space-x-4">
                                 <div className="w-1/2">
@@ -162,6 +171,7 @@ const JobPosting = () => {
                                         required
                                         onChange={e => handleChangeInput('company_name', e.target.value)}
                                     />
+                                    {errors.company_name ? <span className="text-red-600">{errors.company_name}</span> : null }
                                 </div>
                                 <div className="w-1/2">
                                     <label htmlFor="logo" className="block text-gray-700 font-bold mb-2">Company
@@ -171,8 +181,7 @@ const JobPosting = () => {
                                 </div>
                             </div>
                             <div className="text-center">
-                                <button type="submit"
-                                        onClick={onSubmit}
+                                <button type="submit" disabled={processing}
                                         className="bg-blue-600 text-white px-6 py-3 rounded-full text-lg font-semibold hover:bg-blue-700 focus:outline-none focus:ring-2 focus:ring-blue-600">Post
                                     Job
                                 </button>

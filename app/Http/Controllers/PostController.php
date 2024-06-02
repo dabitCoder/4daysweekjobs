@@ -8,6 +8,7 @@ use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Log;
 use Illuminate\Validation\ValidationException;
 use Exception;
+use Inertia\Inertia;
 
 class PostController extends Controller
 {
@@ -47,7 +48,7 @@ class PostController extends Controller
             return response()->json(['message' => 'Post created successfully'], 201);
         } catch (ValidationException $e) {
             Log::error('Error creating post: ' . $e->getMessage());
-            return response()->json(['errors' => $e->errors()], 422);
+            return back()->withErrors($e->errors())->withInput();
         } catch (Exception $e) {
             Log::error('Error creating post: ' . $e->getMessage());
             return response()->json(['message' => 'An error occurred while creating the post'], 500);
