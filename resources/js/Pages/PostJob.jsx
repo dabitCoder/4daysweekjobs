@@ -1,10 +1,6 @@
-import { Head, useForm, Link } from "@inertiajs/react";
-import { useEffect, useState } from "react";
-import TextInput from "@/Components/TextInput.jsx";
-import InputError from "@/Components/InputError.jsx";
-import InputLabel from "@/Components/InputLabel.jsx";
-
-const JobPosting = () => {
+import { Head, useForm, Link, usePage } from "@inertiajs/react";
+const JobPosting = ({isLoggedIn}) => {
+    console.log(isLoggedIn)
   const { data, setData, post, processing, errors } = useForm({
     title: '',
     modality: 'remote',
@@ -18,33 +14,13 @@ const JobPosting = () => {
     password_confirmation: '',
   });
 
-  const [industries, setIndustries] = useState([]);
-
-  useEffect(() => {
-    fetch('http://localhost:8000/industries')
-      .then(async response => setIndustries(await response.json()))
-      .catch(async error => await error.json());
-  }, [setIndustries]);
-
   const handleChangeInput = (field, value) => {
     setData({ ...data, [field]: value });
   };
 
-  const generateSalaryOptions = () => {
-    const options = [];
-    for (let i = 10000; i <= 500000; i += 10000) {
-      options.push(
-        <option key={i} value={i}>{i.toLocaleString()}</option>
-      );
-    }
-    return options;
-  };
-
-  const onSubmit = (e) => {
+  const onSubmit = async (e) => {
     e.preventDefault();
-    post(route('jobs.store'), {
-      onError: () => console.log("errorrrrrrrrrrrrrrr")
-    });
+    post(route('jobs.store'))
   };
 
   return (
@@ -64,7 +40,7 @@ const JobPosting = () => {
         <div className="container mx-auto px-6">
             <h2 className="text-5xl font-bold mb-6 text-gray-800 text-center">Post a Job</h2>
             <div className="max-w-3xl mx-auto bg-white p-8 rounded-lg shadow-lg">
-                <form encType="multipart/form-data" onSubmit={onSubmit}>
+                <form encType="multipart/form-data" method="post" onSubmit={onSubmit}>
                     <div className="mb-4">
                         <label htmlFor="title" className="block text-gray-700 font-bold mb-2">Title <span className="text-red-500">*</span></label>
                         <input type="text"
@@ -140,56 +116,58 @@ const JobPosting = () => {
                                 className="w-full px-4 py-2 border rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-600" />
                         </div>
                     </div>
+                    {!isLoggedIn ?
+                        <div className="my-8 p-6 bg-blue-50 border border-blue-200 rounded-lg shadow-sm">
+                            <h3 className="text-2xl font-semibold text-blue-700 mb-4">Register Your Profile</h3>
+                            <p className="text-sm text-gray-600 mb-4">This is required to edit your posts. We will not use your email to send you spam.</p>
 
-                    <div className="my-8 p-6 bg-blue-50 border border-blue-200 rounded-lg shadow-sm">
-                        <h3 className="text-2xl font-semibold text-blue-700 mb-4">Register Your Profile</h3>
-                          <p className="text-sm text-gray-600 mb-4">This is required to edit your posts. We will not use your email to send you spam.</p>
-
-                        <div className="mb-4">
-                            <label htmlFor="email" className="block text-gray-700 font-bold mb-2">Email<span className="text-red-500">*</span></label>
-                            <input type="email"
-                                id="email" name="email"
-                                className="w-full px-4 py-2 border rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-600"
-                                required
-                                onChange={e => handleChangeInput('email', e.target.value)}
-                                placeholder="Email" />
-                            {errors.email ? <span className="text-red-600">{errors.email}</span> : null}
-                        </div>
-                        <div className="mb-4">
-                            <label htmlFor="username" className="block text-gray-700 font-bold mb-2">Username<span className="text-red-500">*</span></label>
-                            <input type="text"
-                                id="username" name="username"
-                                className="w-full px-4 py-2 border rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-600"
-                                required
-                                onChange={e => handleChangeInput('username', e.target.value)}
-                                placeholder="Username" />
-                            {errors.username ? <span className="text-red-600">{errors.username}</span> : null}
+                            <div className="mb-4">
+                                <label htmlFor="email" className="block text-gray-700 font-bold mb-2">Email<span className="text-red-500">*</span></label>
+                                <input type="email"
+                                       id="email" name="email"
+                                       className="w-full px-4 py-2 border rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-600"
+                                       required
+                                       onChange={e => handleChangeInput('email', e.target.value)}
+                                       placeholder="Email" />
+                                       {errors.email ? <span className="text-red-600">{errors.email}</span> : null}
                             </div>
-                        <div className="mb-4">
-                            <label htmlFor="password" className="block text-gray-700 font-bold mb-2">Password<span className="text-red-500">*</span></label>
-                            <input type="password"
-                                id="password" name="password"
-                                className="w-full px-4 py-2 border rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-600"
-                                required
-                                onChange={e => handleChangeInput('password', e.target.value)}
-                                placeholder="Password" />
-                            {errors.password ? <span className="text-red-600">{errors.password}</span> : null}
-                        </div>
-                        <div className="mt-4">
-                            <label htmlFor="password_confirmation" className="block text-gray-700 font-bold mb-2">Password<span className="text-red-500">*</span></label>
-                            <input type="password"
-                                id="password_confirmation" name="password_confirmation"
-                                className="w-full px-4 py-2 border rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-600"
-                                required
-                                onChange={e => handleChangeInput('password_confirmation', e.target.value)}
-                                placeholder="Repeat your password   " />
-                            {errors.password ? <span className="text-red-600">{errors.password}</span> : null}
-                        </div>
-                    </div>
-
+                            <div className="mb-4">
+                                <label htmlFor="username" className="block text-gray-700 font-bold mb-2">Username<span className="text-red-500">*</span></label>
+                                <input type="text"
+                                       id="username" name="username"
+                                       className="w-full px-4 py-2 border rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-600"
+                                       required
+                                       onChange={e => handleChangeInput('username', e.target.value)}
+                                       placeholder="Username" />
+                                       {errors.username ? <span className="text-red-600">{errors.username}</span> : null}
+                            </div>
+                            <div className="mb-4">
+                                <label htmlFor="password" className="block text-gray-700 font-bold mb-2">Password<span className="text-red-500">*</span></label>
+                                <input type="password"
+                                       id="password" name="password"
+                                       className="w-full px-4 py-2 border rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-600"
+                                       required
+                                       onChange={e => handleChangeInput('password', e.target.value)}
+                                       placeholder="Password" />
+                                       {errors.password ? <span className="text-red-600">{errors.password}</span> : null}
+                            </div>
+                            <div className="mt-4">
+                                <label htmlFor="password_confirmation" className="block text-gray-700 font-bold mb-2">Password<span className="text-red-500">*</span></label>
+                                <input type="password"
+                                       id="password_confirmation" name="password_confirmation"
+                                       className="w-full px-4 py-2 border rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-600"
+                                       required
+                                       onChange={e => handleChangeInput('password_confirmation', e.target.value)}
+                                       placeholder="Repeat your password   " />
+                                       {errors.password ? <span className="text-red-600">{errors.password}</span> : null}
+                            </div>
+                        </div> : null}
 
                     <div className="text-center">
-                        <button type="submit" disabled={processing}
+                        <button
+                            type="submit"
+                            onClick={onSubmit}
+                            disabled={processing}
                             className="bg-blue-600 text-white px-6 py-3 rounded-full text-lg font-semibold hover:bg-blue-700 focus:outline-none focus:ring-2 focus:ring-blue-600">Post Job
                         </button>
                     </div>

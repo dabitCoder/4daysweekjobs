@@ -10,6 +10,7 @@ use Exception;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Log;
 use Illuminate\Validation\ValidationException;
+use Inertia\Inertia;
 
 class PostController extends Controller
 {
@@ -23,48 +24,57 @@ class PostController extends Controller
 
     public function store(Request $request)
     {
-        if (!$request->email || ! $request->password) {
-            Log::error('Email and password for user creation were not informed');
-            return back()->withErrors(['errors' => 'Email or password not informed']);
+        if ($request->user()) {
+            $request->user()->createOrGetStripeCustomer();
         } else {
-            try {
-                $userData = [
-                    "email" => $request->email,
-                    "name" => $request->username,
-                    "password" => $request->password,
-                    "password_confirmation" => $request->password_confirmation
-                ];
-                $validatedUser = UserManager::validateUser($userData);
+            $userData = [
+                "email" => $request->email,
+                "name" => $request->username,
+                "password" => $request->password,
+                "password_confirmation" => $request->password_confirmation
+            ];
 
-                if ($validatedUser) {
-                    UserManager::createUser($userData);
-                }
+            $validatedUser = UserManager::validateUser($userData);
 
-                $validatedJob = $request->validate([
-                    'title' => 'required|string|max:255',
-                    'modality' => 'nullable|string|in:office,remote,hybrid',
-                    'location' => 'nullable|string',
-                    'role' => 'nullable|string|max:100',
-                    'apply_url' => 'required|string',
-                    'salary_range' => 'nullable|string',
-                    'company_name' => 'nullable|string|max:255',
-                ]);
-
-                $validatedJob['job_uuid'] = uuid_create();
-                Post::create($validatedJob);
-
-                if ($validatedJob['company_name']) {
-                    Company::createCompany($validatedJob);
-                    Log::info('New company created');
-                }
-                Log::info('New job created.');
-            } catch (ValidationException $e) {
-                Log::error('Error creating post: '.$e->getMessage());
-                return back()->withErrors($e->errors())->withInput();
-            } catch (Exception $e) {
-                Log::error('Error creating post: '.$e->getMessage());
-                return response()->json(['message' => 'An error occurred while creating the post'], 500);
+            if ($validatedUser) {
+                $user = UserManager::createUser($userData);
+                auth()->login($user);
             }
+        }
+
+        try {
+            $validatedJob = $request->validate([
+                'title' => 'required|string|max:255',
+                'modality' => 'nullable|string|in:office,remote,hybrid',
+                'location' => 'nullable|string',
+                'role' => 'nullable|string|max:100',
+                'apply_url' => 'required|string',
+                'salary_range' => 'nullable|string',
+                'company_name' => 'nullable|string|max:255',
+            ]);
+
+            $validatedJob['job_uuid'] = uuid_create();
+            $newJob = Post::create($validatedJob);
+
+            if ($validatedJob['company_name']) {
+                Company::createCompany($validatedJob);
+                Log::info('New company created');
+            }
+            Log::info('New job created.');
+
+            $checkout = $request->user()->checkout(['price_1PLXPcEgjH84dgjqO9GN94Vu'=> 1], [
+                'success_url' => route('job_form'),
+                'cancel_url' => route('jobs.index'),
+                'metadata' => ["job_id" => $newJob->id]
+            ]);
+
+            return Inertia::location($checkout->url);
+        } catch (ValidationException $e) {
+            Log::error('Error creating post: ' . $e->getMessage());
+            return back()->withErrors($e->errors())->withInput();
+        } catch (Exception $e) {
+            Log::error('Error creating post: ' . $e->getMessage());
+            return response()->json(['message' => 'An error occurred while creating the post'], 500);
         }
     }
 

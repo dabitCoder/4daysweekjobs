@@ -16,19 +16,17 @@ Route::get('/', function () {
 });
 
 Route::get('/post-job', function () {
-    return Inertia::render('PostJob');
-});
+    return Inertia::render('PostJob', [
+        'isLoggedIn' => auth()->check()
+    ]);
+})->name('job_form');
 
 Route::post('jobs', [\App\Http\Controllers\PostController::class, 'store'])->name('jobs.store');
-
-Route::get('/industries', [\App\Http\Controllers\IndustryController::class, 'index']);
 
 Route::get('/dashboard', function () {
     return Inertia::render('Dashboard');
 })->middleware(['auth', 'verified'])->name('dashboard');
 
-Route::get('companies', [CompanyController::class, 'index'])->name('companies.index');
-Route::get('companies/{company}', [CompanyController::class, 'show'])->name('companies.show');
 Route::get('jobs', [\App\Http\Controllers\PostController::class, 'index'])->name('jobs.index');
 Route::get('jobs/{job}', [\App\Http\Controllers\PostController::class, 'show'])->name('jobs.show');
 
