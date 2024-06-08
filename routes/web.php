@@ -1,6 +1,5 @@
 <?php
 
-use App\Http\Controllers\CompanyController;
 use App\Http\Controllers\ProfileController;
 use Illuminate\Foundation\Application;
 use Illuminate\Support\Facades\Route;
@@ -17,24 +16,18 @@ Route::get('/', function () {
 
 Route::get('/post-job', function () {
     return Inertia::render('PostJob', [
-        'isLoggedIn' => auth()->check()
+        'isLoggedIn' => auth()->check(),
     ]);
 })->name('job_form');
 
 Route::post('jobs', [\App\Http\Controllers\PostController::class, 'store'])->name('jobs.store');
 
+Route::get('/payment-error', [\App\Http\Controllers\CheckoutController::class, 'payment_error'])->name('payment.error');
+Route::get('/payment-success', [\App\Http\Controllers\CheckoutController::class, 'payment_success'])->name('payment.success');
+
 Route::get('/dashboard', function () {
     return Inertia::render('Dashboard');
 })->middleware(['auth', 'verified'])->name('dashboard');
-
-Route::get('jobs', [\App\Http\Controllers\PostController::class, 'index'])->name('jobs.index');
-Route::get('jobs/{job}', [\App\Http\Controllers\PostController::class, 'show'])->name('jobs.show');
-
-// Rutas privadas (requieren autenticación)
-Route::middleware(['auth'])->group(function () {
-    Route::resource('companies', CompanyController::class)->except(['index', 'show']);
-    Route::resource('posts', \App\Http\Controllers\PostController::class)->except(['index', 'show']);
-});
 
 Route::middleware('auth')->group(function () {
     Route::get('/profile', [ProfileController::class, 'edit'])->name('profile.edit');

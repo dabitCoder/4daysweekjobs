@@ -2,18 +2,21 @@
 
 namespace App\Http\Controllers;
 
-use Illuminate\Http\Request;
+use Inertia\Inertia;
 
 class CheckoutController extends Controller
 {
-    public function create(Request $request)
+    public function payment_error()
     {
-        $product_id = 'prod_QBvGd8n2Ek9QuF';
-        $quantity = 1;
+        return Inertia::render('Payments/Error', [
+            'isLoggedIn' => auth()->check(),
+        ]);
+    }
 
-        return $request->user()->checkout([$product_id => $quantity], [
-            'success_url' => route('checkout-success'),
-            'cancel_url' => route('jobs'),
+    public function payment_success()
+    {
+        return Inertia::render('Payments/Success', [
+            'isLoggedIn' => auth()->check(),
         ]);
     }
 }

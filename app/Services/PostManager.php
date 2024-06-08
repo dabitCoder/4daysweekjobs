@@ -2,8 +2,8 @@
 
 namespace App\Services;
 
-use App\Models\Post;
 use App\Models\Company;
+use App\Models\Post;
 use Illuminate\Support\Facades\Validator;
 
 class PostManager
@@ -24,12 +24,13 @@ class PostManager
     public static function createJob(array $data)
     {
         $data['job_uuid'] = uuid_create();
+
         return Post::create($data);
     }
 
     public static function createCompany(array $data)
     {
-        if (!empty($data['company_name'])) {
+        if (! empty($data['company_name'])) {
             Company::create(['name' => $data['company_name']]);
         }
     }

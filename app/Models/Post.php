@@ -11,15 +11,11 @@ class Post extends Model
 
     protected $fillable = [
         'title',
-        'description',
         'modality',
-        'industry',
-        'min_salary',
-        'max_salary',
-        'location',
         'role',
         'apply_url',
         'job_uuid',
         'is_active',
+        'creator_id',
     ];
 }
