@@ -1,4 +1,4 @@
-import { useState } from 'react';
+import React, { useState } from 'react';
 import ApplicationLogo from '@/Components/ApplicationLogo';
 import Dropdown from '@/Components/Dropdown';
 import NavLink from '@/Components/NavLink';
@@ -15,9 +15,8 @@ export default function Authenticated({ user, header, children }) {
                     <div className="flex justify-between h-16">
                         <div className="flex">
                             <div className="shrink-0 flex items-center">
-                                <Link href="/">
-                                    <ApplicationLogo className="block h-9 w-auto fill-current text-gray-800" />
-                                </Link>
+                                <Link href="/" className="text-3xl font-bold text-blue-600">4 Days Week Jobs</Link>
+
                             </div>
 
                             <div className="hidden space-x-8 sm:-my-px sm:ms-10 sm:flex">

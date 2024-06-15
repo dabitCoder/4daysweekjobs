@@ -4,6 +4,7 @@ namespace App\Models;
 
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
+use Illuminate\Support\Facades\DB;
 
 class Post extends Model
 {
@@ -18,4 +19,9 @@ class Post extends Model
         'is_active',
         'creator_id',
     ];
+
+    public static function getUserJobs($id)
+    {
+        return DB::select('select * from posts where creator_id = ?', [$id]);
+    }
 }

@@ -11,38 +11,12 @@ class CompanyController extends Controller
     public function index()
     {
         $companies = Company::all();
-
         return view('companies.index', compact('companies'));
     }
 
     public function show(Company $company)
     {
         return view('companies.show', compact('company'));
-    }
-
-    public function create()
-    {
-    }
-
-    public function store(Request $request)
-    {
-        $validated = $request->validate([
-            'name' => 'required|string|max:255',
-            'description' => 'required|string',
-            'location' => 'required|string|max:255',
-            'logo' => 'nullable|image|mimes:jpg,jpeg,png|max:2048',
-        ]);
-
-        if ($request->hasFile('logo')) {
-            $path = $request->file('logo')->store('logos', 'public');
-            $validated['logo'] = $path;
-        }
-
-        $validated['creator_id'] = Auth::id(); // O usar $request->user()->id
-
-        Company::create($validated);
-
-        return redirect()->route('dashboard');
     }
 
     public function edit(Company $company)

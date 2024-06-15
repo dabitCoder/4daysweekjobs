@@ -1,6 +1,5 @@
 import { Head, useForm, Link, usePage } from "@inertiajs/react";
 const JobPosting = ({isLoggedIn}) => {
-    console.log(isLoggedIn)
   const { data, setData, post, processing, errors } = useForm({
     title: '',
     modality: 'remote',
@@ -118,8 +117,8 @@ const JobPosting = ({isLoggedIn}) => {
                     </div>
                     {!isLoggedIn ?
                         <div className="my-8 p-6 bg-blue-50 border border-blue-200 rounded-lg shadow-sm">
-                            <h3 className="text-2xl font-semibold text-blue-700 mb-4">Register Your Profile</h3>
-                            <p className="text-sm text-gray-600 mb-4">This is required to edit your posts. We will not use your email to send you spam.</p>
+                            <h3 className="text-2xl font-semibold text-blue-700 mb-4">Sign Up</h3>
+                            <p className="text-sm text-gray-600 mb-4">This is required to edit your posts, if necessary. We will not use your email to send you spam.</p>
 
                             <div className="mb-4">
                                 <label htmlFor="email" className="block text-gray-700 font-bold mb-2">Email<span className="text-red-500">*</span></label>
@@ -152,13 +151,13 @@ const JobPosting = ({isLoggedIn}) => {
                                        {errors.password ? <span className="text-red-600">{errors.password}</span> : null}
                             </div>
                             <div className="mt-4">
-                                <label htmlFor="password_confirmation" className="block text-gray-700 font-bold mb-2">Password<span className="text-red-500">*</span></label>
+                                <label htmlFor="password_confirmation" className="block text-gray-700 font-bold mb-2">Repeat your password<span className="text-red-500">*</span></label>
                                 <input type="password"
                                        id="password_confirmation" name="password_confirmation"
                                        className="w-full px-4 py-2 border rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-600"
                                        required
                                        onChange={e => handleChangeInput('password_confirmation', e.target.value)}
-                                       placeholder="Repeat your password   " />
+                                       placeholder="Password" />
                                        {errors.password ? <span className="text-red-600">{errors.password}</span> : null}
                             </div>
                         </div> : null}

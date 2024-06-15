@@ -16,9 +16,11 @@ class PostController extends Controller
     /**
      * Display a listing of the resource.
      */
-    public function index()
+    public function index(Request $request): \Illuminate\Http\JsonResponse
     {
-        //
+        $user = $request->user();
+        $jobs = Post::getUserJobs($user->id);
+        return response()->json($jobs);
     }
 
     public function store(Request $request)
