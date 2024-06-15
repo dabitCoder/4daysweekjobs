@@ -4,7 +4,7 @@ const JobPosting = ({isLoggedIn}) => {
     title: '',
     modality: 'remote',
     role: '',
-    salary_range: '0$',
+    salary_range: '',
     apply_url: '',
     company_name: '',
     username: '',

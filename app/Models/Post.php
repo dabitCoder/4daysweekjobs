@@ -15,6 +15,7 @@ class Post extends Model
         'modality',
         'role',
         'apply_url',
+        'salary_range',
         'job_uuid',
         'is_active',
         'creator_id',

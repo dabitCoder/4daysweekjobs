@@ -5,16 +5,21 @@ import PrimaryButton from "@/Components/PrimaryButton.jsx";
 
 export default function Dashboard({ auth }) {
     const userId = auth.user.id
+    const [isError, setIsError] = useState(false)
     const [isLoading, setIsLoading] = useState(false)
     const [userJobs, setUserJobs] = useState([])
 
     useEffect(() => {
         const getUserJobs = async() => {
+            setIsLoading(true)
             const response = await fetch(`http://localhost:8000/jobs/${userId}`)
+
             if (!response.ok) {
+                setIsError(true)
                 throw new Error(`there was an error`)
             }
 
+            setIsLoading(false)
             return await response.json()
         }
 
@@ -34,6 +39,8 @@ export default function Dashboard({ auth }) {
             <div className="py-12">
                 <div className="max-w-7xl mx-auto sm:px-6 lg:px-8">
                     <h1 className="text-2xl font-bold mb-6">Your jobs</h1>
+                    {isError ? 'There was an error reaching your posts. Try again or contact support' : null}
+                    {isLoading ? 'Loading your posts...' :
                     <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-6">
                         {userJobs.map(job => (
                             <div key={job.id} className="relative bg-white overflow-hidden shadow-sm sm:rounded-lg group">
@@ -48,6 +55,7 @@ export default function Dashboard({ auth }) {
                             </div>
                         ))}
                     </div>
+                    }
                 </div>
             </div>
         </AuthenticatedLayout>
