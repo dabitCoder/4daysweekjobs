@@ -43,7 +43,7 @@ class PostController extends Controller
             }
 
             $checkout = $request->user()->checkout(['price_1PLXPcEgjH84dgjqO9GN94Vu' => 1], [
-                'success_url' => route('payment.success'),
+                'success_url' => route('payment.success') . '?session_id={CHECKOUT_SESSION_ID}',
                 'cancel_url' => route('payment.error'),
                 'metadata' => ['job_id' => $newJob->id],
             ]);

@@ -23,6 +23,6 @@ class Post extends Model
 
     public static function getUserJobs($id)
     {
-        return DB::select('select * from posts where creator_id = ?', [$id]);
+        return DB::select('select * from posts where creator_id = ? ORDER BY created_at DESC', [$id]);
     }
 }
