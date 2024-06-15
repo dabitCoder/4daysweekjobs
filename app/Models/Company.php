@@ -21,8 +21,8 @@ class Company extends Model
         return $this->belongsTo(Industry::class);
     }
 
-    public function posts()
+    public function users()
     {
-        return $this->hasMany(Post::class);
+        return $this->hasMany(User::class);
     }
 }

@@ -24,6 +24,7 @@ Route::get('/post-job', function () {
 Route::post('jobs', [\App\Http\Controllers\PostController::class, 'store'])->name('jobs.store');
 Route::get('/jobs/{id}', [\App\Http\Controllers\PostController::class, 'index'])->name('jobs.index');
 
+
 Route::get('/checkout/error', [\App\Http\Controllers\CheckoutController::class, 'payment_error'])->name('payment.error');
 Route::get('/checkout/success', [\App\Http\Controllers\CheckoutController::class, 'payment_success'])->name('payment.success');
 

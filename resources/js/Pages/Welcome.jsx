@@ -39,7 +39,6 @@ export default function Index({ auth }) {
 												</button>
 											</span>
 										</Dropdown.Trigger>
-
 										<Dropdown.Content>
 											<Dropdown.Link href={route("profile.edit")}>
 												Profile
@@ -64,7 +63,7 @@ export default function Index({ auth }) {
 				</div>
 			</header>
 			<section className="bg-blue-600 text-white py-20">
-				<div className="container mx-auto px-6 text-center">
+				<div className="container max-w-5xl px-6 text-center">
 					<h1 className="text-5xl font-bold mb-2">Find Your Dream Job</h1>
 					<p className="text-2xl mb-8">
 						Discover Companies Offering More Free Time and a Better Work-Life
@@ -79,26 +78,44 @@ export default function Index({ auth }) {
 				</div>
 			</section>
 			<section id="jobs" className="py-12 bg-white">
-				<div className="container mx-auto px-6">
-					<h2 className="text-3xl font-bold mb-6 text-gray-800 text-center">
+				<div className="container max-w-4xl px-6">
+					<h2 className="text-3xl font-bold mb-6 text-gray-700">
 						Latest Jobs
 					</h2>
-					<div className="grid gap-6 md:grid-cols-2 lg:grid-cols-3">
-						<div className="bg-white p-6 rounded-lg shadow-lg">
-							<h3 className="text-xl font-bold mb-2">Frontend Developer</h3>
-							<p className="text-gray-700 mb-4">Awesome Company</p>
-							<p className="text-gray-600 mb-2">
-								<strong>Location:</strong> Remote
-							</p>
-							<p className="text-gray-600 mb-2">
-								<strong>Salary:</strong> $60,000 - $80,000
-							</p>
-							<a
-								href="#"
-								className="text-blue-600 font-semibold hover:underline"
-							>
-								View Details
-							</a>
+					<div className="flex flex-col">
+						<div className="flex items-center bg-orange-500 p-6 rounded-lg shadow-lg mt-3 mb-3">
+							<img
+								src="https://via.placeholder.com/50"
+								alt="Company Logo"
+								className="rounded-full w-12 h-12 mr-4"
+							/>
+							<div className="flex-grow">
+								<div className="flex justify-between items-center mb-2">
+									<div>
+										<h3 className="text-xl font-bold text-white">
+											Interaction Design Foundation (IxDF)
+										</h3>
+										<p className="text-lg font-semibold text-white">
+											Senior PHP Developer (Laravel)
+										</p>
+										<p className="text-white">
+											Full Time - 30,000 - 70,000 USD
+										</p>
+									</div>
+									<div className="flex items-center text-white space-x-4">
+										<span className="flex items-center">
+											<svg
+												className="w-5 h-5 mr-1"
+												fill="currentColor"
+												viewBox="0 0 24 24"
+											>
+												<path d="M12 2C8.134 2 5 5.134 5 9c0 7.498 7 13 7 13s7-5.502 7-13c0-3.866-3.134-7-7-7zm0 11c-2.211 0-4-1.789-4-4s1.789-4 4-4 4 1.789 4 4-1.789 4-4 4z" />
+											</svg>
+											Remote
+										</span>
+									</div>
+								</div>
+							</div>
 						</div>
 						<div className="bg-white p-6 rounded-lg shadow-lg">
 							<h3 className="text-xl font-bold mb-2">Backend Developer</h3>

@@ -18,9 +18,15 @@ class PostController extends Controller
      */
     public function index(Request $request): \Illuminate\Http\JsonResponse
     {
-        $user = $request->user();
-        $jobs = Post::getUserJobs($user->id);
-        return response()->json($jobs);
+        try {
+            $posts = new Post();
+            $user = $request->user();
+            $jobs = $posts->getUserJobs($user->id);
+            return response()->json($jobs);
+        } catch (Exception $ex) {
+            Log::error($ex->getMessage());
+            return response()->json([]);
+        }
     }
 
     public function store(Request $request)
@@ -38,8 +44,7 @@ class PostController extends Controller
                     'name' => $validatedJob['company_name']
                 ];
 
-                Company::create($companyData);
-                Log::info('New company created');
+                Company::firstOrCreate(['name' => $validatedJob['company_name']], $companyData);
             }
 
             $checkout = $request->user()->checkout(['price_1PLXPcEgjH84dgjqO9GN94Vu' => 1], [
@@ -47,10 +52,9 @@ class PostController extends Controller
                 'cancel_url' => route('payment.error'),
                 'metadata' => ['job_id' => $newJob->id],
             ]);
-
             return Inertia::location($checkout->url);
         } catch (ValidationException $e) {
-            Log::error('Error valiting post data: '.$e->getMessage());
+            Log::error('Error validating post data: '.$e->getMessage());
             return back()->withErrors($e->errors())->withInput();
         } catch (Exception $e) {
             Log::error('Error creating post: '.$e->getMessage());
@@ -60,8 +64,8 @@ class PostController extends Controller
 
     protected function getUser(Request $request)
     {
+
         if ($request->user()) {
-            $request->user()->createOrGetStripeCustomer();
             return $request->user();
         } else {
             $userData = [
@@ -76,7 +80,6 @@ class PostController extends Controller
             if ($validatedUser) {
                 $user = UserManager::createUser($userData);
                 auth()->login($user);
-
                 return $user;
             }
         }

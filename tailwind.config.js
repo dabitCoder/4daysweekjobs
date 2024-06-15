@@ -11,6 +11,12 @@ export default {
     ],
 
     theme: {
+        container: {
+            center: true,
+            screens: {
+                xl: "1280px"
+            }
+        },
         extend: {
             fontFamily: {
                 sans: ['Figtree', ...defaultTheme.fontFamily.sans],

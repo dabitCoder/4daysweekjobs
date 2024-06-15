@@ -4,7 +4,6 @@ namespace App\Models;
 
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
-use Illuminate\Support\Facades\DB;
 
 class Post extends Model
 {
@@ -21,8 +20,13 @@ class Post extends Model
         'creator_id',
     ];
 
-    public static function getUserJobs($id)
+    public function user()
     {
-        return DB::select('select * from posts where creator_id = ? ORDER BY created_at DESC', [$id]);
+        return $this->belongsTo(User::class);
+    }
+
+    public function getUserJobs($id)
+    {
+        return self::where('creator_id', $id)->orderBy('created_at', 'desc')->get();
     }
 }
