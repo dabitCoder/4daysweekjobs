@@ -1,6 +1,7 @@
 import { Head, useForm, Link } from "@inertiajs/react";
 import Dropdown from "@/Components/Dropdown.jsx";
 import React from "react";
+import JobCard from "@/Components/JobCard.jsx";
 const JobPosting = ({ isLoggedIn, user }) => {
 	const { data, setData, post, processing, errors } = useForm({
 		title: "",
@@ -341,7 +342,10 @@ const JobPosting = ({ isLoggedIn, user }) => {
 									</div>
 								</div>
 							) : null}
-
+                            <div>
+                                <span>Here's how your post is going to look</span>
+                                <JobCard post={data} />
+                            </div>
 							<div className="text-center">
 								<button
 									type="submit"

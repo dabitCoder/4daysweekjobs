@@ -6,7 +6,7 @@ const JobCard = ({ post }) => {
         window.open(post.apply_url, '_blank')
     }
 
-    return <div className="flex items-center bg-white p-6 rounded-lg shadow-sm hover:shadow-md mt-3 mb-3">
+    return <div className="flex items-center bg-white p-6 rounded-lg hover:border-gray-300 mt-3 mb-3 border-2 border-gray-100">
         <img
             src="https://via.placeholder.com/50"
             alt="Company Logo"
