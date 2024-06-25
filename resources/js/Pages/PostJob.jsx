@@ -85,7 +85,7 @@ const JobPosting = ({ isLoggedIn, user }) => {
 					</div>
 				</div>
 			</header>
-			<section className="py-12 bg-gray-50 min-h-screen">
+			<section className="py-12 bg-gray-100 min-h-screen">
 				<div className="container mx-auto px-6">
 					<h2 className="text-5xl font-bold mb-6 text-gray-800 text-center">
 						Post a Job
@@ -349,7 +349,7 @@ const JobPosting = ({ isLoggedIn, user }) => {
 									disabled={processing}
 									className="bg-blue-600 text-white px-6 py-3 rounded-full text-lg font-semibold hover:bg-blue-700 focus:outline-none focus:ring-2 focus:ring-blue-600"
 								>
-									Post Job
+									Checkout + Post Job
 								</button>
 							</div>
 						</form>
