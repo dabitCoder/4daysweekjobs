@@ -5,17 +5,25 @@ use App\Models\Post;
 use Illuminate\Foundation\Application;
 use Illuminate\Support\Facades\Route;
 use Inertia\Inertia;
+use Illuminate\Support\Facades\Redis;
+
 
 Route::get('/', function () {
 
     $latestPosts = Post::orderBy('created_at', 'desc')->take(10)->get();
+
+    $latestPostsWithImages = $latestPosts->map(function ($post) {
+        $imageBase64 = Redis::get('company_logo' . $post->id);
+        $post->imageBase64 = $imageBase64;
+        return $post;
+    });
 
     return Inertia::render('Welcome', [
         'canLogin' => Route::has('login'),
         'canRegister' => Route::has('register'),
         'laravelVersion' => Application::VERSION,
         'phpVersion' => PHP_VERSION,
-        'posts' => $latestPosts,
+        'posts' => $latestPostsWithImages,
     ]);
 });
 

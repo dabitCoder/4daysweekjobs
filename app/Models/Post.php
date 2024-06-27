@@ -12,12 +12,12 @@ class Post extends Model
     protected $fillable = [
         'title',
         'modality',
-        'role',
         'apply_url',
         'salary_range',
         'job_uuid',
         'is_active',
         'creator_id',
+        'location'
     ];
 
     public function user()

@@ -8,6 +8,7 @@ use App\Services\UserManager;
 use Exception;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Log;
+use Illuminate\Support\Facades\Redis;
 use Illuminate\Validation\ValidationException;
 use Inertia\Inertia;
 
@@ -33,11 +34,21 @@ class PostController extends Controller
     {
 
         try {
+            $validatedJob = $this->validateJob($request);
             $user = $this->getUser($request);
-            $validatedJob = $this->validateJob($request, $user);
-            $validatedJob['job_uuid'] = uuid_create();
             $validatedJob['creator_id'] = $user->id;
+            $validatedJob['job_uuid'] = uuid_create();
             $newJob = Post::create($validatedJob);
+
+
+            if($request->hasFile('company_logo')) {
+                $image = $request->file('company_logo');
+                $imagePath = $image->getRealPath();
+                $imageData = file_get_contents($imagePath);
+                $imageBase64 = base64_encode($imageData);
+
+                Redis::set('company_logo', $newJob->id, $imageBase64);
+            }
 
             if ($validatedJob['company_name']) {
                 $companyData = [
@@ -86,14 +97,13 @@ class PostController extends Controller
     }
 
 
-    protected function validateJob(Request $request, $user)
+    protected function validateJob(Request $request)
     {
         return $request->validate([
             'title' => 'required|string|max:255',
             'modality' => 'nullable|string|in:office,remote,hybrid',
-            'location' => 'nullable|string',
-            'role' => 'nullable|string|max:100',
-            'apply_url' => 'required|string',
+            'location' => 'nullable|string|max:60',
+            'apply_url' => 'required|url',
             'salary_range' => 'nullable|string',
             'company_name' => 'required|string|max:255',
         ]);

@@ -15,7 +15,7 @@ return new class extends Migration
             $table->id();
             $table->string('title')->nullable(false);
             $table->text('description')->nullable(false);
-            $table->enum('modality', ['remote', 'hybrid', 'office'])->nullable(false)->default('office');
+            $table->enum('modality', ['Remote', 'Hybrid', 'Office'])->nullable(false)->default('office');
             $table->foreignId('company_id')->constrained()->onDelete('cascade');
             $table->timestamps();
         });

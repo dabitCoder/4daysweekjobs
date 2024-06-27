@@ -80,7 +80,7 @@ export default function Index({ auth, posts }) {
 			</section>
 			<section id="jobs" className="py-12 bg-gray-50">
 				<div className="container max-w-4xl px-6">
-					<h2 className="text-3xl font-bold mb-6 text-gray-700">Latest Jobs</h2>
+					<h2 className="text-3xl font-bold mb-6 text-gray-700">{posts.length ? "Latest Jobs" : 'No jobs were found'} </h2>
 					<div className="flex flex-col min-h-screen">
 						{posts.map((post) => (
 							<JobCard post={post} />
