@@ -14,11 +14,11 @@ const JobCard = ({ post }) => {
     return (
         <div className="relative flex items-center bg-white p-6 rounded-lg hover:border-gray-300 mt-3 mb-3 border-2 border-gray-100">
             <span className="absolute top-2 right-8 text-gray-500 italic">{dateSincePosted}</span>
-            <img
-                src="https://via.placeholder.com/50"
+            {post.imageBase64 ? <img
+                src={`data:image/jpeg;base64,${post.imageBase64}`}
                 alt="Company Logo"
-                className="rounded-full w-12 h-12 mr-4"
-            />
+                className="rounded-full w-20 h-20 mr-4 object-cover"
+            /> : null}
             <div className="flex-grow">
                 <div className="flex justify-between items-center mb-2">
                     <div>

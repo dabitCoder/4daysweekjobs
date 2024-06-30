@@ -7,16 +7,13 @@ use App\Models\Post;
 use App\Services\UserManager;
 use Exception;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Cache;
 use Illuminate\Support\Facades\Log;
-use Illuminate\Support\Facades\Redis;
 use Illuminate\Validation\ValidationException;
 use Inertia\Inertia;
 
 class PostController extends Controller
 {
-    /**
-     * Display a listing of the resource.
-     */
     public function index(Request $request): \Illuminate\Http\JsonResponse
     {
         try {
@@ -32,7 +29,6 @@ class PostController extends Controller
 
     public function store(Request $request)
     {
-
         try {
             $validatedJob = $this->validateJob($request);
             $user = $this->getUser($request);
@@ -42,20 +38,14 @@ class PostController extends Controller
 
 
             if($request->hasFile('company_logo')) {
-                $image = $request->file('company_logo');
-                $imagePath = $image->getRealPath();
-                $imageData = file_get_contents($imagePath);
-                $imageBase64 = base64_encode($imageData);
-
-                Redis::set('company_logo', $newJob->id, $imageBase64);
+                $this->cacheCompanyLogo($newJob->id, $request->file('company_logo'));
             }
 
             if ($validatedJob['company_name']) {
-                $companyData = [
-                    'name' => $validatedJob['company_name']
-                ];
-
-                Company::firstOrCreate(['name' => $validatedJob['company_name']], $companyData);
+                Company::firstOrCreate(
+                    ['name' => $validatedJob['company_name']],
+                    ['name' => $validatedJob['company_name']]
+                );
             }
 
             $checkout = $request->user()->checkout(['price_1PLXPcEgjH84dgjqO9GN94Vu' => 1], [
@@ -65,17 +55,16 @@ class PostController extends Controller
             ]);
             return Inertia::location($checkout->url);
         } catch (ValidationException $e) {
-            Log::error('Error validating post data: '.$e->getMessage());
+            Log::error('Error validating post data: ' . $e->getMessage());
             return back()->withErrors($e->errors())->withInput();
         } catch (Exception $e) {
-            Log::error('Error creating post: '.$e->getMessage());
+            Log::error('Error creating post: ' . $e->getMessage());
             return response()->json(['message' => 'An error occurred while creating the post'], 500);
         }
     }
 
     protected function getUser(Request $request)
     {
-
         if ($request->user()) {
             return $request->user();
         } else {
@@ -96,7 +85,6 @@ class PostController extends Controller
         }
     }
 
-
     protected function validateJob(Request $request)
     {
         return $request->validate([
@@ -106,29 +94,36 @@ class PostController extends Controller
             'apply_url' => 'required|url',
             'salary_range' => 'nullable|string',
             'company_name' => 'required|string|max:255',
+            'company_logo' => 'nullable|image|mimes:jpeg,png,jpg,svg|max:2048',
         ]);
     }
 
-
+    private function cacheCompanyLogo($jobId, $image): void
+    {
+        try {
+            Log::info("Uploading image for job ID: {$jobId}");
+            $imageData = file_get_contents($image->getRealPath());
+            $imageBase64 = base64_encode($imageData);
+            Cache::put('company_logo_' . $jobId, $imageBase64, now());
+            Log::info("Image uploaded and cached successfully for job ID: {$jobId}");
+        } catch (Exception $e) {
+            Log::error("Error uploading image for job ID: {$jobId} - " . $e->getMessage());
+            throw $e;
+        }
+    }
 
     public function show(string $id)
     {
-
+        // Implementar lógica de mostrar detalles de una oferta de trabajo
     }
 
-    /**
-     * Show the form for editing the specified resource.
-     */
     public function edit(string $id)
     {
-        //
+        // Implementar lógica de edición
     }
 
-    /**
-     * Update the specified resource in storage.
-     */
     public function update(Request $request, string $id)
     {
-        //
+        // Implementar lógica de actualización
     }
 }

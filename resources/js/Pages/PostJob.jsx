@@ -11,6 +11,7 @@ const JobPosting = ({ isLoggedIn, user }) => {
 		location: "",
 		apply_url: "",
 		company_name: "",
+        company_logo: "",
 		username: "",
 		email: "",
 		password: "",
@@ -177,8 +178,12 @@ const JobPosting = ({ isLoggedIn, user }) => {
 										type="file"
 										id="company_logo"
 										name="company_logo"
+                                        onChange={event => handleChangeInput('company_logo', event.target.files[0])}
 										className="w-full px-4 py-2 border rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-600"
 									/>
+                                    {errors.company_logo ? (
+                                        <span className="text-red-600">{errors.company_logo}</span>
+                                    ) : null}
 								</div>
 							</div>
 							{!isLoggedIn ? (

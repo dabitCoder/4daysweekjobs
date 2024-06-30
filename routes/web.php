@@ -5,7 +5,7 @@ use App\Models\Post;
 use Illuminate\Foundation\Application;
 use Illuminate\Support\Facades\Route;
 use Inertia\Inertia;
-use Illuminate\Support\Facades\Redis;
+use Illuminate\Support\Facades\Cache;
 
 
 Route::get('/', function () {
@@ -13,7 +13,7 @@ Route::get('/', function () {
     $latestPosts = Post::orderBy('created_at', 'desc')->take(10)->get();
 
     $latestPostsWithImages = $latestPosts->map(function ($post) {
-        $imageBase64 = Redis::get('company_logo' . $post->id);
+        $imageBase64 = Cache::get('company_logo_' . $post->id);
         $post->imageBase64 = $imageBase64;
         return $post;
     });
