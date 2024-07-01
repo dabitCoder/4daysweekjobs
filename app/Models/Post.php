@@ -17,12 +17,18 @@ class Post extends Model
         'job_uuid',
         'is_active',
         'creator_id',
+        'company_id',
         'location'
     ];
 
     public function user()
     {
-        return $this->belongsTo(User::class);
+        return $this->belongsTo(User::class, 'creator_id');
+    }
+
+    public function company()
+    {
+        return $this->belongsTo(Company::class, 'company_id');
     }
 
     public function getUserJobs($id)

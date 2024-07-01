@@ -4,6 +4,7 @@ namespace App\Http\Controllers;
 
 use App\Models\Company;
 use App\Models\Post;
+use App\Rules\MoneyRange;
 use App\Services\UserManager;
 use Exception;
 use Illuminate\Http\Request;
@@ -34,18 +35,19 @@ class PostController extends Controller
             $user = $this->getUser($request);
             $validatedJob['creator_id'] = $user->id;
             $validatedJob['job_uuid'] = uuid_create();
-            $newJob = Post::create($validatedJob);
 
+            if ($validatedJob['company_name']) {
+                $newCompany = Company::firstOrCreate(
+                    ['name' => $validatedJob['company_name']],
+                    ['creator_id' => $user->id]
+                );
+                $validatedJob['company_id'] = $newCompany->id;
+            }
+
+            $newJob = Post::create($validatedJob);
 
             if($request->hasFile('company_logo')) {
                 $this->cacheCompanyLogo($newJob->id, $request->file('company_logo'));
-            }
-
-            if ($validatedJob['company_name']) {
-                Company::firstOrCreate(
-                    ['name' => $validatedJob['company_name']],
-                    ['name' => $validatedJob['company_name']]
-                );
             }
 
             $checkout = $request->user()->checkout(['price_1PLXPcEgjH84dgjqO9GN94Vu' => 1], [
@@ -92,9 +94,9 @@ class PostController extends Controller
             'modality' => 'nullable|string|in:office,remote,hybrid',
             'location' => 'nullable|string|max:60',
             'apply_url' => 'required|url',
-            'salary_range' => 'nullable|string',
+            'salary_range' => ['nullable', new MoneyRange],
             'company_name' => 'required|string|max:255',
-            'company_logo' => 'nullable|image|mimes:jpeg,png,jpg,svg|max:2048',
+            'company_logo' => 'nullable|image|mimes:jpeg,png,jpg,svg|max:5100',
         ]);
     }
 
@@ -104,7 +106,7 @@ class PostController extends Controller
             Log::info("Uploading image for job ID: {$jobId}");
             $imageData = file_get_contents($image->getRealPath());
             $imageBase64 = base64_encode($imageData);
-            Cache::put('company_logo_' . $jobId, $imageBase64, now());
+            Cache::put('company_logo_' . $jobId, $imageBase64);
             Log::info("Image uploaded and cached successfully for job ID: {$jobId}");
         } catch (Exception $e) {
             Log::error("Error uploading image for job ID: {$jobId} - " . $e->getMessage());

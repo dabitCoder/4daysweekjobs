@@ -9,14 +9,14 @@ use Illuminate\Support\Facades\Cache;
 
 
 Route::get('/', function () {
-
-    $latestPosts = Post::orderBy('created_at', 'desc')->take(10)->get();
+    $latestPosts = Post::with(['company'])->where('is_active', true)->orderBy('created_at', 'desc')->take(10)->get();
 
     $latestPostsWithImages = $latestPosts->map(function ($post) {
         $imageBase64 = Cache::get('company_logo_' . $post->id);
         $post->imageBase64 = $imageBase64;
         return $post;
     });
+
 
     return Inertia::render('Welcome', [
         'canLogin' => Route::has('login'),

@@ -1,4 +1,4 @@
-import { Head, useForm,  } from "@inertiajs/react";
+import { Head, useForm } from "@inertiajs/react";
 import React from "react";
 import JobCard from "@/Components/JobCard.jsx";
 import Signup from "@/Pages/Signup.jsx";
@@ -11,7 +11,7 @@ const JobPosting = ({ isLoggedIn, user }) => {
 		location: "",
 		apply_url: "",
 		company_name: "",
-        company_logo: "",
+		company_logo: "",
 		username: "",
 		email: "",
 		password: "",
@@ -27,17 +27,19 @@ const JobPosting = ({ isLoggedIn, user }) => {
 		post(route("jobs.store"));
 	};
 
+    console.log(errors)
+
 	return (
 		<>
 			<Head title="4 days week jobs - Post job" />
-			<Header isLoggedIn={isLoggedIn} user={user}/>
+			<Header isLoggedIn={isLoggedIn} user={user} />
 			<section className="py-12 bg-gray-100 min-h-screen">
 				<div className="container mx-auto px-6">
 					<h2 className="text-5xl font-bold mb-6 text-gray-800 text-center">
 						Post a Job
 					</h2>
-                    <div className="max-w-4xl mx-auto bg-white p-8 rounded-lg shadow-lg">
-                        <form
+					<div className="max-w-4xl mx-auto bg-white p-8 rounded-lg shadow-lg">
+						<form
 							encType="multipart/form-data"
 							method="post"
 							onSubmit={onSubmit}
@@ -178,16 +180,18 @@ const JobPosting = ({ isLoggedIn, user }) => {
 										type="file"
 										id="company_logo"
 										name="company_logo"
-                                        onChange={event => handleChangeInput('company_logo', event.target.files[0])}
+										onChange={(event) =>
+											handleChangeInput("company_logo", event.target.files[0])
+										}
 										className="w-full px-4 py-2 border rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-600"
 									/>
-                                    {errors.company_logo ? (
-                                        <span className="text-red-600">{errors.company_logo}</span>
-                                    ) : null}
+									{errors.company_logo ? (
+										<span className="text-red-600">{errors.company_logo}</span>
+									) : null}
 								</div>
 							</div>
 							{!isLoggedIn ? (
-								<Signup errors={errors} handleChangeInput={handleChangeInput}/>
+								<Signup errors={errors} handleChangeInput={handleChangeInput} />
 							) : null}
 							<div>
 								<span>Here's how your post is going to look</span>

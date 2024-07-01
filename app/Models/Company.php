@@ -11,18 +11,17 @@ class Company extends Model
 
     protected $fillable = [
         'name',
-        'description',
-        'location',
-        'logo',
+        'creator_id'
     ];
 
-    public function industry()
+
+    public function user()
     {
-        return $this->belongsTo(Industry::class);
+        return $this->belongsTo(User::class, 'creator_id');
     }
 
-    public function users()
+    public function posts()
     {
-        return $this->hasMany(User::class);
+        return $this->hasMany(Post::class);
     }
 }
