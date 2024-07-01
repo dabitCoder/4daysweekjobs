@@ -3,6 +3,8 @@ import { Head, Link } from "@inertiajs/react";
 import Dropdown from "@/Components/Dropdown.jsx";
 import JobCard from "@/Components/JobCard.jsx";
 import Header from "@/Components/Header.jsx";
+import {faBriefcase} from "@fortawesome/free-solid-svg-icons";
+import {FontAwesomeIcon} from "@fortawesome/react-fontawesome";
 
 export default function Index({ auth, posts, isLoggedIn }) {
 	return (
@@ -11,7 +13,7 @@ export default function Index({ auth, posts, isLoggedIn }) {
 			<Header user={auth.user} isLoggedIn={isLoggedIn} />
 			<section className="bg-gradient-to-r from-blue-500 to-blue-600 text-white pb-20 pt-20">
 				<div className="container max-w-5xl px-6 text-center">
-					<h1 className="text-5xl font-bold mb-2">Find Your Dream Job</h1>
+					<h1 className="text-5xl font-bold mb-2">Find Your 4-Day Week Dream Job</h1>
 					<p className="text-2xl mb-8">
 						Discover Companies Offering More Free Time and a Better Work-Life
 						Balance
@@ -20,13 +22,14 @@ export default function Index({ auth, posts, isLoggedIn }) {
 						href="/post-job"
 						className="bg-white text-blue-500 px-6 py-3 rounded-full hover:bg-blue-500 hover:text-white hover:shadow"
 					>
-						Post a Job
+                        <FontAwesomeIcon icon={faBriefcase} />
+                        <span className="ml-3">Post a Job</span>
 					</Link>
 				</div>
 			</section>
 			<section id="jobs" className="py-12 bg-gray-50">
-				<div className="container max-w-4xl px-6">
-					<h2 className="text-3xl font-bold mb-6 text-gray-700">
+				<div className="container max-w-4xl ">
+					<h2 className="text-3xl font-bold mb-6 text-gray-700 text-center">
 						{posts.data.length ? "Latest Jobs" : "No jobs were found"}
 					</h2>
 					<div className="flex flex-col min-h-screen">

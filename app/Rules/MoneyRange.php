@@ -7,6 +7,13 @@ use Illuminate\Contracts\Validation\Rule;
 class MoneyRange implements Rule
 {
     /**
+     * The custom error message.
+     *
+     * @var string
+     */
+    protected $errorMessage;
+
+    /**
      * Create a new rule instance.
      *
      * @return void
@@ -25,7 +32,7 @@ class MoneyRange implements Rule
      */
     public function passes($attribute, $value)
     {
-        // Verificar si es un número simple o un rango de números
+
         $parts = explode(' - ', $value);
 
         if (count($parts) == 2) {
@@ -33,11 +40,21 @@ class MoneyRange implements Rule
             $start = $parts[0];
             $end = $parts[1];
 
-            // Validar que ambos extremos del rango sean cantidades de dinero válidas
-            return $this->isValidMoney($start) && $this->isValidMoney($end);
+
+            if (!$this->isValidMoney($start) || !$this->isValidMoney($end)) {
+                $this->errorMessage = "Both values in the range must be valid monetary amounts.";
+                return false;
+            }
+
+            return true;
         } else {
-            // Es un solo valor, verificar si es una cantidad de dinero válida
-            return $this->isValidMoney($value);
+
+            if (!$this->isValidMoney($value)) {
+                $this->errorMessage = "The value must be a valid monetary amount.";
+                return false;
+            }
+
+            return true;
         }
     }
 
@@ -49,7 +66,7 @@ class MoneyRange implements Rule
      */
     private function isValidMoney($value)
     {
-        return preg_match('/^[^\d]*\d{1,3}([,.]\d{3})*([.,]\d{2})?$/', $value);
+        return preg_match('/^[^\d\s]?\s?\d{1,3}([.,]\d{3})*([.,]\d{2})?$/', $value);
     }
 
     /**
@@ -59,6 +76,6 @@ class MoneyRange implements Rule
      */
     public function message()
     {
-        return 'El campo :attribute debe ser un número válido o un rango válido de cantidades de dinero.';
+        return $this->errorMessage ?? 'The :attribute must be a valid monetary amount or a valid range of monetary amounts.';
     }
 }

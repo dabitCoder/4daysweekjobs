@@ -7,7 +7,7 @@ import { Input } from "postcss";
 const JobPosting = ({ isLoggedIn, user }) => {
 	const { data, setData, post, processing, errors } = useForm({
 		title: "",
-		modality: "Remote",
+		modality: "remote",
 		salary_range: "",
 		location: "",
 		apply_url: "",
@@ -32,7 +32,7 @@ const JobPosting = ({ isLoggedIn, user }) => {
 		<>
 			<Head title="Publish a new job - 4 day week jobs" />
 			<Header isLoggedIn={isLoggedIn} user={user} />
-			<section className="pt-40 bg-gray-100 min-h-screen">
+			<section className="pt-40 bg-gray-100 min-h-screen pb-20">
 				<div className="container mx-auto px-6">
 					<h2 className="text-5xl font-bold mb-6 text-gray-800 text-center">
 						Post a Job
@@ -103,7 +103,7 @@ const JobPosting = ({ isLoggedIn, user }) => {
                                     }
                                 />
                                 {errors.salary_range ? (
-                                    <span className="text-red-600">{errors.company_name}</span>
+                                    <span className="text-red-600">{errors.salary_range}</span>
                                 ) : null}
                             </div>
                             <div className="flex !flex-row gap-2 w-full">
@@ -199,7 +199,7 @@ const JobPosting = ({ isLoggedIn, user }) => {
                                 <Signup errors={errors} handleChangeInput={handleChangeInput}/>
                             ) : null}
                             <div>
-                                <span>Here's how your post is going to look</span>
+                                <span>Here's how your post is going to look. Logo will show up once checkout is complete.</span>
                                 <JobCard post={data}/>
                             </div>
                             <div className="text-center">
