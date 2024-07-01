@@ -9,9 +9,9 @@ use Illuminate\Support\Facades\Cache;
 
 
 Route::get('/', function () {
-    $latestPosts = Post::with(['company'])->where('is_active', true)->orderBy('created_at', 'desc')->take(10)->get();
+    $latestPosts = Post::with(['company'])->where('is_active', true)->orderBy('created_at', 'desc')->paginate(3);
 
-    $latestPostsWithImages = $latestPosts->map(function ($post) {
+    $latestPosts->getCollection()->transform(function ($post) {
         $imageBase64 = Cache::get('company_logo_' . $post->id);
         $post->imageBase64 = $imageBase64;
         return $post;
@@ -23,7 +23,9 @@ Route::get('/', function () {
         'canRegister' => Route::has('register'),
         'laravelVersion' => Application::VERSION,
         'phpVersion' => PHP_VERSION,
-        'posts' => $latestPostsWithImages,
+        'posts' => $latestPosts,
+        'isLoggedIn' => auth()->check(),
+
     ]);
 });
 

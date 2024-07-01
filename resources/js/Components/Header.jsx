@@ -3,9 +3,9 @@ import Dropdown from "@/Components/Dropdown.jsx";
 import React from "react";
 
 const Header = ({ isLoggedIn, user }) => (
-	<header className="bg-white shadow-md">
+	<header className="fixed w-full bg-gradient-to-r from-blue-500 to-blue-600 z-40">
 		<div className="container mx-auto px-6 flex justify-between items-center py-4">
-			<Link href="/" className="text-3xl font-bold text-blue-600">
+			<Link href="/" className="text-3xl font-bold text-white">
 				4 Days Week Jobs
 			</Link>
 			<nav className="space-x-4"></nav>
@@ -54,9 +54,14 @@ const Header = ({ isLoggedIn, user }) => (
 						</div>
 					</div>
 				) : (
-					<Link href="/login" className="text-gray-700 hover:text-blue-600">
+                    <>
+					<Link href="/login" className="text-white hover:text-black">
 						Login
 					</Link>
+                    <Link href="/register" className="text-white hover:text-black">
+                        Signup
+                    </Link>
+                    </>
 				)}
 			</div>
 		</div>

@@ -64,9 +64,6 @@ export default function Dashboard({ auth }) {
 												? "No specified"
 												: job.salary_range}
 										</p>
-										<p className="text-gray-600 mb-2">
-											<strong>Description:</strong> {job.description}
-										</p>
 										<p className="text-gray-700 mb-2">
 											<strong>Is Active:</strong> {job.is_active ? "Yes" : "No"}
 										</p>

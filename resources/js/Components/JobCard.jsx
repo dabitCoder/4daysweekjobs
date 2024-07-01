@@ -9,14 +9,13 @@ const JobCard = ({ post }) => {
 		window.open(post.apply_url, "_blank");
 	};
 
-
 	return (
 		<div className="relative flex items-center bg-white p-6 rounded-lg hover:border-gray-300 mt-3 mb-3 border-2 border-gray-100 group">
 			{post.imageBase64 ? (
 				<img
 					src={`data:image/jpeg;base64,${post.imageBase64}`}
 					alt="Company Logo"
-					className="rounded-full w-20 h-20 mr-4 object-cover"
+					className="rounded-full w-16 h-16 mr-4 object-cover"
 				/>
 			) : null}
 			<div className="flex-grow">
@@ -27,31 +26,34 @@ const JobCard = ({ post }) => {
 							{post.title}
 						</h3>
 						<div className="inline-flex">
-							<div className="mt-2">
-									<span className="inline-block bg-indigo-50 text-gray-800 text-xs px-2 py-1 rounded-full">
+							{post.salary_range ? (
+								<div className="mt-2">
+									<span className="inline-block bg-[#14B8A6] text-white text-xs px-2 py-1 rounded-full">
 										{post?.salary_range}
 									</span>
+								</div>
+							) : null}
 
-							</div>
-                            {post?.location ?
-                            <div className="mt-2 ml-2">
-								<span className="inline-block bg-[#00416A]/10 text-gray-800 text-xs px-2 py-1 rounded-full">
-									<span>{post?.location}</span>
-								</span>
-							</div> : null }
-                            {post.modality ?
-                            <div className="mt-2 ml-2">
-                                <span
-                                    className="inline-block bg-[#00416A]/20 text-gray-800 text-xs px-2 py-1 rounded-full">
-                                    <span>{post.modality}</span>
-                                </span>
-                            </div> : null}
-                        </div>
-                    </div>
-                    <div className="flex items-center text-gray-600 space-x-4 ">
-                        <button
+							{post?.location ? (
+								<div className="mt-2 ml-2">
+									<span className="inline-block bg-[#EAB308] text-gray-800 text-xs px-2 py-1 rounded-full">
+										<span>{post?.location}</span>
+									</span>
+								</div>
+							) : null}
+							{post.modality ? (
+								<div className="mt-2 ml-2">
+									<span className="inline-block bg-[#EC4899] text-white text-xs px-2 py-1 rounded-full">
+										<span>{post.modality}</span>
+									</span>
+								</div>
+							) : null}
+						</div>
+					</div>
+					<div className="flex items-center text-gray-600 space-x-4 ">
+						<button
 							onClick={handleClickApply}
-							className="bg-blue-600 text-white px-4 py-2 rounded-full text-sm font-semibold hover:bg-blue-700 focus:outline-none focus:ring-2 focus:ring-blue-600 opacity-0 group-hover:opacity-100 transition-opacity duration-300"
+							className="bg-gradient-to-r from-blue-500 to-blue-600 text-white px-4 py-2 rounded-full text-sm font-semibold hover:bg-blue-700 focus:outline-none focus:ring-2 focus:ring-blue-600 opacity-0 group-hover:opacity-100 transition-opacity duration-300"
 						>
 							Apply URL
 						</button>
