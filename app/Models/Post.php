@@ -18,7 +18,8 @@ class Post extends Model
         'is_active',
         'creator_id',
         'company_id',
-        'location'
+        'location',
+        'four_day_arrangement'
     ];
 
     public function user()

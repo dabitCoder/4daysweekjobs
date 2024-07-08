@@ -97,6 +97,7 @@ class PostController extends Controller
             'salary_range' => ['nullable', new MoneyRange],
             'company_name' => 'required|string|max:255',
             'company_logo' => 'nullable|image|mimes:jpeg,png,jpg,svg|max:5100',
+            'four_day_arrangement' => 'required|string'
         ]);
     }
 

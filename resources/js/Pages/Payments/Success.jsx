@@ -2,11 +2,11 @@ import { Head, Link } from "@inertiajs/react";
 
 const PaymentSuccess = () => (
 	<>
-		<Head title="4 days week jobs - Success!" />
+		<Head title="4 days week tech jobs - Success!" />
 		<header className="bg-white shadow-md">
 			<div className="container mx-auto px-6 flex justify-between items-center py-4">
 				<Link href="/" className="text-3xl font-bold text-blue-600">
-					4 Days Week Jobs
+					4 Days Week Tech Jobs
 				</Link>
 				<nav className="space-x-4"></nav>
 				<div className="space-x-4">

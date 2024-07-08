@@ -3,213 +3,183 @@ import React from "react";
 import JobCard from "@/Components/JobCard.jsx";
 import Signup from "@/Pages/Signup.jsx";
 import Header from "@/Components/Header.jsx";
-import { Input } from "postcss";
+
 const JobPosting = ({ isLoggedIn, user }) => {
-	const { data, setData, post, processing, errors } = useForm({
-		title: "",
-		modality: "remote",
-		salary_range: "",
-		location: "",
-		apply_url: "",
-		company_name: "",
-		company_logo: "",
-		username: "",
-		email: "",
-		password: "",
-		password_confirmation: "",
-	});
+    const { data, setData, post, processing, errors } = useForm({
+        title: "",
+        modality: "remote",
+        salary_range: "",
+        location: "",
+        apply_url: "",
+        company_name: "",
+        company_logo: "",
+        username: "",
+        four_day_arrangement: "",
+        email: "",
+        password: "",
+        password_confirmation: "",
+    });
 
-	const handleChangeInput = (field, value) => {
-		setData({ ...data, [field]: value });
-	};
+    const handleChangeInput = (field, value) => {
+        setData({ ...data, [field]: value });
+    };
 
-	const onSubmit = async (e) => {
-		e.preventDefault();
-		post(route("jobs.store"));
-	};
+    const onSubmit = async (e) => {
+        e.preventDefault();
+        post(route("jobs.store"));
+    };
 
-	return (
-		<>
-			<Head title="Publish a new job - 4 day week jobs" />
-			<Header isLoggedIn={isLoggedIn} user={user} />
-			<section className="pt-40 bg-gray-100 min-h-screen pb-20">
-				<div className="container mx-auto px-6">
-					<h2 className="text-5xl font-bold mb-6 text-gray-800 text-center">
-						Post a Job
-					</h2>
-					<div className="max-w-4xl mx-auto bg-white p-8 rounded-lg shadow-lg">
+    console.log(errors)
+
+    return (
+        <>
+            <Head title="Publish a new job - 4 day week jobs" />
+            <Header isLoggedIn={isLoggedIn} user={user} />
+            <section className="pt-20 md:pt-28 lg:pt-32 bg-gray-100 min-h-screen pb-20">
+                <div className="container mx-auto px-4 sm:px-6 max-w-6xl">
+                    <h2 className="text-3xl sm:text-5xl font-bold mb-6 text-gray-800 text-center">
+                        Post a Job
+                    </h2>
+                    <div className="max-w-4xl mx-auto bg-white p-4 sm:p-8 rounded-lg shadow-lg">
                         <form
                             encType="multipart/form-data"
                             method="post"
                             onSubmit={onSubmit}
+                            className="space-y-6"
                         >
-                            <div className="mb-4">
-                                <label
-                                    htmlFor="title"
-                                    className="block text-gray-700 font-bold mb-2"
-                                >
-                                    Title <span className="text-red-500">*</span>
-                                </label>
+                            <InputField
+                                id="title"
+                                label="Title"
+                                required={true}
+                                placeholder="Frontend Developer with React"
+                                value={data.title}
+                                onChange={(e) => handleChangeInput("title", e.target.value)}
+                                error={errors.title}
+                            />
 
-                                <input
-                                    type="text"
-                                    id="title"
-                                    name="title"
-                                    className="w-full px-4 py-2 rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-600"
-                                    required
-                                    onChange={(e) => handleChangeInput("title", e.target.value)}
-                                    placeholder="Frontend Developer with React"
-                                />
-                                {errors.title ? (
-                                    <span className="text-red-600">{errors.title}</span>
-                                ) : null}
-                            </div>
+                            <InputField
+                                id="apply_url"
+                                label="Apply URL"
+                                required={true}
+                                placeholder="https://boards.eu.greenhouse.io/proton/jobs/4305915101?source=LinkedIn"
+                                value={data.apply_url}
+                                onChange={(e) => handleChangeInput("apply_url", e.target.value)}
+                                error={errors.apply_url}
+                            />
+
                             <div className="mb-4">
                                 <label
-                                    htmlFor="apply_url"
+                                    htmlFor="four_day_week_type"
                                     className="block text-gray-700 font-bold mb-2"
                                 >
-                                    Apply URL<span className="text-red-500">*</span>
+                                    4-Day Week Arrangement <span className="text-red-500">*</span>
                                 </label>
-                                <input
-                                    type="text"
-                                    id="apply_url"
-                                    name="apply_url"
-                                    placeholder="https://boards.eu.greenhouse.io/proton/jobs/4305915101?source=LinkedIn"
+                                <select
+                                    id="four_day_week_type"
+                                    name="four_day_week_type"
                                     className="w-full px-4 py-2 border rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-600"
                                     required
-                                    onChange={(e) =>
-                                        handleChangeInput("apply_url", e.target.value)
-                                    }
-                                />
-                                {errors.apply_url ? (
-                                    <span className="text-red-600">{errors.apply_url}</span>
-                                ) : null}
-                            </div>
-                            <div className="mb-4">
-                                <label
-                                    htmlFor="salary_range"
-                                    className="block text-gray-700 font-bold mb-2"
+                                    onChange={(e) => handleChangeInput("four_day_arrangement", e.target.value)}
                                 >
-                                    Salary Range
-                                </label>
-                                <input
-                                    type="text"
-                                    id="salary_range"
-                                    className="w-full px-4 py-2 border rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-600"
-                                    placeholder="$100.000-$200.000, 50.000€-70.000€"
-                                    onChange={(e) =>
-                                        handleChangeInput("salary_range", e.target.value)
-                                    }
-                                />
-                                {errors.salary_range ? (
-                                    <span className="text-red-600">{errors.salary_range}</span>
-                                ) : null}
+                                    <option value="">Select an option</option>
+                                    <option value="standard">Standard 4-day week (32 hours, no salary reduction)
+                                    </option>
+                                    <option value="compressed">Compressed 4-day week (40 hours in 4 days)</option>
+                                    <option value="80_percent">80% time for 80% pay (32 hours, pro-rata salary)</option>
+                                    <option value="9_day_fortnight">9-day fortnight (every other Friday off)</option>
+                                    <option value="flexible">Flexible 4-day week (employee chooses their day off)</option>
+                                    <option value="seasonal">Seasonal 4-day week (e.g., summer months only)</option>
+                                    <option value="gradual">Gradual transition to 4-day week</option>
+                                    <option value="trial">Trial 4-day week (company is testing the concept)</option>
+                                </select>
+                                {errors.four_day_arrangement && (
+                                    <span className="text-red-600">{errors.four_day_arrangement}</span>
+                                )}
                             </div>
-                            <div className="flex !flex-row gap-2 w-full">
-                                <div className="mb-4 flex-1">
-                                    <label
-                                        htmlFor="location"
-                                        className="block text-gray-700 font-bold mb-2"
-                                    >
-                                        Location
-                                    </label>
-                                    <input
-                                        type="text"
-                                        id="location"
-                                        className="w-full px-4 py-2 border rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-600"
-                                        placeholder="New York City, USA"
-                                        onChange={(e) =>
-                                            handleChangeInput("location", e.target.value)
-                                        }
-                                    />
-                                    {errors.location ? (
-                                        <span className="text-red-600">{errors.location}</span>
-                                    ) : null}
-                                </div>
-                                <div className="mb-4 flex-1">
-                                    <label
-                                        htmlFor="modality"
-                                        className="block text-gray-700 font-bold mb-2"
-                                    >
+
+                            <InputField
+                                id="salary_range"
+                                label="Salary Range"
+                                placeholder="$100,000-$200,000, 50.000€-70.000€"
+                                value={data.salary_range}
+                                onChange={(e) => handleChangeInput("salary_range", e.target.value)}
+                                error={errors.salary_range}
+                            />
+
+                            <div className="flex flex-col sm:flex-row gap-4">
+                                <InputField
+                                    id="location"
+                                    label="Location"
+                                    placeholder="New York City, USA"
+                                    value={data.location}
+                                    onChange={(e) => handleChangeInput("location", e.target.value)}
+                                    error={errors.location}
+                                    className="flex-1"
+                                />
+
+                                <div className="flex-1">
+                                    <label htmlFor="modality" className="block text-gray-700 font-bold mb-2">
                                         Modality
                                     </label>
                                     <select
-                                        onChange={(e) =>
-                                            handleChangeInput("modality", e.target.value)
-                                        }
                                         id="modality"
                                         name="modality"
+                                        value={data.modality}
+                                        onChange={(e) => handleChangeInput("modality", e.target.value)}
                                         className="w-full px-4 py-2 border rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-600"
                                     >
                                         <option value="remote">Remote</option>
                                         <option value="hybrid">Hybrid</option>
                                         <option value="office">Office</option>
                                     </select>
-                                    {errors.modality ? (
-                                        <span className="text-red-600">{errors.modality}</span>
-                                    ) : null}
+                                    {errors.modality && <span className="text-red-600 text-sm">{errors.modality}</span>}
                                 </div>
-
                             </div>
-                            <div className="mb-4 flex space-x-4">
-                                <div className="w-1/2">
-                                    <label
-                                        htmlFor="company_name"
-                                        className="block text-gray-700 font-bold mb-2"
-                                    >
-                                        Company Name
-                                    </label>
-                                    <input
-                                        type="text"
-                                        id="company_name"
-                                        name="company_name"
-                                        className="w-full px-4 py-2 border rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-600"
-                                        required
-                                        onChange={(e) =>
-                                            handleChangeInput("company_name", e.target.value)
-                                        }
-                                    />
-                                    {errors.company_name ? (
-                                        <span className="text-red-600">{errors.company_name}</span>
-                                    ) : null}
-                                </div>
-                                <div className="w-1/2">
-                                    <label
-                                        htmlFor="company_logo"
-                                        className="block text-gray-700 font-bold mb-2"
-                                    >
+
+                            <div className="flex flex-col sm:flex-row gap-4">
+                                <InputField
+                                    id="company_name"
+                                    label="Company Name"
+                                    required={true}
+                                    value={data.company_name}
+                                    onChange={(e) => handleChangeInput("company_name", e.target.value)}
+                                    error={errors.company_name}
+                                    className="flex-1"
+                                    placeholder="Your awesome company"
+                                />
+
+                                <div className="flex-1">
+                                    <label htmlFor="company_logo" className="block text-gray-700 font-bold mb-2">
                                         Company Logo
                                     </label>
                                     <input
                                         type="file"
                                         id="company_logo"
                                         name="company_logo"
-                                        onChange={(event) =>
-                                            handleChangeInput("company_logo", event.target.files[0])
-                                        }
+                                        onChange={(event) => handleChangeInput("company_logo", event.target.files[0])}
                                         className="w-full px-4 py-2 border rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-600"
                                     />
-                                    {errors.company_logo ? (
-                                        <span className="text-red-600">{errors.company_logo}</span>
-                                    ) : null}
+                                    {errors.company_logo &&
+                                        <span className="text-red-600 text-sm">{errors.company_logo}</span>}
                                 </div>
                             </div>
-                            {!isLoggedIn ? (
+
+                            {!isLoggedIn && (
                                 <Signup errors={errors} handleChangeInput={handleChangeInput}/>
-                            ) : null}
-                            <div>
-                                <span>Here's how your post is going to look. Logo will show up once checkout is complete.</span>
+                            )}
+
+                            <div className="mt-8">
+                                <h3 className="text-lg font-semibold mb-2">Preview:</h3>
                                 <JobCard post={data}/>
                             </div>
-                            <div className="text-center">
+
+                            <div className="text-center mt-8">
                                 <button
                                     type="submit"
-                                    onClick={onSubmit}
                                     disabled={processing}
-                                    className="bg-gradient-to-r from-blue-500 to-blue-600 text-white px-6 py-3 rounded-full text-lg font-semibold hover:bg-blue-700 focus:outline-none focus:ring-2 focus:ring-blue-600"
+                                    className="bg-gradient-to-r from-blue-500 to-blue-600 text-white px-6 py-3 rounded-full text-lg font-semibold hover:bg-blue-700 focus:outline-none focus:ring-2 focus:ring-blue-600 w-full sm:w-auto"
                                 >
-                                    Checkout + Post Job
+                                    {processing ? "Processing..." : "Checkout + Post Job"}
                                 </button>
                             </div>
                         </form>
@@ -219,5 +189,24 @@ const JobPosting = ({ isLoggedIn, user }) => {
         </>
     );
 };
+
+const InputField = ({id, label, required, placeholder, value, onChange, error, className = ""}) => (
+    <div className={className}>
+        <label htmlFor={id} className="block text-gray-700 font-bold mb-2">
+            {label} {required && <span className="text-red-500">*</span>}
+        </label>
+        <input
+            type="text"
+            id={id}
+            name={id}
+            value={value}
+            onChange={onChange}
+            placeholder={placeholder}
+            className="w-full px-4 py-2 border rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-600"
+            required={required}
+        />
+        {error && <span className="text-red-600 text-sm">{error}</span>}
+    </div>
+);
 
 export default JobPosting;

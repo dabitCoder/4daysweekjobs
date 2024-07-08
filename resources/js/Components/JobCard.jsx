@@ -2,7 +2,7 @@ import React, { useState } from "react";
 import dayjs from "dayjs";
 import relativeTime from "dayjs/plugin/relativeTime";
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
-import { faExternalLinkAlt, faMoneyBillWave, faMapMarkerAlt, faLaptopHouse } from '@fortawesome/free-solid-svg-icons';
+import { faExternalLinkAlt, faMoneyBillWave, faMapMarkerAlt, faLaptopHouse, faBuilding } from '@fortawesome/free-solid-svg-icons';
 
 dayjs.extend(relativeTime);
 
@@ -26,8 +26,13 @@ const JobCard = ({ post }) => {
                     src={`data:image/jpeg;base64,${post.imageBase64}`}
                     alt="Company Logo"
                     className="rounded-full w-16 h-16 mr-4 object-cover"
+                    title={`${post.company.name} logo`}
                 />
-            ) : null}
+            ) : (
+                <div className="rounded-full w-16 h-16 mr-4 bg-gray-300 flex items-center justify-center">
+                    <FontAwesomeIcon icon={faBuilding} className="text-gray-600 text-2xl" title="No Company Logo" />
+                </div>
+            )}
             <div className="flex-grow">
                 <div className="flex justify-between items-center mb-2">
                     <div>

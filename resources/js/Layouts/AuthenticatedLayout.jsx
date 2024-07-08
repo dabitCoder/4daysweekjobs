@@ -17,7 +17,7 @@ export default function Authenticated({ user, header, children }) {
 						<div className="flex">
 							<div className="shrink-0 flex items-center">
 								<Link href="/" className="text-3xl font-bold text-blue-600">
-									4 Days Week Jobs
+									4 Days Week Tech Jobs
 								</Link>
 							</div>
 

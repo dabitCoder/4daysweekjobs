@@ -7,7 +7,7 @@ export default function Guest({ children }) {
 		<div className="min-h-screen flex flex-col sm:justify-center items-center pt-6 sm:pt-0 bg-gray-100">
 			<div>
 				<Link href="/" className="text-3xl font-bold text-blue-600">
-					4 Days Week Jobs
+					4 Days Week Tech Jobs
 				</Link>
 			</div>
 

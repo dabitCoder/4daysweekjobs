@@ -1,6 +1,5 @@
 import React from "react";
 import { Head, Link } from "@inertiajs/react";
-import Dropdown from "@/Components/Dropdown.jsx";
 import JobCard from "@/Components/JobCard.jsx";
 import Header from "@/Components/Header.jsx";
 import {faBriefcase} from "@fortawesome/free-solid-svg-icons";
@@ -9,14 +8,13 @@ import {FontAwesomeIcon} from "@fortawesome/react-fontawesome";
 export default function Index({ auth, posts, isLoggedIn }) {
 	return (
 		<>
-			<Head title="4 days week jobs" />
+			<Head title="4 days week tech jobs" />
 			<Header user={auth.user} isLoggedIn={isLoggedIn} />
 			<section className="bg-gradient-to-r from-blue-500 to-blue-600 text-white pb-20 pt-20">
 				<div className="container max-w-5xl px-6 text-center">
-					<h1 className="text-5xl font-bold mb-2">Find Your 4-Day Week Dream Job</h1>
+					<h1 className="text-5xl font-bold mb-2">Tech Careers with 3-Day Weekends</h1>
 					<p className="text-2xl mb-8">
-						Discover Companies Offering More Free Time and a Better Work-Life
-						Balance
+                        Explore Jobs at Companies Pioneering the 4-Day Work Week
 					</p>
 					<Link
 						href="/post-job"

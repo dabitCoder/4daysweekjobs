@@ -1,105 +1,110 @@
 import React, { useState, useEffect } from "react";
 import { Link } from "@inertiajs/react";
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
-import { faBriefcase } from '@fortawesome/free-solid-svg-icons';
+import { faBriefcase, faBars } from '@fortawesome/free-solid-svg-icons';
 import Dropdown from "@/Components/Dropdown.jsx";
 
-// Add styles for transition
 const Header = ({ isLoggedIn, user }) => {
     const [showPostJobButton, setShowPostJobButton] = useState(false);
+    const [mobileMenuOpen, setMobileMenuOpen] = useState(false);
 
     useEffect(() => {
         const handleScroll = () => {
-            if (window.scrollY > 50) {
-                setShowPostJobButton(true);
-            } else {
-                setShowPostJobButton(false);
-            }
+            setShowPostJobButton(window.scrollY > 50);
         };
 
         window.addEventListener("scroll", handleScroll);
-
-        return () => {
-            window.removeEventListener("scroll", handleScroll);
-        };
+        return () => window.removeEventListener("scroll", handleScroll);
     }, []);
 
     return (
         <header className="fixed w-full bg-gradient-to-r from-blue-500 to-blue-600 z-40">
-            <div className="container mx-auto px-6 flex justify-between items-center py-4">
-                <Link href="/" className="text-3xl font-bold text-white">
-                    4 Days Week Jobs
+            <div className="container mx-auto px-4 sm:px-6 flex justify-between items-center py-4">
+                <Link href="/" className="text-xl sm:text-3xl font-bold text-white">
+                    4 Days Week Tech Jobs
                 </Link>
-                <nav className="space-x-4"></nav>
-                <div className="space-x-4 flex items-center">
+                <div className="flex items-center space-x-4">
                     <div
                         className={`transition-opacity duration-500 ${
                             showPostJobButton ? 'opacity-100' : 'opacity-0'
-                        }`}
+                        } hidden sm:block`}
                     >
                         <Link
                             href="/post-job"
-                            className="bg-white text-blue-500 px-4 py-2 rounded-full hover:bg-blue-500 hover:text-white hover:shadow transition-transform transform hover:scale-105 flex items-center space-x-2 font-semibold"
+                            className="bg-white text-blue-500 px-3 py-1 sm:px-4 sm:py-2 rounded-full hover:bg-blue-500 hover:text-white hover:shadow transition-transform transform hover:scale-105 flex items-center space-x-2 font-semibold text-sm sm:text-base"
                         >
                             <FontAwesomeIcon icon={faBriefcase} />
-                            <span>Post a Job</span>
+                            <span className="hidden sm:inline">Post a Job</span>
                         </Link>
                     </div>
-                    {isLoggedIn ? (
-                        <div className="hidden sm:flex sm:items-center sm:ms-6">
-                            <div className="ms-3 relative">
-                                <Dropdown>
-                                    <Dropdown.Trigger>
-                                        <span className="inline-flex rounded-md">
-                                            <button
-                                                type="button"
-                                                className="inline-flex items-center px-3 py-2 border border-transparent text-sm leading-4 font-medium rounded-md text-gray-500 bg-white hover:text-gray-700 focus:outline-none transition ease-in-out duration-150"
-                                            >
-                                                {user.name}
-
-                                                <svg
-                                                    className="ms-2 -me-0.5 h-4 w-4"
-                                                    xmlns="http://www.w3.org/2000/svg"
-                                                    viewBox="0 0 20 20"
-                                                    fill="currentColor"
-                                                >
-                                                    <path
-                                                        fillRule="evenodd"
-                                                        d="M5.293 7.293a1 1 0 011.414 0L10 10.586l3.293-3.293a1 1 0 111.414 1.414l-4 4a1 1 0 01-1.414 0l-4-4a1 1 0 010-1.414z"
-                                                        clipRule="evenodd"
-                                                    />
-                                                </svg>
-                                            </button>
-                                        </span>
-                                    </Dropdown.Trigger>
-
-                                    <Dropdown.Content>
-                                        <Dropdown.Link href={route("profile.edit")}>
-                                            Profile
-                                        </Dropdown.Link>
-                                        <Dropdown.Link
-                                            href={route("logout")}
-                                            method="post"
-                                            as="button"
+                    <div className="hidden sm:flex items-center space-x-4">
+                        {isLoggedIn ? (
+                            <Dropdown>
+                                <Dropdown.Trigger>
+                                    <span className="inline-flex rounded-md">
+                                        <button
+                                            type="button"
+                                            className="inline-flex items-center px-3 py-2 border border-transparent text-sm leading-4 font-medium rounded-md text-gray-500 bg-white hover:text-gray-700 focus:outline-none transition ease-in-out duration-150"
                                         >
-                                            Log Out
-                                        </Dropdown.Link>
-                                    </Dropdown.Content>
-                                </Dropdown>
-                            </div>
-                        </div>
-                    ) : (
-                        <>
-                            <Link href="/login" className="text-white hover:text-black">
-                                Login
-                            </Link>
-                            <Link href="/register" className="text-white hover:text-black">
-                                Signup
-                            </Link>
-                        </>
-                    )}
+                                            {user.name}
+                                            <svg
+                                                className="ms-2 -me-0.5 h-4 w-4"
+                                                xmlns="http://www.w3.org/2000/svg"
+                                                viewBox="0 0 20 20"
+                                                fill="currentColor"
+                                            >
+                                                <path
+                                                    fillRule="evenodd"
+                                                    d="M5.293 7.293a1 1 0 011.414 0L10 10.586l3.293-3.293a1 1 0 111.414 1.414l-4 4a1 1 0 01-1.414 0l-4-4a1 1 0 010-1.414z"
+                                                    clipRule="evenodd"
+                                                />
+                                            </svg>
+                                        </button>
+                                    </span>
+                                </Dropdown.Trigger>
+                                <Dropdown.Content>
+                                    <Dropdown.Link href={route("profile.edit")}>Profile</Dropdown.Link>
+                                    <Dropdown.Link href={route("logout")} method="post" as="button">Log Out</Dropdown.Link>
+                                </Dropdown.Content>
+                            </Dropdown>
+                        ) : (
+                            <>
+                                <Link href="/login" className="text-white hover:text-black">Login</Link>
+                                <Link href="/register" className="text-white hover:text-black">Signup</Link>
+                            </>
+                        )}
+                    </div>
+                    <button
+                        className="sm:hidden text-white"
+                        onClick={() => setMobileMenuOpen(!mobileMenuOpen)}
+                    >
+                        <FontAwesomeIcon icon={faBars} size="lg" />
+                    </button>
                 </div>
             </div>
+            {mobileMenuOpen && (
+                <div className="sm:hidden bg-blue-600 py-2">
+                    <div className="container mx-auto px-4">
+                        <Link
+                            href="/post-job"
+                            className="block bg-white text-blue-500 px-4 py-2 rounded-full hover:bg-blue-500 hover:text-white text-center mb-2"
+                        >
+                            Post a Job
+                        </Link>
+                        {isLoggedIn ? (
+                            <>
+                                <Link href={route("profile.edit")} className="block text-white py-2">Profile</Link>
+                                <Link href={route("logout")} method="post" as="button" className="block text-white py-2 w-full text-left">Log Out</Link>
+                            </>
+                        ) : (
+                            <>
+                                <Link href="/login" className="block text-white py-2">Login</Link>
+                                <Link href="/register" className="block text-white py-2">Signup</Link>
+                            </>
+                        )}
+                    </div>
+                </div>
+            )}
         </header>
     );
 };
