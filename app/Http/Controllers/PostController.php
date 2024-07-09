@@ -50,7 +50,7 @@ class PostController extends Controller
                 $this->cacheCompanyLogo($newJob->id, $request->file('company_logo'));
             }
 
-            $checkout = $request->user()->checkout([env('STRIPE_PRODUCT_KEY', 'price_1PLXPcEgjH84dgjqO9GN94Vu') => 1], [
+            $checkout = $request->user()->checkout([env('price_1PLXPcEgjH84dgjqO9GN94Vu', 'price_1PLXPcEgjH84dgjqO9GN94Vu') => 1], [
                 'success_url' => route('payment.success') . '?session_id={CHECKOUT_SESSION_ID}',
                 'cancel_url' => route('payment.error'),
                 'metadata' => ['job_id' => $newJob->id],

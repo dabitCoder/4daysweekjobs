@@ -40,6 +40,7 @@ class CheckoutController extends Controller
 
         return Inertia::render('Payments/Success', [
             'isLoggedIn' => auth()->check(),
+            'user' => auth()->user()
         ]);
     }
 }

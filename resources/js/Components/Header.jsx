@@ -18,9 +18,9 @@ const Header = ({ isLoggedIn, user }) => {
     }, []);
 
     return (
-        <header className="fixed w-full bg-gradient-to-r from-blue-500 to-blue-600 z-40">
+        <header className="fixed w-full bg-gradient-to-r from-blue-500 to-blue-600 z-40 ">
             <div className="container mx-auto px-4 sm:px-6 flex justify-between items-center py-4">
-                <Link href="/" className="text-xl sm:text-3xl font-bold text-white">
+                <Link href="/" className="text-xl sm:text-3xl font-bold text-white hover:text-gray-200 transition-colors">
                     4 Days Week Tech Jobs
                 </Link>
                 <div className="flex items-center space-x-4">
@@ -31,7 +31,7 @@ const Header = ({ isLoggedIn, user }) => {
                     >
                         <Link
                             href="/post-job"
-                            className="bg-white text-blue-500 px-3 py-1 sm:px-4 sm:py-2 rounded-full hover:bg-blue-500 hover:text-white hover:shadow transition-transform transform hover:scale-105 flex items-center space-x-2 font-semibold text-sm sm:text-base"
+                            className="bg-white text-blue-500 px-3 py-1 sm:px-4 sm:py-2 rounded-full hover:bg-blue-500 hover:text-white hover:shadow-lg transition-transform transform hover:scale-105 flex items-center space-x-2 font-semibold text-sm sm:text-base"
                         >
                             <FontAwesomeIcon icon={faBriefcase} />
                             <span className="hidden sm:inline">Post a Job</span>
@@ -48,7 +48,7 @@ const Header = ({ isLoggedIn, user }) => {
                                         >
                                             {user.name}
                                             <svg
-                                                className="ms-2 -me-0.5 h-4 w-4"
+                                                className="ml-2 -mr-0.5 h-4 w-4"
                                                 xmlns="http://www.w3.org/2000/svg"
                                                 viewBox="0 0 20 20"
                                                 fill="currentColor"
@@ -69,8 +69,8 @@ const Header = ({ isLoggedIn, user }) => {
                             </Dropdown>
                         ) : (
                             <>
-                                <Link href="/login" className="text-white hover:text-black">Login</Link>
-                                <Link href="/register" className="text-white hover:text-black">Signup</Link>
+                                <Link href="/login" className="text-white hover:text-gray-200 transition-colors">Login</Link>
+                                <Link href="/register" className="text-white hover:text-gray-200 transition-colors">Signup</Link>
                             </>
                         )}
                     </div>
@@ -87,19 +87,19 @@ const Header = ({ isLoggedIn, user }) => {
                     <div className="container mx-auto px-4">
                         <Link
                             href="/post-job"
-                            className="block bg-white text-blue-500 px-4 py-2 rounded-full hover:bg-blue-500 hover:text-white text-center mb-2"
+                            className="block bg-white text-blue-500 px-4 py-2 rounded-full hover:bg-blue-500 hover:text-white text-center mb-2 transition-colors"
                         >
                             Post a Job
                         </Link>
                         {isLoggedIn ? (
                             <>
-                                <Link href={route("profile.edit")} className="block text-white py-2">Profile</Link>
-                                <Link href={route("logout")} method="post" as="button" className="block text-white py-2 w-full text-left">Log Out</Link>
+                                <Link href={route("profile.edit")} className="block text-white py-2 transition-colors hover:text-gray-200">Profile</Link>
+                                <Link href={route("logout")} method="post" as="button" className="block text-white py-2 w-full text-left transition-colors hover:text-gray-200">Log Out</Link>
                             </>
                         ) : (
                             <>
-                                <Link href="/login" className="block text-white py-2">Login</Link>
-                                <Link href="/register" className="block text-white py-2">Signup</Link>
+                                <Link href="/login" className="block text-white py-2 transition-colors hover:text-gray-200">Login</Link>
+                                <Link href="/register" className="block text-white py-2 transition-colors hover:text-gray-200">Signup</Link>
                             </>
                         )}
                     </div>

@@ -17,7 +17,7 @@ const JobCard = ({ post }) => {
 
     return (
         <div
-            className="relative flex items-center bg-white p-6 rounded-lg hover:border-gray-300 mt-3 mb-3 border-2 border-gray-100 group"
+            className="relative flex items-center bg-white p-6 rounded-lg hover:shadow-lg transition-shadow duration-300 mt-3 mb-3 border border-gray-200 group"
             onMouseEnter={() => setIsHovered(true)}
             onMouseLeave={() => setIsHovered(false)}
         >
@@ -37,44 +37,43 @@ const JobCard = ({ post }) => {
                 <div className="flex justify-between items-center mb-2">
                     <div>
                         <p className="text-sm text-gray-600">{post?.company?.name}</p>
-                        <h3 className="text-xl font-semibold text-gray-600">
+                        <h3 className="text-xl font-semibold text-gray-800">
                             {post.title}
                         </h3>
                         <div className="flex flex-col sm:flex-row mt-2 space-y-2 sm:space-y-0 sm:space-x-2">
-                            {post.salary_range ? (
+                            {post.salary_range && (
                                 <div>
                                     <span className="inline-block bg-[#14B8A6] text-white text-xs px-2 py-1 rounded-full flex items-center space-x-1">
                                         <FontAwesomeIcon icon={faMoneyBillWave} />
-                                        <span>{post?.salary_range}</span>
+                                        <span>{post.salary_range}</span>
                                     </span>
                                 </div>
-                            ) : null}
-
-                            {post?.location ? (
+                            )}
+                            {post.location && (
                                 <div>
                                     <span className="inline-block bg-[#EAB308] text-gray-800 text-xs px-2 py-1 rounded-full flex items-center space-x-1">
                                         <FontAwesomeIcon icon={faMapMarkerAlt} />
-                                        <span>{post?.location}</span>
+                                        <span>{post.location}</span>
                                     </span>
                                 </div>
-                            ) : null}
-                            {post.modality ? (
+                            )}
+                            {post.modality && (
                                 <div>
                                     <span className="inline-block bg-[#EC4899] text-white text-xs px-2 py-1 rounded-full flex items-center space-x-1">
                                         <FontAwesomeIcon icon={faLaptopHouse} />
                                         <span>{post.modality}</span>
                                     </span>
                                 </div>
-                            ) : null}
+                            )}
                         </div>
                     </div>
                     <div className="flex items-center text-gray-600 space-x-4">
                         {isHovered ? (
                             <button
                                 onClick={handleClickApply}
-                                className="bg-gradient-to-r from-blue-500 to-blue-600 text-white px-4 py-2 rounded-full text-sm font-semibold hover:bg-blue-700 focus:outline-none focus:ring-2 focus:ring-blue-600 opacity-100 transition-opacity duration-300 flex items-center space-x-2"
+                                className="bg-gradient-to-r from-blue-500 to-blue-600 text-white px-4 py-2 rounded-full text-sm font-semibold hover:bg-blue-700 focus:outline-none focus:ring-2 focus:ring-blue-600 transition-opacity duration-300 flex items-center space-x-2"
                             >
-                                <span>Apply URL</span>
+                                <span>Apply</span>
                                 <FontAwesomeIcon icon={faExternalLinkAlt} />
                             </button>
                         ) : (
