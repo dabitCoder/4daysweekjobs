@@ -110,9 +110,7 @@ export default function Index({ auth, posts, isLoggedIn }) {
             <section id="jobs" className="py-12 bg-gray-50">
                 <div className="container max-w-4xl ">
                     <h2 className="text-3xl font-bold mb-6 text-gray-700 text-center">
-                        {posts.data.length
-                            ? "Latest Jobs"
-                            : "No jobs were found"}
+                        {posts.data.length ? "Latest Jobs" : "No jobs found"}
                     </h2>
                     <div className="flex flex-col min-h-screen">
                         {posts.data.map((post) => (

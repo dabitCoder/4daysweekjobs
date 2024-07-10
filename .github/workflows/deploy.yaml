@@ -51,6 +51,5 @@ jobs:
         username: ${{ secrets.USERNAME }}
         key: ${{ secrets.SSH_PRIVATE_KEY }}
         script: |
-          cd /var/www/html
-          docker-compose up --build -d
-          docker system prune -f
+          cd /var/www/html/4daystechjobs
+          npm run build
