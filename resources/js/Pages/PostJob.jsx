@@ -3,6 +3,7 @@ import React from "react";
 import JobCard from "@/Components/JobCard.jsx";
 import Signup from "@/Pages/Signup.jsx";
 import Header from "@/Components/Header.jsx";
+import Footer from "@/Components/Footer";
 
 const JobPosting = ({ isLoggedIn, user }) => {
     const { data, setData, post, processing, errors } = useForm({
@@ -322,6 +323,7 @@ const JobPosting = ({ isLoggedIn, user }) => {
                     </div>
                 </div>
             </section>
+            <Footer />
         </>
     );
 };

@@ -60,10 +60,10 @@ const Footer = () => {
                                     className="mr-2"
                                 />
                                 <a
-                                    href="mailto:contact@4daystechjobs.com"
+                                    href="mailto:4daystechjobs@gmail.com"
                                     className="hover:text-blue-500"
                                 >
-                                    contact@4daystechjobs.com
+                                    4daystechjobs@gmail.com
                                 </a>
                             </li>
                         </ul>
