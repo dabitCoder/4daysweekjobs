@@ -22,6 +22,7 @@
         "vite": "^5.0"
     },
     "dependencies": {
+        "@fortawesome/free-brands-svg-icons": "^6.5.2",
         "@fortawesome/free-solid-svg-icons": "^6.5.2",
         "@fortawesome/react-fontawesome": "^0.2.2",
         "dayjs": "^1.11.11",

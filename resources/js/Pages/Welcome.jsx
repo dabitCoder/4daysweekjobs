@@ -4,6 +4,7 @@ import JobCard from "@/Components/JobCard.jsx";
 import Header from "@/Components/Header.jsx";
 import { faBriefcase } from "@fortawesome/free-solid-svg-icons";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
+import Footer from "@/Components/Footer";
 
 export default function Index({ auth, posts, isLoggedIn }) {
     const metaDescription =
@@ -149,6 +150,7 @@ export default function Index({ auth, posts, isLoggedIn }) {
                     </div>
                 </div>
             </section>
+            <Footer />
         </>
     );
 }
