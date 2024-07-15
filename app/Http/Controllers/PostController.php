@@ -54,6 +54,7 @@ class PostController extends Controller
             $checkout = $request->user()->checkout([env('price_1PLXPcEgjH84dgjqO9GN94Vu', 'price_1PLXPcEgjH84dgjqO9GN94Vu') => 1], [
                 'success_url' => route('payment.success') . '?session_id={CHECKOUT_SESSION_ID}',
                 'cancel_url' => route('payment.error'),
+                'allow_promotion_codes' => true,
                 'metadata' => ['job_id' => $newJob->id],
             ]);
             return Inertia::location($checkout->url);
