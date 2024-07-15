@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers;
 
+use App\Enums\Modality;
 use App\Models\Company;
 use App\Models\Post;
 use App\Rules\MoneyRange;
@@ -46,7 +47,7 @@ class PostController extends Controller
 
             $newJob = Post::create($validatedJob);
 
-            if($request->hasFile('company_logo')) {
+            if ($request->hasFile('company_logo')) {
                 $this->cacheCompanyLogo($newJob->id, $request->file('company_logo'));
             }
 
@@ -91,7 +92,7 @@ class PostController extends Controller
     {
         return $request->validate([
             'title' => 'required|string|max:255',
-            'modality' => 'nullable|string|in:office,remote,hybrid',
+            'modality' => 'required|string|in:Remote,Hybrid,Office,remote,hybrid,office',
             'location' => 'nullable|string|max:60',
             'apply_url' => 'required|url',
             'salary_range' => ['nullable', new MoneyRange],
@@ -111,13 +112,32 @@ class PostController extends Controller
             Log::info("Image uploaded and cached successfully for job ID: {$jobId}");
         } catch (Exception $e) {
             Log::error("Error uploading image for job ID: {$jobId} - " . $e->getMessage());
-            throw $e;
         }
     }
 
-    public function show(string $id)
+    public function show(Request $request, string $id)
     {
-        // Implementar lógica de mostrar detalles de una oferta de trabajo
+        try {
+            if (!$request->user()) {
+                return response()->json(['message' => 'Unauthorized'], 401);
+            }
+
+            $post = Post::where('job_uuid', $id)
+                ->with(['company'])
+                ->where('creator_id', $request->user()->id)
+                ->first();
+
+            if (!$post) {
+                return response()->json(['message' => 'Job not found or unauthorized'], 404);
+            }
+
+            return Inertia::render('JobDetails', [
+                'job' => $post
+            ]);
+        } catch (Exception $e) {
+            Log::error("Error getting job by job_uuid: " . $e->getMessage());
+            return response()->json(['message' => 'An error occurred while fetching the job details'], 500);
+        }
     }
 
     public function edit(string $id)
@@ -127,6 +147,49 @@ class PostController extends Controller
 
     public function update(Request $request, string $id)
     {
-        // Implementar lógica de actualización
+        try {
+            // Verificar que el usuario esté autenticado
+            if (!$request->user()) {
+                return Inertia::render('Error', ['message' => 'Unauthorized']);
+            }
+
+
+            $post = Post::where('job_uuid', $id)
+                ->where('creator_id', $request->user()->id)
+                ->first();
+
+            if (!$post) {
+                return Inertia::render('Error', ['message' => 'Job not found or unauthorized']);
+            }
+
+            $validatedData = $this->validateJob($request);
+
+
+            if ($validatedData['company_name'] && $validatedData['company_name'] !== $post->company->name) {
+                $company = Company::updateOrCreate(
+                    ['name' => $validatedData['company_name']],
+                    ['creator_id' => $request->user()->id]
+                );
+                $validatedData['company_id'] = $company->id;
+            }
+
+            $post->update($validatedData);
+
+            if ($request->hasFile('company_logo')) {
+                $this->cacheCompanyLogo($post->id, $request->file('company_logo'));
+            }
+
+            // Devolver la respuesta
+            return Inertia::render('JobDetails', [
+                'job' => $post->fresh()->load('company'),
+                'message' => 'Job updated successfully'
+            ]);
+        } catch (ValidationException $e) {
+            Log::error('Error validating post data: ' . $e->getMessage());
+            return back()->withErrors($e->errors())->withInput();
+        } catch (Exception $e) {
+            Log::error('Error updating post: ' . $e->getMessage());
+            return response()->json(['message' => 'An error occurred while updating the post'], 500);
+        }
     }
 }

@@ -4,6 +4,7 @@ use App\Http\Controllers\CheckoutController;
 use App\Http\Controllers\HomeController;
 use App\Http\Controllers\PostController;
 use App\Http\Controllers\ProfileController;
+use App\Http\Controllers\DashboardController;
 use Illuminate\Support\Facades\Route;
 use Inertia\Inertia;
 
@@ -20,13 +21,16 @@ Route::get('/post-job', function () {
 Route::post('/jobs', [PostController::class, 'store'])->name('jobs.store');
 Route::get('/jobs/{id}', [PostController::class, 'index'])->name('jobs.index');
 Route::get('/jobs/{id}/edit', [PostController::class, 'edit'])->name('jobs.show');
+Route::get('/job/{id}', [PostController::class, 'show'])->name('jobs.show');
+Route::put('/jobs/{id}', [PostController::class, 'update'])->name('jobs.update');
+
 
 Route::get('/checkout/error', [CheckoutController::class, 'payment_error'])->name('payment.error');
 Route::get('/checkout/success', [CheckoutController::class, 'payment_success'])->name('payment.success');
 
-Route::get('/dashboard', function () {
-    return Inertia::render('Dashboard');
-})->middleware(['auth', 'verified'])->name('dashboard');
+Route::get('/dashboard', [DashboardController::class, 'index'])
+    ->middleware(['auth', 'verified'])
+    ->name('dashboard');
 
 Route::middleware('auth')->group(function () {
     Route::get('/profile', [ProfileController::class, 'edit'])->name('profile.edit');
@@ -35,4 +39,4 @@ Route::middleware('auth')->group(function () {
 });
 Route::inertia('/about', 'AboutUs');
 
-require __DIR__.'/auth.php';
+require __DIR__ . '/auth.php';
