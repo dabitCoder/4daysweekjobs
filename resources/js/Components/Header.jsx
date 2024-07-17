@@ -1,7 +1,7 @@
 import React, { useState, useEffect } from "react";
 import { Link } from "@inertiajs/react";
-import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
-import { faBriefcase, faBars } from '@fortawesome/free-solid-svg-icons';
+import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
+import { faBriefcase, faBars } from "@fortawesome/free-solid-svg-icons";
 import Dropdown from "@/Components/Dropdown.jsx";
 
 const Header = ({ isLoggedIn, user }) => {
@@ -20,13 +20,16 @@ const Header = ({ isLoggedIn, user }) => {
     return (
         <header className="fixed w-full bg-gradient-to-r from-blue-500 to-blue-600 z-40 ">
             <div className="container mx-auto px-4 sm:px-6 flex justify-between items-center py-4">
-                <Link href="/" className="text-xl sm:text-3xl font-bold text-white hover:text-gray-200 transition-colors">
+                <Link
+                    href="/"
+                    className="text-xl sm:text-3xl font-bold text-white hover:text-gray-200 transition-colors"
+                >
                     4 Days Week Tech Jobs
                 </Link>
                 <div className="flex items-center space-x-4">
                     <div
                         className={`transition-opacity duration-500 ${
-                            showPostJobButton ? 'opacity-100' : 'opacity-0'
+                            showPostJobButton ? "opacity-100" : "opacity-0"
                         } hidden sm:block`}
                     >
                         <Link
@@ -63,18 +66,37 @@ const Header = ({ isLoggedIn, user }) => {
                                     </span>
                                 </Dropdown.Trigger>
                                 <Dropdown.Content>
-                                    <Dropdown.Link href={route("profile.edit")}>Profile</Dropdown.Link>
-                                    <Dropdown.Link href={route("logout")} method="post" as="button">Log Out</Dropdown.Link>
+                                    <Dropdown.Link href={route("profile.edit")}>
+                                        Profile
+                                    </Dropdown.Link>
+                                    <Dropdown.Link
+                                        href={route("logout")}
+                                        method="post"
+                                        as="button"
+                                    >
+                                        Log Out
+                                    </Dropdown.Link>
                                 </Dropdown.Content>
                             </Dropdown>
                         ) : (
                             <>
-                                <Link href="/login" className="text-white hover:text-gray-200 transition-colors">Login</Link>
-                                <Link href="/register" className="text-white hover:text-gray-200 transition-colors">Signup</Link>
+                                <Link
+                                    href="/login"
+                                    className="text-white hover:text-gray-200 transition-colors"
+                                >
+                                    Login
+                                </Link>
+                                <Link
+                                    href="/register"
+                                    className="text-white hover:text-gray-200 transition-colors"
+                                >
+                                    Signup
+                                </Link>
                             </>
                         )}
                     </div>
                     <button
+                        aria-label="MobileMenuOpen"
                         className="sm:hidden text-white"
                         onClick={() => setMobileMenuOpen(!mobileMenuOpen)}
                     >
@@ -93,13 +115,35 @@ const Header = ({ isLoggedIn, user }) => {
                         </Link>
                         {isLoggedIn ? (
                             <>
-                                <Link href={route("profile.edit")} className="block text-white py-2 transition-colors hover:text-gray-200">Profile</Link>
-                                <Link href={route("logout")} method="post" as="button" className="block text-white py-2 w-full text-left transition-colors hover:text-gray-200">Log Out</Link>
+                                <Link
+                                    href={route("profile.edit")}
+                                    className="block text-white py-2 transition-colors hover:text-gray-200"
+                                >
+                                    Profile
+                                </Link>
+                                <Link
+                                    href={route("logout")}
+                                    method="post"
+                                    as="button"
+                                    className="block text-white py-2 w-full text-left transition-colors hover:text-gray-200"
+                                >
+                                    Log Out
+                                </Link>
                             </>
                         ) : (
                             <>
-                                <Link href="/login" className="block text-white py-2 transition-colors hover:text-gray-200">Login</Link>
-                                <Link href="/register" className="block text-white py-2 transition-colors hover:text-gray-200">Signup</Link>
+                                <Link
+                                    href="/login"
+                                    className="block text-white py-2 transition-colors hover:text-gray-200"
+                                >
+                                    Login
+                                </Link>
+                                <Link
+                                    href="/register"
+                                    className="block text-white py-2 transition-colors hover:text-gray-200"
+                                >
+                                    Signup
+                                </Link>
                             </>
                         )}
                     </div>
