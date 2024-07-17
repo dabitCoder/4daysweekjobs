@@ -79,9 +79,9 @@ const JobPosting = ({ isLoggedIn, user }) => {
             <Header isLoggedIn={isLoggedIn} user={user} />
             <section className="pt-20 md:pt-28 lg:pt-32 bg-gray-100 min-h-screen pb-20">
                 <div className="container mx-auto px-4 sm:px-6 max-w-4xl">
-                    <h2 className="text-3xl sm:text-5xl font-bold mb-8 text-gray-800 text-center">
+                    <h1 className="text-3xl sm:text-5xl font-bold mb-8 text-gray-800 text-center">
                         Post a Job
-                    </h2>
+                    </h1>
                     <p className="text-lg mb-12 text-center text-gray-600">
                         Use the form below to post a new job opening at your
                         company. Please fill out all required fields and provide
