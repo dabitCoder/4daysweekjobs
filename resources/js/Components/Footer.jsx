@@ -1,12 +1,6 @@
-import React from "react";
 import { Link } from "@inertiajs/react";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
-import { faEnvelope, faPhone } from "@fortawesome/free-solid-svg-icons";
-import {
-    faTwitter,
-    faLinkedin,
-    faGithub,
-} from "@fortawesome/free-brands-svg-icons";
+import { faEnvelope } from "@fortawesome/free-solid-svg-icons";
 
 const Footer = () => {
     return (

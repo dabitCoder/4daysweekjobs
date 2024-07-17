@@ -1,5 +1,4 @@
 import { Head, useForm } from "@inertiajs/react";
-import React from "react";
 import JobCard from "@/Components/JobCard.jsx";
 import Signup from "@/Pages/Signup.jsx";
 import Header from "@/Components/Header.jsx";

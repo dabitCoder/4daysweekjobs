@@ -1,32 +1,1014 @@
 import { jsxDEV, Fragment } from "react/jsx-dev-runtime";
-import { forwardRef, useRef, useEffect, createContext, useState, useContext, Fragment as Fragment$1 } from "react";
-import { Link, useForm, Head, usePage, createInertiaApp } from "@inertiajs/react";
-import { Transition, Dialog } from "@headlessui/react";
+import { Link, Head, useForm, usePage, createInertiaApp } from "@inertiajs/react";
+import { createContext, useState, useContext, Fragment as Fragment$1, useEffect, forwardRef, useRef } from "react";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
-import { faBriefcase, faBars, faCheckCircle, faBuilding, faMoneyBillWave, faMapMarkerAlt, faLaptopHouse, faExternalLinkAlt } from "@fortawesome/free-solid-svg-icons";
+import { faBriefcase, faBars, faEnvelope, faCheckCircle, faBuilding, faMoneyBillWave, faMapMarkerAlt, faLaptopHouse, faExternalLinkAlt } from "@fortawesome/free-solid-svg-icons";
+import { Transition, Dialog } from "@headlessui/react";
 import dayjs from "dayjs";
 import relativeTime from "dayjs/plugin/relativeTime.js";
 import createServer from "@inertiajs/react/server";
 import ReactDOMServer from "react-dom/server";
+import ReactGA from "react-ga4";
+const DropDownContext = createContext();
+const Dropdown = ({ children }) => {
+  const [open, setOpen] = useState(false);
+  const toggleOpen = () => {
+    setOpen((previousState) => !previousState);
+  };
+  return /* @__PURE__ */ jsxDEV(DropDownContext.Provider, { value: { open, setOpen, toggleOpen }, children: /* @__PURE__ */ jsxDEV("div", { className: "relative", children }, void 0, false, {
+    fileName: "/home/dabit/4daysweekjobs/resources/js/Components/Dropdown.jsx",
+    lineNumber: 16,
+    columnNumber: 4
+  }, void 0) }, void 0, false, {
+    fileName: "/home/dabit/4daysweekjobs/resources/js/Components/Dropdown.jsx",
+    lineNumber: 15,
+    columnNumber: 3
+  }, void 0);
+};
+const Trigger = ({ children }) => {
+  const { open, setOpen, toggleOpen } = useContext(DropDownContext);
+  return /* @__PURE__ */ jsxDEV(Fragment, { children: [
+    /* @__PURE__ */ jsxDEV("div", { onClick: toggleOpen, children }, void 0, false, {
+      fileName: "/home/dabit/4daysweekjobs/resources/js/Components/Dropdown.jsx",
+      lineNumber: 26,
+      columnNumber: 4
+    }, void 0),
+    open && /* @__PURE__ */ jsxDEV(
+      "div",
+      {
+        className: "fixed inset-0 z-40",
+        onClick: () => setOpen(false)
+      },
+      void 0,
+      false,
+      {
+        fileName: "/home/dabit/4daysweekjobs/resources/js/Components/Dropdown.jsx",
+        lineNumber: 29,
+        columnNumber: 5
+      },
+      void 0
+    )
+  ] }, void 0, true, {
+    fileName: "/home/dabit/4daysweekjobs/resources/js/Components/Dropdown.jsx",
+    lineNumber: 25,
+    columnNumber: 3
+  }, void 0);
+};
+const Content = ({
+  align = "right",
+  width = "48",
+  contentClasses = "py-1 bg-white",
+  children
+}) => {
+  const { open, setOpen } = useContext(DropDownContext);
+  let alignmentClasses = "origin-top";
+  if (align === "left") {
+    alignmentClasses = "ltr:origin-top-left rtl:origin-top-right start-0";
+  } else if (align === "right") {
+    alignmentClasses = "ltr:origin-top-right rtl:origin-top-left end-0";
+  }
+  let widthClasses = "";
+  if (width === "48") {
+    widthClasses = "w-48";
+  }
+  return /* @__PURE__ */ jsxDEV(Fragment, { children: /* @__PURE__ */ jsxDEV(
+    Transition,
+    {
+      as: Fragment$1,
+      show: open,
+      enter: "transition ease-out duration-200",
+      enterFrom: "opacity-0 scale-95",
+      enterTo: "opacity-100 scale-100",
+      leave: "transition ease-in duration-75",
+      leaveFrom: "opacity-100 scale-100",
+      leaveTo: "opacity-0 scale-95",
+      children: /* @__PURE__ */ jsxDEV(
+        "div",
+        {
+          className: `absolute z-50 mt-2 rounded-md shadow-lg ${alignmentClasses} ${widthClasses}`,
+          onClick: () => setOpen(false),
+          children: /* @__PURE__ */ jsxDEV(
+            "div",
+            {
+              className: `rounded-md ring-1 ring-black ring-opacity-5 ` + contentClasses,
+              children
+            },
+            void 0,
+            false,
+            {
+              fileName: "/home/dabit/4daysweekjobs/resources/js/Components/Dropdown.jsx",
+              lineNumber: 76,
+              columnNumber: 6
+            },
+            void 0
+          )
+        },
+        void 0,
+        false,
+        {
+          fileName: "/home/dabit/4daysweekjobs/resources/js/Components/Dropdown.jsx",
+          lineNumber: 72,
+          columnNumber: 5
+        },
+        void 0
+      )
+    },
+    void 0,
+    false,
+    {
+      fileName: "/home/dabit/4daysweekjobs/resources/js/Components/Dropdown.jsx",
+      lineNumber: 62,
+      columnNumber: 4
+    },
+    void 0
+  ) }, void 0, false, {
+    fileName: "/home/dabit/4daysweekjobs/resources/js/Components/Dropdown.jsx",
+    lineNumber: 61,
+    columnNumber: 3
+  }, void 0);
+};
+const DropdownLink = ({ className = "", children, ...props }) => {
+  return /* @__PURE__ */ jsxDEV(
+    Link,
+    {
+      ...props,
+      className: "block w-full px-4 py-2 text-start text-sm leading-5 text-gray-700 hover:bg-gray-100 focus:outline-none focus:bg-gray-100 transition duration-150 ease-in-out " + className,
+      children
+    },
+    void 0,
+    false,
+    {
+      fileName: "/home/dabit/4daysweekjobs/resources/js/Components/Dropdown.jsx",
+      lineNumber: 91,
+      columnNumber: 3
+    },
+    void 0
+  );
+};
+Dropdown.Trigger = Trigger;
+Dropdown.Content = Content;
+Dropdown.Link = DropdownLink;
+const Header = ({ isLoggedIn, user }) => {
+  const [showPostJobButton, setShowPostJobButton] = useState(false);
+  const [mobileMenuOpen, setMobileMenuOpen] = useState(false);
+  useEffect(() => {
+    const handleScroll = () => {
+      setShowPostJobButton(window.scrollY > 50);
+    };
+    window.addEventListener("scroll", handleScroll);
+    return () => window.removeEventListener("scroll", handleScroll);
+  }, []);
+  return /* @__PURE__ */ jsxDEV("header", { className: "fixed w-full bg-gradient-to-r from-blue-500 to-blue-600 z-40 ", children: [
+    /* @__PURE__ */ jsxDEV("div", { className: "container mx-auto px-4 sm:px-6 flex justify-between items-center py-4", children: [
+      /* @__PURE__ */ jsxDEV(
+        Link,
+        {
+          href: "/",
+          className: "text-xl sm:text-3xl font-bold text-white hover:text-gray-200 transition-colors",
+          children: "4 Days Week Tech Jobs"
+        },
+        void 0,
+        false,
+        {
+          fileName: "/home/dabit/4daysweekjobs/resources/js/Components/Header.jsx",
+          lineNumber: 23,
+          columnNumber: 17
+        },
+        void 0
+      ),
+      /* @__PURE__ */ jsxDEV("div", { className: "flex items-center space-x-4", children: [
+        /* @__PURE__ */ jsxDEV(
+          "div",
+          {
+            className: `transition-opacity duration-500 ${showPostJobButton ? "opacity-100" : "opacity-0"} hidden sm:block`,
+            children: /* @__PURE__ */ jsxDEV(
+              Link,
+              {
+                href: "/post-job",
+                className: "bg-white text-blue-500 px-3 py-1 sm:px-4 sm:py-2 rounded-full hover:bg-blue-500 hover:text-white hover:shadow-lg transition-transform transform hover:scale-105 flex items-center space-x-2 font-semibold text-sm sm:text-base",
+                children: [
+                  /* @__PURE__ */ jsxDEV(FontAwesomeIcon, { icon: faBriefcase }, void 0, false, {
+                    fileName: "/home/dabit/4daysweekjobs/resources/js/Components/Header.jsx",
+                    lineNumber: 39,
+                    columnNumber: 29
+                  }, void 0),
+                  /* @__PURE__ */ jsxDEV("span", { className: "hidden sm:inline", children: "Post a Job" }, void 0, false, {
+                    fileName: "/home/dabit/4daysweekjobs/resources/js/Components/Header.jsx",
+                    lineNumber: 40,
+                    columnNumber: 29
+                  }, void 0)
+                ]
+              },
+              void 0,
+              true,
+              {
+                fileName: "/home/dabit/4daysweekjobs/resources/js/Components/Header.jsx",
+                lineNumber: 35,
+                columnNumber: 25
+              },
+              void 0
+            )
+          },
+          void 0,
+          false,
+          {
+            fileName: "/home/dabit/4daysweekjobs/resources/js/Components/Header.jsx",
+            lineNumber: 30,
+            columnNumber: 21
+          },
+          void 0
+        ),
+        /* @__PURE__ */ jsxDEV("div", { className: "hidden sm:flex items-center space-x-4", children: isLoggedIn ? /* @__PURE__ */ jsxDEV(Dropdown, { children: [
+          /* @__PURE__ */ jsxDEV(Dropdown.Trigger, { children: /* @__PURE__ */ jsxDEV("span", { className: "inline-flex rounded-md", children: /* @__PURE__ */ jsxDEV(
+            "button",
+            {
+              type: "button",
+              className: "inline-flex items-center px-3 py-2 border border-transparent text-sm leading-4 font-medium rounded-md text-gray-500 bg-white hover:text-gray-700 focus:outline-none transition ease-in-out duration-150",
+              children: [
+                user.name,
+                /* @__PURE__ */ jsxDEV(
+                  "svg",
+                  {
+                    className: "ml-2 -mr-0.5 h-4 w-4",
+                    xmlns: "http://www.w3.org/2000/svg",
+                    viewBox: "0 0 20 20",
+                    fill: "currentColor",
+                    children: /* @__PURE__ */ jsxDEV(
+                      "path",
+                      {
+                        fillRule: "evenodd",
+                        d: "M5.293 7.293a1 1 0 011.414 0L10 10.586l3.293-3.293a1 1 0 111.414 1.414l-4 4a1 1 0 01-1.414 0l-4-4a1 1 0 010-1.414z",
+                        clipRule: "evenodd"
+                      },
+                      void 0,
+                      false,
+                      {
+                        fileName: "/home/dabit/4daysweekjobs/resources/js/Components/Header.jsx",
+                        lineNumber: 59,
+                        columnNumber: 49
+                      },
+                      void 0
+                    )
+                  },
+                  void 0,
+                  false,
+                  {
+                    fileName: "/home/dabit/4daysweekjobs/resources/js/Components/Header.jsx",
+                    lineNumber: 53,
+                    columnNumber: 45
+                  },
+                  void 0
+                )
+              ]
+            },
+            void 0,
+            true,
+            {
+              fileName: "/home/dabit/4daysweekjobs/resources/js/Components/Header.jsx",
+              lineNumber: 48,
+              columnNumber: 41
+            },
+            void 0
+          ) }, void 0, false, {
+            fileName: "/home/dabit/4daysweekjobs/resources/js/Components/Header.jsx",
+            lineNumber: 47,
+            columnNumber: 37
+          }, void 0) }, void 0, false, {
+            fileName: "/home/dabit/4daysweekjobs/resources/js/Components/Header.jsx",
+            lineNumber: 46,
+            columnNumber: 33
+          }, void 0),
+          /* @__PURE__ */ jsxDEV(Dropdown.Content, { children: [
+            /* @__PURE__ */ jsxDEV(Dropdown.Link, { href: route("profile.edit"), children: "Profile" }, void 0, false, {
+              fileName: "/home/dabit/4daysweekjobs/resources/js/Components/Header.jsx",
+              lineNumber: 69,
+              columnNumber: 37
+            }, void 0),
+            /* @__PURE__ */ jsxDEV(
+              Dropdown.Link,
+              {
+                href: route("logout"),
+                method: "post",
+                as: "button",
+                children: "Log Out"
+              },
+              void 0,
+              false,
+              {
+                fileName: "/home/dabit/4daysweekjobs/resources/js/Components/Header.jsx",
+                lineNumber: 72,
+                columnNumber: 37
+              },
+              void 0
+            )
+          ] }, void 0, true, {
+            fileName: "/home/dabit/4daysweekjobs/resources/js/Components/Header.jsx",
+            lineNumber: 68,
+            columnNumber: 33
+          }, void 0)
+        ] }, void 0, true, {
+          fileName: "/home/dabit/4daysweekjobs/resources/js/Components/Header.jsx",
+          lineNumber: 45,
+          columnNumber: 29
+        }, void 0) : /* @__PURE__ */ jsxDEV(Fragment, { children: [
+          /* @__PURE__ */ jsxDEV(
+            Link,
+            {
+              href: "/login",
+              className: "text-white hover:text-gray-200 transition-colors",
+              children: "Login"
+            },
+            void 0,
+            false,
+            {
+              fileName: "/home/dabit/4daysweekjobs/resources/js/Components/Header.jsx",
+              lineNumber: 83,
+              columnNumber: 33
+            },
+            void 0
+          ),
+          /* @__PURE__ */ jsxDEV(
+            Link,
+            {
+              href: "/register",
+              className: "text-white hover:text-gray-200 transition-colors",
+              children: "Signup"
+            },
+            void 0,
+            false,
+            {
+              fileName: "/home/dabit/4daysweekjobs/resources/js/Components/Header.jsx",
+              lineNumber: 89,
+              columnNumber: 33
+            },
+            void 0
+          )
+        ] }, void 0, true, {
+          fileName: "/home/dabit/4daysweekjobs/resources/js/Components/Header.jsx",
+          lineNumber: 82,
+          columnNumber: 29
+        }, void 0) }, void 0, false, {
+          fileName: "/home/dabit/4daysweekjobs/resources/js/Components/Header.jsx",
+          lineNumber: 43,
+          columnNumber: 21
+        }, void 0),
+        /* @__PURE__ */ jsxDEV(
+          "button",
+          {
+            "aria-label": "MobileMenuOpen",
+            className: "sm:hidden text-white",
+            onClick: () => setMobileMenuOpen(!mobileMenuOpen),
+            children: /* @__PURE__ */ jsxDEV(FontAwesomeIcon, { icon: faBars, size: "lg" }, void 0, false, {
+              fileName: "/home/dabit/4daysweekjobs/resources/js/Components/Header.jsx",
+              lineNumber: 103,
+              columnNumber: 25
+            }, void 0)
+          },
+          void 0,
+          false,
+          {
+            fileName: "/home/dabit/4daysweekjobs/resources/js/Components/Header.jsx",
+            lineNumber: 98,
+            columnNumber: 21
+          },
+          void 0
+        )
+      ] }, void 0, true, {
+        fileName: "/home/dabit/4daysweekjobs/resources/js/Components/Header.jsx",
+        lineNumber: 29,
+        columnNumber: 17
+      }, void 0)
+    ] }, void 0, true, {
+      fileName: "/home/dabit/4daysweekjobs/resources/js/Components/Header.jsx",
+      lineNumber: 22,
+      columnNumber: 13
+    }, void 0),
+    mobileMenuOpen && /* @__PURE__ */ jsxDEV("div", { className: "sm:hidden bg-blue-600 py-2", children: /* @__PURE__ */ jsxDEV("div", { className: "container mx-auto px-4", children: [
+      /* @__PURE__ */ jsxDEV(
+        Link,
+        {
+          href: "/post-job",
+          className: "block bg-white text-blue-500 px-4 py-2 rounded-full hover:bg-blue-500 hover:text-white text-center mb-2 transition-colors",
+          children: "Post a Job"
+        },
+        void 0,
+        false,
+        {
+          fileName: "/home/dabit/4daysweekjobs/resources/js/Components/Header.jsx",
+          lineNumber: 110,
+          columnNumber: 25
+        },
+        void 0
+      ),
+      isLoggedIn ? /* @__PURE__ */ jsxDEV(Fragment, { children: [
+        /* @__PURE__ */ jsxDEV(
+          Link,
+          {
+            href: route("profile.edit"),
+            className: "block text-white py-2 transition-colors hover:text-gray-200",
+            children: "Profile"
+          },
+          void 0,
+          false,
+          {
+            fileName: "/home/dabit/4daysweekjobs/resources/js/Components/Header.jsx",
+            lineNumber: 118,
+            columnNumber: 33
+          },
+          void 0
+        ),
+        /* @__PURE__ */ jsxDEV(
+          Link,
+          {
+            href: route("logout"),
+            method: "post",
+            as: "button",
+            className: "block text-white py-2 w-full text-left transition-colors hover:text-gray-200",
+            children: "Log Out"
+          },
+          void 0,
+          false,
+          {
+            fileName: "/home/dabit/4daysweekjobs/resources/js/Components/Header.jsx",
+            lineNumber: 124,
+            columnNumber: 33
+          },
+          void 0
+        )
+      ] }, void 0, true, {
+        fileName: "/home/dabit/4daysweekjobs/resources/js/Components/Header.jsx",
+        lineNumber: 117,
+        columnNumber: 29
+      }, void 0) : /* @__PURE__ */ jsxDEV(Fragment, { children: [
+        /* @__PURE__ */ jsxDEV(
+          Link,
+          {
+            href: "/login",
+            className: "block text-white py-2 transition-colors hover:text-gray-200",
+            children: "Login"
+          },
+          void 0,
+          false,
+          {
+            fileName: "/home/dabit/4daysweekjobs/resources/js/Components/Header.jsx",
+            lineNumber: 135,
+            columnNumber: 33
+          },
+          void 0
+        ),
+        /* @__PURE__ */ jsxDEV(
+          Link,
+          {
+            href: "/register",
+            className: "block text-white py-2 transition-colors hover:text-gray-200",
+            children: "Signup"
+          },
+          void 0,
+          false,
+          {
+            fileName: "/home/dabit/4daysweekjobs/resources/js/Components/Header.jsx",
+            lineNumber: 141,
+            columnNumber: 33
+          },
+          void 0
+        )
+      ] }, void 0, true, {
+        fileName: "/home/dabit/4daysweekjobs/resources/js/Components/Header.jsx",
+        lineNumber: 134,
+        columnNumber: 29
+      }, void 0)
+    ] }, void 0, true, {
+      fileName: "/home/dabit/4daysweekjobs/resources/js/Components/Header.jsx",
+      lineNumber: 109,
+      columnNumber: 21
+    }, void 0) }, void 0, false, {
+      fileName: "/home/dabit/4daysweekjobs/resources/js/Components/Header.jsx",
+      lineNumber: 108,
+      columnNumber: 17
+    }, void 0)
+  ] }, void 0, true, {
+    fileName: "/home/dabit/4daysweekjobs/resources/js/Components/Header.jsx",
+    lineNumber: 21,
+    columnNumber: 9
+  }, void 0);
+};
+const Footer = () => {
+  return /* @__PURE__ */ jsxDEV("footer", { className: "bg-gray-200 text-gray-700 py-8", children: /* @__PURE__ */ jsxDEV("div", { className: "container max-w-5xl mx-auto px-6", children: [
+    /* @__PURE__ */ jsxDEV("div", { className: "flex flex-wrap justify-between", children: [
+      /* @__PURE__ */ jsxDEV("div", { className: "w-full md:w-1/3 mb-6 md:mb-0", children: [
+        /* @__PURE__ */ jsxDEV("h3", { className: "text-lg font-semibold mb-2", children: "4-Day Week Tech Jobs" }, void 0, false, {
+          fileName: "/home/dabit/4daysweekjobs/resources/js/Components/Footer.jsx",
+          lineNumber: 11,
+          columnNumber: 25
+        }, void 0),
+        /* @__PURE__ */ jsxDEV("p", { className: "text-sm", children: "Find your perfect work-life balance in tech." }, void 0, false, {
+          fileName: "/home/dabit/4daysweekjobs/resources/js/Components/Footer.jsx",
+          lineNumber: 14,
+          columnNumber: 25
+        }, void 0)
+      ] }, void 0, true, {
+        fileName: "/home/dabit/4daysweekjobs/resources/js/Components/Footer.jsx",
+        lineNumber: 10,
+        columnNumber: 21
+      }, void 0),
+      /* @__PURE__ */ jsxDEV("div", { className: "w-full md:w-1/3 mb-6 md:mb-0", children: [
+        /* @__PURE__ */ jsxDEV("h3", { className: "text-lg font-semibold mb-2", children: "Quick Links" }, void 0, false, {
+          fileName: "/home/dabit/4daysweekjobs/resources/js/Components/Footer.jsx",
+          lineNumber: 19,
+          columnNumber: 25
+        }, void 0),
+        /* @__PURE__ */ jsxDEV("ul", { className: "text-sm", children: [
+          /* @__PURE__ */ jsxDEV("li", { className: "mb-1", children: /* @__PURE__ */ jsxDEV(Link, { href: "/", className: "hover:text-blue-500", children: "Home" }, void 0, false, {
+            fileName: "/home/dabit/4daysweekjobs/resources/js/Components/Footer.jsx",
+            lineNumber: 24,
+            columnNumber: 33
+          }, void 0) }, void 0, false, {
+            fileName: "/home/dabit/4daysweekjobs/resources/js/Components/Footer.jsx",
+            lineNumber: 23,
+            columnNumber: 29
+          }, void 0),
+          /* @__PURE__ */ jsxDEV("li", { className: "mb-1", children: /* @__PURE__ */ jsxDEV(
+            Link,
+            {
+              href: "/about",
+              className: "hover:text-blue-500",
+              children: "About Us"
+            },
+            void 0,
+            false,
+            {
+              fileName: "/home/dabit/4daysweekjobs/resources/js/Components/Footer.jsx",
+              lineNumber: 29,
+              columnNumber: 33
+            },
+            void 0
+          ) }, void 0, false, {
+            fileName: "/home/dabit/4daysweekjobs/resources/js/Components/Footer.jsx",
+            lineNumber: 28,
+            columnNumber: 29
+          }, void 0),
+          /* @__PURE__ */ jsxDEV("li", { className: "mb-1", children: /* @__PURE__ */ jsxDEV(
+            Link,
+            {
+              href: "/post-job",
+              className: "hover:text-blue-500",
+              children: "Post a Job"
+            },
+            void 0,
+            false,
+            {
+              fileName: "/home/dabit/4daysweekjobs/resources/js/Components/Footer.jsx",
+              lineNumber: 37,
+              columnNumber: 33
+            },
+            void 0
+          ) }, void 0, false, {
+            fileName: "/home/dabit/4daysweekjobs/resources/js/Components/Footer.jsx",
+            lineNumber: 36,
+            columnNumber: 29
+          }, void 0)
+        ] }, void 0, true, {
+          fileName: "/home/dabit/4daysweekjobs/resources/js/Components/Footer.jsx",
+          lineNumber: 22,
+          columnNumber: 25
+        }, void 0)
+      ] }, void 0, true, {
+        fileName: "/home/dabit/4daysweekjobs/resources/js/Components/Footer.jsx",
+        lineNumber: 18,
+        columnNumber: 21
+      }, void 0),
+      /* @__PURE__ */ jsxDEV("div", { className: "w-full md:w-1/3", children: [
+        /* @__PURE__ */ jsxDEV("h3", { className: "text-lg font-semibold mb-2", children: "Contact Us" }, void 0, false, {
+          fileName: "/home/dabit/4daysweekjobs/resources/js/Components/Footer.jsx",
+          lineNumber: 47,
+          columnNumber: 25
+        }, void 0),
+        /* @__PURE__ */ jsxDEV("ul", { className: "text-sm", children: /* @__PURE__ */ jsxDEV("li", { className: "mb-1", children: [
+          /* @__PURE__ */ jsxDEV(
+            FontAwesomeIcon,
+            {
+              icon: faEnvelope,
+              className: "mr-2"
+            },
+            void 0,
+            false,
+            {
+              fileName: "/home/dabit/4daysweekjobs/resources/js/Components/Footer.jsx",
+              lineNumber: 52,
+              columnNumber: 33
+            },
+            void 0
+          ),
+          /* @__PURE__ */ jsxDEV(
+            "a",
+            {
+              href: "mailto:4daystechjobs@gmail.com",
+              className: "hover:text-blue-500",
+              children: "4daystechjobs@gmail.com"
+            },
+            void 0,
+            false,
+            {
+              fileName: "/home/dabit/4daysweekjobs/resources/js/Components/Footer.jsx",
+              lineNumber: 56,
+              columnNumber: 33
+            },
+            void 0
+          )
+        ] }, void 0, true, {
+          fileName: "/home/dabit/4daysweekjobs/resources/js/Components/Footer.jsx",
+          lineNumber: 51,
+          columnNumber: 29
+        }, void 0) }, void 0, false, {
+          fileName: "/home/dabit/4daysweekjobs/resources/js/Components/Footer.jsx",
+          lineNumber: 50,
+          columnNumber: 25
+        }, void 0)
+      ] }, void 0, true, {
+        fileName: "/home/dabit/4daysweekjobs/resources/js/Components/Footer.jsx",
+        lineNumber: 46,
+        columnNumber: 21
+      }, void 0)
+    ] }, void 0, true, {
+      fileName: "/home/dabit/4daysweekjobs/resources/js/Components/Footer.jsx",
+      lineNumber: 9,
+      columnNumber: 17
+    }, void 0),
+    /* @__PURE__ */ jsxDEV("div", { className: "mt-8 pt-8 border-t border-gray-300 flex flex-wrap justify-between items-center", children: /* @__PURE__ */ jsxDEV("p", { className: "text-sm", children: [
+      "© ",
+      (/* @__PURE__ */ new Date()).getFullYear(),
+      " 4-Day Week Tech Jobs. All rights reserved."
+    ] }, void 0, true, {
+      fileName: "/home/dabit/4daysweekjobs/resources/js/Components/Footer.jsx",
+      lineNumber: 67,
+      columnNumber: 21
+    }, void 0) }, void 0, false, {
+      fileName: "/home/dabit/4daysweekjobs/resources/js/Components/Footer.jsx",
+      lineNumber: 66,
+      columnNumber: 17
+    }, void 0)
+  ] }, void 0, true, {
+    fileName: "/home/dabit/4daysweekjobs/resources/js/Components/Footer.jsx",
+    lineNumber: 8,
+    columnNumber: 13
+  }, void 0) }, void 0, false, {
+    fileName: "/home/dabit/4daysweekjobs/resources/js/Components/Footer.jsx",
+    lineNumber: 7,
+    columnNumber: 9
+  }, void 0);
+};
+function AboutUs({ auth, isLoggedIn }) {
+  const metaDescription = "Learn about 4-Day Work Week Tech Jobs. Discover our mission to revolutionize the tech industry with better work-life balance through 4-day work weeks.";
+  const canonicalUrl = "https://4daystechjobs.com/about";
+  const siteUrl = "https://4daystechjobs.com";
+  return /* @__PURE__ */ jsxDEV(Fragment, { children: [
+    /* @__PURE__ */ jsxDEV(Head, { children: [
+      /* @__PURE__ */ jsxDEV("title", { children: "About 4-Day Work Week Tech Jobs | Our Mission and Vision" }, void 0, false, {
+        fileName: "/home/dabit/4daysweekjobs/resources/js/Pages/AboutUs.jsx",
+        lineNumber: 14,
+        columnNumber: 17
+      }, this),
+      /* @__PURE__ */ jsxDEV("meta", { name: "description", content: metaDescription }, void 0, false, {
+        fileName: "/home/dabit/4daysweekjobs/resources/js/Pages/AboutUs.jsx",
+        lineNumber: 17,
+        columnNumber: 17
+      }, this),
+      /* @__PURE__ */ jsxDEV(
+        "meta",
+        {
+          name: "keywords",
+          content: "4-day work week, tech jobs, work-life balance, company mission, tech industry revolution"
+        },
+        void 0,
+        false,
+        {
+          fileName: "/home/dabit/4daysweekjobs/resources/js/Pages/AboutUs.jsx",
+          lineNumber: 18,
+          columnNumber: 17
+        },
+        this
+      ),
+      /* @__PURE__ */ jsxDEV("link", { rel: "canonical", href: canonicalUrl }, void 0, false, {
+        fileName: "/home/dabit/4daysweekjobs/resources/js/Pages/AboutUs.jsx",
+        lineNumber: 22,
+        columnNumber: 17
+      }, this),
+      /* @__PURE__ */ jsxDEV(
+        "meta",
+        {
+          property: "og:title",
+          content: "About 4-Day Work Week Tech Jobs | Our Mission and Vision"
+        },
+        void 0,
+        false,
+        {
+          fileName: "/home/dabit/4daysweekjobs/resources/js/Pages/AboutUs.jsx",
+          lineNumber: 25,
+          columnNumber: 17
+        },
+        this
+      ),
+      /* @__PURE__ */ jsxDEV("meta", { property: "og:description", content: metaDescription }, void 0, false, {
+        fileName: "/home/dabit/4daysweekjobs/resources/js/Pages/AboutUs.jsx",
+        lineNumber: 29,
+        columnNumber: 17
+      }, this),
+      /* @__PURE__ */ jsxDEV("meta", { property: "og:type", content: "website" }, void 0, false, {
+        fileName: "/home/dabit/4daysweekjobs/resources/js/Pages/AboutUs.jsx",
+        lineNumber: 30,
+        columnNumber: 17
+      }, this),
+      /* @__PURE__ */ jsxDEV("meta", { property: "og:url", content: canonicalUrl }, void 0, false, {
+        fileName: "/home/dabit/4daysweekjobs/resources/js/Pages/AboutUs.jsx",
+        lineNumber: 31,
+        columnNumber: 17
+      }, this),
+      /* @__PURE__ */ jsxDEV(
+        "meta",
+        {
+          property: "og:image",
+          content: `${siteUrl}/og-image-about.jpg`
+        },
+        void 0,
+        false,
+        {
+          fileName: "/home/dabit/4daysweekjobs/resources/js/Pages/AboutUs.jsx",
+          lineNumber: 32,
+          columnNumber: 17
+        },
+        this
+      ),
+      /* @__PURE__ */ jsxDEV("meta", { name: "twitter:card", content: "summary_large_image" }, void 0, false, {
+        fileName: "/home/dabit/4daysweekjobs/resources/js/Pages/AboutUs.jsx",
+        lineNumber: 38,
+        columnNumber: 17
+      }, this),
+      /* @__PURE__ */ jsxDEV(
+        "meta",
+        {
+          name: "twitter:title",
+          content: "About 4-Day Work Week Tech Jobs | Our Mission and Vision"
+        },
+        void 0,
+        false,
+        {
+          fileName: "/home/dabit/4daysweekjobs/resources/js/Pages/AboutUs.jsx",
+          lineNumber: 39,
+          columnNumber: 17
+        },
+        this
+      ),
+      /* @__PURE__ */ jsxDEV("meta", { name: "twitter:description", content: metaDescription }, void 0, false, {
+        fileName: "/home/dabit/4daysweekjobs/resources/js/Pages/AboutUs.jsx",
+        lineNumber: 43,
+        columnNumber: 17
+      }, this),
+      /* @__PURE__ */ jsxDEV(
+        "meta",
+        {
+          name: "twitter:image",
+          content: `${siteUrl}/twitter-image-about.jpg`
+        },
+        void 0,
+        false,
+        {
+          fileName: "/home/dabit/4daysweekjobs/resources/js/Pages/AboutUs.jsx",
+          lineNumber: 44,
+          columnNumber: 17
+        },
+        this
+      ),
+      /* @__PURE__ */ jsxDEV(
+        "meta",
+        {
+          name: "robots",
+          content: "index, follow, max-image-preview:large, max-snippet:-1, max-video-preview:-1"
+        },
+        void 0,
+        false,
+        {
+          fileName: "/home/dabit/4daysweekjobs/resources/js/Pages/AboutUs.jsx",
+          lineNumber: 50,
+          columnNumber: 17
+        },
+        this
+      ),
+      /* @__PURE__ */ jsxDEV("meta", { name: "googlebot", content: "index, follow" }, void 0, false, {
+        fileName: "/home/dabit/4daysweekjobs/resources/js/Pages/AboutUs.jsx",
+        lineNumber: 54,
+        columnNumber: 17
+      }, this),
+      /* @__PURE__ */ jsxDEV("meta", { name: "bingbot", content: "index, follow" }, void 0, false, {
+        fileName: "/home/dabit/4daysweekjobs/resources/js/Pages/AboutUs.jsx",
+        lineNumber: 55,
+        columnNumber: 17
+      }, this),
+      /* @__PURE__ */ jsxDEV("meta", { name: "application-name", content: "4-Day Week Tech Jobs" }, void 0, false, {
+        fileName: "/home/dabit/4daysweekjobs/resources/js/Pages/AboutUs.jsx",
+        lineNumber: 56,
+        columnNumber: 17
+      }, this),
+      /* @__PURE__ */ jsxDEV(
+        "meta",
+        {
+          name: "apple-mobile-web-app-title",
+          content: "4-Day Week Tech Jobs"
+        },
+        void 0,
+        false,
+        {
+          fileName: "/home/dabit/4daysweekjobs/resources/js/Pages/AboutUs.jsx",
+          lineNumber: 57,
+          columnNumber: 17
+        },
+        this
+      ),
+      /* @__PURE__ */ jsxDEV("meta", { name: "author", content: "4 Days Tech Jobs" }, void 0, false, {
+        fileName: "/home/dabit/4daysweekjobs/resources/js/Pages/AboutUs.jsx",
+        lineNumber: 61,
+        columnNumber: 17
+      }, this),
+      /* @__PURE__ */ jsxDEV(
+        "meta",
+        {
+          name: "viewport",
+          content: "width=device-width, initial-scale=1.0"
+        },
+        void 0,
+        false,
+        {
+          fileName: "/home/dabit/4daysweekjobs/resources/js/Pages/AboutUs.jsx",
+          lineNumber: 62,
+          columnNumber: 17
+        },
+        this
+      ),
+      /* @__PURE__ */ jsxDEV("script", { type: "application/ld+json", children: JSON.stringify({
+        "@context": "https://schema.org",
+        "@type": "Organization",
+        name: "4-Day Work Week Tech Jobs",
+        url: siteUrl,
+        logo: `${siteUrl}/logo.png`,
+        description: metaDescription
+      }) }, void 0, false, {
+        fileName: "/home/dabit/4daysweekjobs/resources/js/Pages/AboutUs.jsx",
+        lineNumber: 68,
+        columnNumber: 17
+      }, this)
+    ] }, void 0, true, {
+      fileName: "/home/dabit/4daysweekjobs/resources/js/Pages/AboutUs.jsx",
+      lineNumber: 13,
+      columnNumber: 13
+    }, this),
+    /* @__PURE__ */ jsxDEV(Header, { user: auth.user, isLoggedIn }, void 0, false, {
+      fileName: "/home/dabit/4daysweekjobs/resources/js/Pages/AboutUs.jsx",
+      lineNumber: 79,
+      columnNumber: 13
+    }, this),
+    /* @__PURE__ */ jsxDEV("main", { className: "bg-gray-50 py-24", children: /* @__PURE__ */ jsxDEV("div", { className: "container max-w-4xl mx-auto px-6", children: [
+      /* @__PURE__ */ jsxDEV("h1", { className: "text-4xl font-bold text-gray-800 mb-8 text-center", children: "About 4-Day Work Week Tech Jobs" }, void 0, false, {
+        fileName: "/home/dabit/4daysweekjobs/resources/js/Pages/AboutUs.jsx",
+        lineNumber: 82,
+        columnNumber: 21
+      }, this),
+      /* @__PURE__ */ jsxDEV("section", { className: "mb-12", children: [
+        /* @__PURE__ */ jsxDEV("h2", { className: "text-2xl font-semibold text-gray-700 mb-4", children: "Our Mission" }, void 0, false, {
+          fileName: "/home/dabit/4daysweekjobs/resources/js/Pages/AboutUs.jsx",
+          lineNumber: 87,
+          columnNumber: 25
+        }, this),
+        /* @__PURE__ */ jsxDEV("p", { className: "text-gray-600 mb-4", children: "At 4-Day Work Week Tech Jobs, we're on a mission to revolutionize the tech industry by promoting a healthier work-life balance. We believe that a 4-day work week can lead to increased productivity, improved employee satisfaction, and better overall quality of life." }, void 0, false, {
+          fileName: "/home/dabit/4daysweekjobs/resources/js/Pages/AboutUs.jsx",
+          lineNumber: 90,
+          columnNumber: 25
+        }, this),
+        /* @__PURE__ */ jsxDEV("p", { className: "text-gray-600 mb-4", children: "Our platform connects forward-thinking tech companies offering 4-day work weeks with talented professionals seeking a better balance between their careers and personal lives." }, void 0, false, {
+          fileName: "/home/dabit/4daysweekjobs/resources/js/Pages/AboutUs.jsx",
+          lineNumber: 98,
+          columnNumber: 25
+        }, this)
+      ] }, void 0, true, {
+        fileName: "/home/dabit/4daysweekjobs/resources/js/Pages/AboutUs.jsx",
+        lineNumber: 86,
+        columnNumber: 21
+      }, this),
+      /* @__PURE__ */ jsxDEV("section", { className: "mb-12", children: [
+        /* @__PURE__ */ jsxDEV("h2", { className: "text-2xl font-semibold text-gray-700 mb-4", children: "Why 4-Day Work Weeks?" }, void 0, false, {
+          fileName: "/home/dabit/4daysweekjobs/resources/js/Pages/AboutUs.jsx",
+          lineNumber: 107,
+          columnNumber: 25
+        }, this),
+        /* @__PURE__ */ jsxDEV("ul", { className: "list-disc list-inside text-gray-600 space-y-2", children: [
+          /* @__PURE__ */ jsxDEV("li", { children: "Improved work-life balance" }, void 0, false, {
+            fileName: "/home/dabit/4daysweekjobs/resources/js/Pages/AboutUs.jsx",
+            lineNumber: 111,
+            columnNumber: 29
+          }, this),
+          /* @__PURE__ */ jsxDEV("li", { children: "Increased productivity and focus" }, void 0, false, {
+            fileName: "/home/dabit/4daysweekjobs/resources/js/Pages/AboutUs.jsx",
+            lineNumber: 112,
+            columnNumber: 29
+          }, this),
+          /* @__PURE__ */ jsxDEV("li", { children: "Reduced burnout and stress" }, void 0, false, {
+            fileName: "/home/dabit/4daysweekjobs/resources/js/Pages/AboutUs.jsx",
+            lineNumber: 113,
+            columnNumber: 29
+          }, this),
+          /* @__PURE__ */ jsxDEV("li", { children: "Greater job satisfaction" }, void 0, false, {
+            fileName: "/home/dabit/4daysweekjobs/resources/js/Pages/AboutUs.jsx",
+            lineNumber: 114,
+            columnNumber: 29
+          }, this),
+          /* @__PURE__ */ jsxDEV("li", { children: "More time for personal growth and family" }, void 0, false, {
+            fileName: "/home/dabit/4daysweekjobs/resources/js/Pages/AboutUs.jsx",
+            lineNumber: 115,
+            columnNumber: 29
+          }, this)
+        ] }, void 0, true, {
+          fileName: "/home/dabit/4daysweekjobs/resources/js/Pages/AboutUs.jsx",
+          lineNumber: 110,
+          columnNumber: 25
+        }, this)
+      ] }, void 0, true, {
+        fileName: "/home/dabit/4daysweekjobs/resources/js/Pages/AboutUs.jsx",
+        lineNumber: 106,
+        columnNumber: 21
+      }, this),
+      /* @__PURE__ */ jsxDEV("section", { className: "mb-12", children: [
+        /* @__PURE__ */ jsxDEV("h2", { className: "text-2xl font-semibold text-gray-700 mb-4", children: "Our Story" }, void 0, false, {
+          fileName: "/home/dabit/4daysweekjobs/resources/js/Pages/AboutUs.jsx",
+          lineNumber: 120,
+          columnNumber: 25
+        }, this),
+        /* @__PURE__ */ jsxDEV("p", { className: "text-gray-600 mb-4", children: "Founded in 2023, 4-Day Work Week Tech Jobs was born from the realization that the traditional 5-day work week was no longer serving the best interests of tech professionals or companies. We saw an opportunity to create a platform that would champion a new way of working." }, void 0, false, {
+          fileName: "/home/dabit/4daysweekjobs/resources/js/Pages/AboutUs.jsx",
+          lineNumber: 123,
+          columnNumber: 25
+        }, this)
+      ] }, void 0, true, {
+        fileName: "/home/dabit/4daysweekjobs/resources/js/Pages/AboutUs.jsx",
+        lineNumber: 119,
+        columnNumber: 21
+      }, this),
+      /* @__PURE__ */ jsxDEV("section", { children: [
+        /* @__PURE__ */ jsxDEV("h2", { className: "text-2xl font-semibold text-gray-700 mb-4", children: "Join the Movement" }, void 0, false, {
+          fileName: "/home/dabit/4daysweekjobs/resources/js/Pages/AboutUs.jsx",
+          lineNumber: 134,
+          columnNumber: 25
+        }, this),
+        /* @__PURE__ */ jsxDEV("p", { className: "text-gray-600 mb-4", children: "Whether you're a job seeker looking for a better work-life balance or a company ready to embrace the future of work, we invite you to join our growing community. Together, we can reshape the tech industry and create a more balanced, productive, and fulfilling work environment for all." }, void 0, false, {
+          fileName: "/home/dabit/4daysweekjobs/resources/js/Pages/AboutUs.jsx",
+          lineNumber: 137,
+          columnNumber: 25
+        }, this)
+      ] }, void 0, true, {
+        fileName: "/home/dabit/4daysweekjobs/resources/js/Pages/AboutUs.jsx",
+        lineNumber: 133,
+        columnNumber: 21
+      }, this)
+    ] }, void 0, true, {
+      fileName: "/home/dabit/4daysweekjobs/resources/js/Pages/AboutUs.jsx",
+      lineNumber: 81,
+      columnNumber: 17
+    }, this) }, void 0, false, {
+      fileName: "/home/dabit/4daysweekjobs/resources/js/Pages/AboutUs.jsx",
+      lineNumber: 80,
+      columnNumber: 13
+    }, this),
+    /* @__PURE__ */ jsxDEV(Footer, {}, void 0, false, {
+      fileName: "/home/dabit/4daysweekjobs/resources/js/Pages/AboutUs.jsx",
+      lineNumber: 148,
+      columnNumber: 13
+    }, this)
+  ] }, void 0, true, {
+    fileName: "/home/dabit/4daysweekjobs/resources/js/Pages/AboutUs.jsx",
+    lineNumber: 12,
+    columnNumber: 9
+  }, this);
+}
+const __vite_glob_0_0 = /* @__PURE__ */ Object.freeze(/* @__PURE__ */ Object.defineProperty({
+  __proto__: null,
+  default: AboutUs
+}, Symbol.toStringTag, { value: "Module" }));
 function Guest({ children }) {
   return /* @__PURE__ */ jsxDEV("div", { className: "min-h-screen flex flex-col sm:justify-center items-center pt-6 sm:pt-0 bg-gray-100", children: [
     /* @__PURE__ */ jsxDEV("div", { children: /* @__PURE__ */ jsxDEV(Link, { href: "/", className: "text-3xl font-bold text-blue-600", children: "4 Days Week Tech Jobs" }, void 0, false, {
       fileName: "/home/dabit/4daysweekjobs/resources/js/Layouts/GuestLayout.jsx",
-      lineNumber: 9,
+      lineNumber: 8,
       columnNumber: 5
     }, this) }, void 0, false, {
       fileName: "/home/dabit/4daysweekjobs/resources/js/Layouts/GuestLayout.jsx",
-      lineNumber: 8,
+      lineNumber: 7,
       columnNumber: 4
     }, this),
     /* @__PURE__ */ jsxDEV("div", { className: "w-full sm:max-w-md mt-6 px-6 py-4 bg-white shadow-md overflow-hidden sm:rounded-lg", children }, void 0, false, {
       fileName: "/home/dabit/4daysweekjobs/resources/js/Layouts/GuestLayout.jsx",
-      lineNumber: 14,
+      lineNumber: 13,
       columnNumber: 4
     }, this)
   ] }, void 0, true, {
     fileName: "/home/dabit/4daysweekjobs/resources/js/Layouts/GuestLayout.jsx",
-    lineNumber: 7,
+    lineNumber: 6,
     columnNumber: 3
   }, this);
 }
@@ -190,7 +1172,7 @@ function ConfirmPassword() {
     columnNumber: 3
   }, this);
 }
-const __vite_glob_0_0 = /* @__PURE__ */ Object.freeze(/* @__PURE__ */ Object.defineProperty({
+const __vite_glob_0_1 = /* @__PURE__ */ Object.freeze(/* @__PURE__ */ Object.defineProperty({
   __proto__: null,
   default: ConfirmPassword
 }, Symbol.toStringTag, { value: "Module" }));
@@ -264,7 +1246,7 @@ function ForgotPassword({ status }) {
     columnNumber: 3
   }, this);
 }
-const __vite_glob_0_1 = /* @__PURE__ */ Object.freeze(/* @__PURE__ */ Object.defineProperty({
+const __vite_glob_0_2 = /* @__PURE__ */ Object.freeze(/* @__PURE__ */ Object.defineProperty({
   __proto__: null,
   default: ForgotPassword
 }, Symbol.toStringTag, { value: "Module" }));
@@ -455,7 +1437,7 @@ function Login({ status, canResetPassword }) {
     columnNumber: 3
   }, this);
 }
-const __vite_glob_0_2 = /* @__PURE__ */ Object.freeze(/* @__PURE__ */ Object.defineProperty({
+const __vite_glob_0_3 = /* @__PURE__ */ Object.freeze(/* @__PURE__ */ Object.defineProperty({
   __proto__: null,
   default: Login
 }, Symbol.toStringTag, { value: "Module" }));
@@ -678,7 +1660,7 @@ function Register() {
     columnNumber: 3
   }, this);
 }
-const __vite_glob_0_3 = /* @__PURE__ */ Object.freeze(/* @__PURE__ */ Object.defineProperty({
+const __vite_glob_0_4 = /* @__PURE__ */ Object.freeze(/* @__PURE__ */ Object.defineProperty({
   __proto__: null,
   default: Register
 }, Symbol.toStringTag, { value: "Module" }));
@@ -844,7 +1826,7 @@ function ResetPassword({ token, email }) {
     columnNumber: 3
   }, this);
 }
-const __vite_glob_0_4 = /* @__PURE__ */ Object.freeze(/* @__PURE__ */ Object.defineProperty({
+const __vite_glob_0_5 = /* @__PURE__ */ Object.freeze(/* @__PURE__ */ Object.defineProperty({
   __proto__: null,
   default: ResetPassword
 }, Symbol.toStringTag, { value: "Module" }));
@@ -909,149 +1891,10 @@ function VerifyEmail({ status }) {
     columnNumber: 3
   }, this);
 }
-const __vite_glob_0_5 = /* @__PURE__ */ Object.freeze(/* @__PURE__ */ Object.defineProperty({
+const __vite_glob_0_6 = /* @__PURE__ */ Object.freeze(/* @__PURE__ */ Object.defineProperty({
   __proto__: null,
   default: VerifyEmail
 }, Symbol.toStringTag, { value: "Module" }));
-const DropDownContext = createContext();
-const Dropdown = ({ children }) => {
-  const [open, setOpen] = useState(false);
-  const toggleOpen = () => {
-    setOpen((previousState) => !previousState);
-  };
-  return /* @__PURE__ */ jsxDEV(DropDownContext.Provider, { value: { open, setOpen, toggleOpen }, children: /* @__PURE__ */ jsxDEV("div", { className: "relative", children }, void 0, false, {
-    fileName: "/home/dabit/4daysweekjobs/resources/js/Components/Dropdown.jsx",
-    lineNumber: 16,
-    columnNumber: 4
-  }, void 0) }, void 0, false, {
-    fileName: "/home/dabit/4daysweekjobs/resources/js/Components/Dropdown.jsx",
-    lineNumber: 15,
-    columnNumber: 3
-  }, void 0);
-};
-const Trigger = ({ children }) => {
-  const { open, setOpen, toggleOpen } = useContext(DropDownContext);
-  return /* @__PURE__ */ jsxDEV(Fragment, { children: [
-    /* @__PURE__ */ jsxDEV("div", { onClick: toggleOpen, children }, void 0, false, {
-      fileName: "/home/dabit/4daysweekjobs/resources/js/Components/Dropdown.jsx",
-      lineNumber: 26,
-      columnNumber: 4
-    }, void 0),
-    open && /* @__PURE__ */ jsxDEV(
-      "div",
-      {
-        className: "fixed inset-0 z-40",
-        onClick: () => setOpen(false)
-      },
-      void 0,
-      false,
-      {
-        fileName: "/home/dabit/4daysweekjobs/resources/js/Components/Dropdown.jsx",
-        lineNumber: 29,
-        columnNumber: 5
-      },
-      void 0
-    )
-  ] }, void 0, true, {
-    fileName: "/home/dabit/4daysweekjobs/resources/js/Components/Dropdown.jsx",
-    lineNumber: 25,
-    columnNumber: 3
-  }, void 0);
-};
-const Content = ({
-  align = "right",
-  width = "48",
-  contentClasses = "py-1 bg-white",
-  children
-}) => {
-  const { open, setOpen } = useContext(DropDownContext);
-  let alignmentClasses = "origin-top";
-  if (align === "left") {
-    alignmentClasses = "ltr:origin-top-left rtl:origin-top-right start-0";
-  } else if (align === "right") {
-    alignmentClasses = "ltr:origin-top-right rtl:origin-top-left end-0";
-  }
-  let widthClasses = "";
-  if (width === "48") {
-    widthClasses = "w-48";
-  }
-  return /* @__PURE__ */ jsxDEV(Fragment, { children: /* @__PURE__ */ jsxDEV(
-    Transition,
-    {
-      as: Fragment$1,
-      show: open,
-      enter: "transition ease-out duration-200",
-      enterFrom: "opacity-0 scale-95",
-      enterTo: "opacity-100 scale-100",
-      leave: "transition ease-in duration-75",
-      leaveFrom: "opacity-100 scale-100",
-      leaveTo: "opacity-0 scale-95",
-      children: /* @__PURE__ */ jsxDEV(
-        "div",
-        {
-          className: `absolute z-50 mt-2 rounded-md shadow-lg ${alignmentClasses} ${widthClasses}`,
-          onClick: () => setOpen(false),
-          children: /* @__PURE__ */ jsxDEV(
-            "div",
-            {
-              className: `rounded-md ring-1 ring-black ring-opacity-5 ` + contentClasses,
-              children
-            },
-            void 0,
-            false,
-            {
-              fileName: "/home/dabit/4daysweekjobs/resources/js/Components/Dropdown.jsx",
-              lineNumber: 76,
-              columnNumber: 6
-            },
-            void 0
-          )
-        },
-        void 0,
-        false,
-        {
-          fileName: "/home/dabit/4daysweekjobs/resources/js/Components/Dropdown.jsx",
-          lineNumber: 72,
-          columnNumber: 5
-        },
-        void 0
-      )
-    },
-    void 0,
-    false,
-    {
-      fileName: "/home/dabit/4daysweekjobs/resources/js/Components/Dropdown.jsx",
-      lineNumber: 62,
-      columnNumber: 4
-    },
-    void 0
-  ) }, void 0, false, {
-    fileName: "/home/dabit/4daysweekjobs/resources/js/Components/Dropdown.jsx",
-    lineNumber: 61,
-    columnNumber: 3
-  }, void 0);
-};
-const DropdownLink = ({ className = "", children, ...props }) => {
-  return /* @__PURE__ */ jsxDEV(
-    Link,
-    {
-      ...props,
-      className: "block w-full px-4 py-2 text-start text-sm leading-5 text-gray-700 hover:bg-gray-100 focus:outline-none focus:bg-gray-100 transition duration-150 ease-in-out " + className,
-      children
-    },
-    void 0,
-    false,
-    {
-      fileName: "/home/dabit/4daysweekjobs/resources/js/Components/Dropdown.jsx",
-      lineNumber: 91,
-      columnNumber: 3
-    },
-    void 0
-  );
-};
-Dropdown.Trigger = Trigger;
-Dropdown.Content = Content;
-Dropdown.Link = DropdownLink;
 function NavLink({
   active = false,
   className = "",
@@ -1435,130 +2278,150 @@ function Authenticated({ user, header, children }) {
     columnNumber: 3
   }, this);
 }
-function Dashboard({ auth }) {
-  const userId = auth.user.id;
-  const [isError, setIsError] = useState(false);
-  const [isLoading, setIsLoading] = useState(false);
-  const [userJobs, setUserJobs] = useState([]);
-  useEffect(() => {
-    const getUserJobs = async () => {
-      setIsLoading(true);
-      const response = await fetch(`http://localhost:8000/jobs/${userId}`);
-      if (!response.ok) {
-        setIsError(true);
-        throw new Error(`there was an error`);
-      }
-      setIsLoading(false);
-      return await response.json();
-    };
-    getUserJobs().then((response) => {
-      setUserJobs(response);
-    });
-  }, [userId]);
+function Dashboard({ auth, jobs }) {
+  console.log(jobs);
   return /* @__PURE__ */ jsxDEV(
     Authenticated,
     {
       user: auth.user,
       header: /* @__PURE__ */ jsxDEV("h2", { className: "font-semibold text-xl text-gray-800 leading-tight", children: "Dashboard" }, void 0, false, {
         fileName: "/home/dabit/4daysweekjobs/resources/js/Pages/Dashboard.jsx",
-        lineNumber: 35,
-        columnNumber: 5
+        lineNumber: 13,
+        columnNumber: 17
       }, this),
       children: [
         /* @__PURE__ */ jsxDEV(Head, { title: "Your profile" }, void 0, false, {
           fileName: "/home/dabit/4daysweekjobs/resources/js/Pages/Dashboard.jsx",
-          lineNumber: 40,
-          columnNumber: 4
+          lineNumber: 18,
+          columnNumber: 13
         }, this),
         /* @__PURE__ */ jsxDEV("div", { className: "py-12", children: /* @__PURE__ */ jsxDEV("div", { className: "max-w-7xl mx-auto sm:px-6 lg:px-8", children: [
           /* @__PURE__ */ jsxDEV("h1", { className: "text-2xl font-bold mb-6", children: "Your jobs" }, void 0, false, {
             fileName: "/home/dabit/4daysweekjobs/resources/js/Pages/Dashboard.jsx",
-            lineNumber: 44,
-            columnNumber: 6
+            lineNumber: 22,
+            columnNumber: 21
           }, this),
-          isError ? "There was an error reaching your posts. Try again or contact support" : null,
-          isLoading ? "Loading your posts..." : /* @__PURE__ */ jsxDEV("div", { className: "grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-6", children: userJobs.map((job) => /* @__PURE__ */ jsxDEV(
+          /* @__PURE__ */ jsxDEV("div", { className: "grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-6", children: jobs == null ? void 0 : jobs.map((job) => /* @__PURE__ */ jsxDEV(
             "div",
             {
               className: "relative bg-white overflow-hidden shadow-sm sm:rounded-lg group",
               children: [
-                /* @__PURE__ */ jsxDEV("div", { className: "p-6 text-gray-900 group-hover:opacity-25 transition-opacity duration-300", children: [
-                  /* @__PURE__ */ jsxDEV("p", { className: "text-gray-700 mb-2", children: [
-                    /* @__PURE__ */ jsxDEV("strong", { children: "Title:" }, void 0, false, {
-                      fileName: "/home/dabit/4daysweekjobs/resources/js/Pages/Dashboard.jsx",
-                      lineNumber: 59,
-                      columnNumber: 12
-                    }, this),
-                    " ",
-                    job.title
-                  ] }, void 0, true, {
+                /* @__PURE__ */ jsxDEV(
+                  "div",
+                  {
+                    className: "p-6 text-gray-900 group-hover:opacity-25 transition-opacity duration-300",
+                    children: [
+                      /* @__PURE__ */ jsxDEV("p", { className: "text-gray-700 mb-2", children: [
+                        /* @__PURE__ */ jsxDEV("strong", { children: "Title:" }, void 0, false, {
+                          fileName: "/home/dabit/4daysweekjobs/resources/js/Pages/Dashboard.jsx",
+                          lineNumber: 32,
+                          columnNumber: 41
+                        }, this),
+                        " ",
+                        job.title
+                      ] }, void 0, true, {
+                        fileName: "/home/dabit/4daysweekjobs/resources/js/Pages/Dashboard.jsx",
+                        lineNumber: 31,
+                        columnNumber: 37
+                      }, this),
+                      /* @__PURE__ */ jsxDEV("p", { className: "text-gray-600 mb-2", children: [
+                        /* @__PURE__ */ jsxDEV("strong", { children: "Salary:" }, void 0, false, {
+                          fileName: "/home/dabit/4daysweekjobs/resources/js/Pages/Dashboard.jsx",
+                          lineNumber: 35,
+                          columnNumber: 41
+                        }, this),
+                        " ",
+                        job.salary_range === "0" ? "No specified" : job.salary_range
+                      ] }, void 0, true, {
+                        fileName: "/home/dabit/4daysweekjobs/resources/js/Pages/Dashboard.jsx",
+                        lineNumber: 34,
+                        columnNumber: 37
+                      }, this),
+                      /* @__PURE__ */ jsxDEV("p", { className: "text-gray-700 mb-2", children: [
+                        /* @__PURE__ */ jsxDEV("strong", { children: "Is Active:" }, void 0, false, {
+                          fileName: "/home/dabit/4daysweekjobs/resources/js/Pages/Dashboard.jsx",
+                          lineNumber: 41,
+                          columnNumber: 41
+                        }, this),
+                        " ",
+                        job.is_active ? "Yes" : "No"
+                      ] }, void 0, true, {
+                        fileName: "/home/dabit/4daysweekjobs/resources/js/Pages/Dashboard.jsx",
+                        lineNumber: 40,
+                        columnNumber: 37
+                      }, this)
+                    ]
+                  },
+                  void 0,
+                  true,
+                  {
                     fileName: "/home/dabit/4daysweekjobs/resources/js/Pages/Dashboard.jsx",
-                    lineNumber: 58,
-                    columnNumber: 11
-                  }, this),
-                  /* @__PURE__ */ jsxDEV("p", { className: "text-gray-600 mb-2", children: [
-                    /* @__PURE__ */ jsxDEV("strong", { children: "Salary:" }, void 0, false, {
+                    lineNumber: 29,
+                    columnNumber: 33
+                  },
+                  this
+                ),
+                /* @__PURE__ */ jsxDEV(
+                  "div",
+                  {
+                    className: "absolute inset-0 flex items-center justify-center opacity-0 group-hover:opacity-100 transition-opacity duration-300",
+                    children: /* @__PURE__ */ jsxDEV(Link, { href: route("jobs.show", { id: job.job_uuid }), children: /* @__PURE__ */ jsxDEV(
+                      PrimaryButton,
+                      {
+                        className: "text-white text-xl font-bold bg-black bg-opacity-50 px-4 py-2 rounded",
+                        children: "EDIT"
+                      },
+                      void 0,
+                      false,
+                      {
+                        fileName: "/home/dabit/4daysweekjobs/resources/js/Pages/Dashboard.jsx",
+                        lineNumber: 48,
+                        columnNumber: 41
+                      },
+                      this
+                    ) }, void 0, false, {
                       fileName: "/home/dabit/4daysweekjobs/resources/js/Pages/Dashboard.jsx",
-                      lineNumber: 62,
-                      columnNumber: 12
-                    }, this),
-                    " ",
-                    job.salary_range === "0" ? "No specified" : job.salary_range
-                  ] }, void 0, true, {
+                      lineNumber: 47,
+                      columnNumber: 37
+                    }, this)
+                  },
+                  void 0,
+                  false,
+                  {
                     fileName: "/home/dabit/4daysweekjobs/resources/js/Pages/Dashboard.jsx",
-                    lineNumber: 61,
-                    columnNumber: 11
-                  }, this),
-                  /* @__PURE__ */ jsxDEV("p", { className: "text-gray-700 mb-2", children: [
-                    /* @__PURE__ */ jsxDEV("strong", { children: "Is Active:" }, void 0, false, {
-                      fileName: "/home/dabit/4daysweekjobs/resources/js/Pages/Dashboard.jsx",
-                      lineNumber: 68,
-                      columnNumber: 12
-                    }, this),
-                    " ",
-                    job.is_active ? "Yes" : "No"
-                  ] }, void 0, true, {
-                    fileName: "/home/dabit/4daysweekjobs/resources/js/Pages/Dashboard.jsx",
-                    lineNumber: 67,
-                    columnNumber: 11
-                  }, this)
-                ] }, void 0, true, {
-                  fileName: "/home/dabit/4daysweekjobs/resources/js/Pages/Dashboard.jsx",
-                  lineNumber: 57,
-                  columnNumber: 10
-                }, this),
-                /* @__PURE__ */ jsxDEV("div", { className: "absolute inset-0 flex items-center justify-center opacity-0 group-hover:opacity-100 transition-opacity duration-300", children: /* @__PURE__ */ jsxDEV(PrimaryButton, { className: "text-white text-xl font-bold bg-black bg-opacity-50 px-4 py-2 rounded", children: "EDIT" }, void 0, false, {
-                  fileName: "/home/dabit/4daysweekjobs/resources/js/Pages/Dashboard.jsx",
-                  lineNumber: 72,
-                  columnNumber: 11
-                }, this) }, void 0, false, {
-                  fileName: "/home/dabit/4daysweekjobs/resources/js/Pages/Dashboard.jsx",
-                  lineNumber: 71,
-                  columnNumber: 10
-                }, this)
+                    lineNumber: 45,
+                    columnNumber: 33
+                  },
+                  this
+                )
               ]
             },
             job.id,
             true,
             {
               fileName: "/home/dabit/4daysweekjobs/resources/js/Pages/Dashboard.jsx",
-              lineNumber: 53,
-              columnNumber: 9
+              lineNumber: 25,
+              columnNumber: 29
             },
             this
           )) }, void 0, false, {
             fileName: "/home/dabit/4daysweekjobs/resources/js/Pages/Dashboard.jsx",
-            lineNumber: 51,
-            columnNumber: 7
+            lineNumber: 23,
+            columnNumber: 21
           }, this)
         ] }, void 0, true, {
           fileName: "/home/dabit/4daysweekjobs/resources/js/Pages/Dashboard.jsx",
-          lineNumber: 43,
-          columnNumber: 5
+          lineNumber: 21,
+          columnNumber: 17
         }, this) }, void 0, false, {
           fileName: "/home/dabit/4daysweekjobs/resources/js/Pages/Dashboard.jsx",
-          lineNumber: 42,
-          columnNumber: 4
+          lineNumber: 20,
+          columnNumber: 13
+        }, this),
+        /* @__PURE__ */ jsxDEV(Footer, {}, void 0, false, {
+          fileName: "/home/dabit/4daysweekjobs/resources/js/Pages/Dashboard.jsx",
+          lineNumber: 59,
+          columnNumber: 13
         }, this)
       ]
     },
@@ -1566,15 +2429,468 @@ function Dashboard({ auth }) {
     true,
     {
       fileName: "/home/dabit/4daysweekjobs/resources/js/Pages/Dashboard.jsx",
-      lineNumber: 32,
-      columnNumber: 3
+      lineNumber: 10,
+      columnNumber: 9
     },
     this
   );
 }
-const __vite_glob_0_6 = /* @__PURE__ */ Object.freeze(/* @__PURE__ */ Object.defineProperty({
+const __vite_glob_0_7 = /* @__PURE__ */ Object.freeze(/* @__PURE__ */ Object.defineProperty({
   __proto__: null,
   default: Dashboard
+}, Symbol.toStringTag, { value: "Module" }));
+function JobDetails({ auth, job }) {
+  const [isEditing, setIsEditing] = useState(false);
+  const { data, setData, put, processing, errors, reset } = useForm({
+    title: job.title,
+    modality: job.modality,
+    salary_range: job.salary_range,
+    location: job.location,
+    apply_url: job.apply_url,
+    company_name: job.company.name,
+    four_day_arrangement: job.four_day_arrangement
+  });
+  const handleChangeInput = (field, value) => {
+    setData({ ...data, [field]: value });
+  };
+  const onSubmit = (e) => {
+    e.preventDefault();
+    put(route("jobs.update", job.job_uuid), {
+      preserveState: true,
+      preserveScroll: true,
+      onSuccess: () => {
+        setIsEditing(false);
+        reset();
+      }
+    });
+  };
+  const renderJobDetails = () => /* @__PURE__ */ jsxDEV("div", { className: "bg-white p-8 rounded-lg shadow-lg transition-all duration-300 hover:shadow-xl", children: [
+    /* @__PURE__ */ jsxDEV("h2", { className: "text-3xl font-bold mb-6 text-gray-800", children: job.title }, void 0, false, {
+      fileName: "/home/dabit/4daysweekjobs/resources/js/Pages/JobDetails.jsx",
+      lineNumber: 39,
+      columnNumber: 13
+    }, this),
+    /* @__PURE__ */ jsxDEV("div", { className: "grid grid-cols-1 md:grid-cols-2 gap-4", children: [
+      /* @__PURE__ */ jsxDEV(InfoItem, { label: "Company", value: job.company.name }, void 0, false, {
+        fileName: "/home/dabit/4daysweekjobs/resources/js/Pages/JobDetails.jsx",
+        lineNumber: 41,
+        columnNumber: 17
+      }, this),
+      /* @__PURE__ */ jsxDEV(InfoItem, { label: "Modality", value: job.modality }, void 0, false, {
+        fileName: "/home/dabit/4daysweekjobs/resources/js/Pages/JobDetails.jsx",
+        lineNumber: 42,
+        columnNumber: 17
+      }, this),
+      /* @__PURE__ */ jsxDEV(InfoItem, { label: "Location", value: job.location }, void 0, false, {
+        fileName: "/home/dabit/4daysweekjobs/resources/js/Pages/JobDetails.jsx",
+        lineNumber: 43,
+        columnNumber: 17
+      }, this),
+      /* @__PURE__ */ jsxDEV(InfoItem, { label: "Salary Range", value: job.salary_range }, void 0, false, {
+        fileName: "/home/dabit/4daysweekjobs/resources/js/Pages/JobDetails.jsx",
+        lineNumber: 44,
+        columnNumber: 17
+      }, this),
+      /* @__PURE__ */ jsxDEV(InfoItem, { label: "Apply URL", value: /* @__PURE__ */ jsxDEV(
+        "a",
+        {
+          href: job.apply_url,
+          target: "_blank",
+          rel: "noopener noreferrer",
+          className: "text-blue-600 hover:text-blue-800 underline",
+          children: job.apply_url
+        },
+        void 0,
+        false,
+        {
+          fileName: "/home/dabit/4daysweekjobs/resources/js/Pages/JobDetails.jsx",
+          lineNumber: 46,
+          columnNumber: 21
+        },
+        this
+      ) }, void 0, false, {
+        fileName: "/home/dabit/4daysweekjobs/resources/js/Pages/JobDetails.jsx",
+        lineNumber: 45,
+        columnNumber: 17
+      }, this),
+      /* @__PURE__ */ jsxDEV(InfoItem, { label: "4-Day Arrangement", value: job.four_day_arrangement }, void 0, false, {
+        fileName: "/home/dabit/4daysweekjobs/resources/js/Pages/JobDetails.jsx",
+        lineNumber: 51,
+        columnNumber: 17
+      }, this)
+    ] }, void 0, true, {
+      fileName: "/home/dabit/4daysweekjobs/resources/js/Pages/JobDetails.jsx",
+      lineNumber: 40,
+      columnNumber: 13
+    }, this),
+    /* @__PURE__ */ jsxDEV(PrimaryButton, { onClick: () => setIsEditing(true), className: "mt-8", children: "Edit Job" }, void 0, false, {
+      fileName: "/home/dabit/4daysweekjobs/resources/js/Pages/JobDetails.jsx",
+      lineNumber: 53,
+      columnNumber: 13
+    }, this)
+  ] }, void 0, true, {
+    fileName: "/home/dabit/4daysweekjobs/resources/js/Pages/JobDetails.jsx",
+    lineNumber: 38,
+    columnNumber: 9
+  }, this);
+  const renderEditForm = () => /* @__PURE__ */ jsxDEV("form", { onSubmit, className: "bg-white p-8 rounded-lg shadow-lg space-y-6", children: [
+    /* @__PURE__ */ jsxDEV("div", { className: "grid grid-cols-1 md:grid-cols-2 gap-6", children: [
+      /* @__PURE__ */ jsxDEV(
+        InputField$1,
+        {
+          id: "title",
+          label: "Job Title",
+          required: true,
+          value: data.title,
+          onChange: (e) => handleChangeInput("title", e.target.value),
+          error: errors.title
+        },
+        void 0,
+        false,
+        {
+          fileName: "/home/dabit/4daysweekjobs/resources/js/Pages/JobDetails.jsx",
+          lineNumber: 62,
+          columnNumber: 17
+        },
+        this
+      ),
+      /* @__PURE__ */ jsxDEV(
+        InputField$1,
+        {
+          id: "company_name",
+          label: "Company Name",
+          required: true,
+          value: data.company_name,
+          onChange: (e) => handleChangeInput("company_name", e.target.value),
+          error: errors.company_name
+        },
+        void 0,
+        false,
+        {
+          fileName: "/home/dabit/4daysweekjobs/resources/js/Pages/JobDetails.jsx",
+          lineNumber: 71,
+          columnNumber: 17
+        },
+        this
+      ),
+      /* @__PURE__ */ jsxDEV(
+        SelectField,
+        {
+          id: "modality",
+          label: "Modality",
+          value: data.modality,
+          onChange: (e) => handleChangeInput("modality", e.target.value),
+          error: errors.modality,
+          options: [
+            { value: "Remote", label: "Remote" },
+            { value: "Hybrid", label: "Hybrid" },
+            { value: "Office", label: "Office" }
+          ]
+        },
+        void 0,
+        false,
+        {
+          fileName: "/home/dabit/4daysweekjobs/resources/js/Pages/JobDetails.jsx",
+          lineNumber: 80,
+          columnNumber: 17
+        },
+        this
+      ),
+      /* @__PURE__ */ jsxDEV(
+        InputField$1,
+        {
+          id: "location",
+          label: "Location",
+          value: data.location,
+          onChange: (e) => handleChangeInput("location", e.target.value),
+          error: errors.location
+        },
+        void 0,
+        false,
+        {
+          fileName: "/home/dabit/4daysweekjobs/resources/js/Pages/JobDetails.jsx",
+          lineNumber: 93,
+          columnNumber: 17
+        },
+        this
+      ),
+      /* @__PURE__ */ jsxDEV(
+        InputField$1,
+        {
+          id: "salary_range",
+          label: "Salary Range",
+          value: data.salary_range,
+          onChange: (e) => handleChangeInput("salary_range", e.target.value),
+          error: errors.salary_range
+        },
+        void 0,
+        false,
+        {
+          fileName: "/home/dabit/4daysweekjobs/resources/js/Pages/JobDetails.jsx",
+          lineNumber: 101,
+          columnNumber: 17
+        },
+        this
+      ),
+      /* @__PURE__ */ jsxDEV(
+        InputField$1,
+        {
+          id: "apply_url",
+          label: "Apply URL",
+          required: true,
+          value: data.apply_url,
+          onChange: (e) => handleChangeInput("apply_url", e.target.value),
+          error: errors.apply_url
+        },
+        void 0,
+        false,
+        {
+          fileName: "/home/dabit/4daysweekjobs/resources/js/Pages/JobDetails.jsx",
+          lineNumber: 109,
+          columnNumber: 17
+        },
+        this
+      ),
+      /* @__PURE__ */ jsxDEV(
+        SelectField,
+        {
+          id: "four_day_arrangement",
+          label: "4-Day Week Arrangement",
+          value: data.four_day_arrangement,
+          onChange: (e) => handleChangeInput("four_day_arrangement", e.target.value),
+          error: errors.four_day_arrangement,
+          options: [
+            { value: "", label: "Select an option" },
+            { value: "standard", label: "Standard 4-day week (32 hours, no salary reduction)" },
+            { value: "compressed", label: "Compressed 4-day week (40 hours in 4 days)" },
+            { value: "80_percent", label: "80% time for 80% pay (32 hours, pro-rata salary)" },
+            { value: "9_day_fortnight", label: "9-day fortnight (every other Friday off)" },
+            { value: "flexible", label: "Flexible 4-day week (employee chooses their day off)" },
+            { value: "seasonal", label: "Seasonal 4-day week (e.g., summer months only)" },
+            { value: "gradual", label: "Gradual transition to 4-day week" },
+            { value: "trial", label: "Trial 4-day week (company is testing the concept)" }
+          ],
+          required: true
+        },
+        void 0,
+        false,
+        {
+          fileName: "/home/dabit/4daysweekjobs/resources/js/Pages/JobDetails.jsx",
+          lineNumber: 118,
+          columnNumber: 17
+        },
+        this
+      )
+    ] }, void 0, true, {
+      fileName: "/home/dabit/4daysweekjobs/resources/js/Pages/JobDetails.jsx",
+      lineNumber: 61,
+      columnNumber: 13
+    }, this),
+    /* @__PURE__ */ jsxDEV("div", { className: "flex justify-end space-x-4 mt-8", children: [
+      /* @__PURE__ */ jsxDEV(
+        PrimaryButton,
+        {
+          type: "button",
+          onClick: () => setIsEditing(false),
+          className: "bg-gray-500 hover:bg-gray-600",
+          children: "Cancel"
+        },
+        void 0,
+        false,
+        {
+          fileName: "/home/dabit/4daysweekjobs/resources/js/Pages/JobDetails.jsx",
+          lineNumber: 140,
+          columnNumber: 17
+        },
+        this
+      ),
+      /* @__PURE__ */ jsxDEV(PrimaryButton, { type: "submit", disabled: processing, children: processing ? "Saving..." : "Save Changes" }, void 0, false, {
+        fileName: "/home/dabit/4daysweekjobs/resources/js/Pages/JobDetails.jsx",
+        lineNumber: 144,
+        columnNumber: 17
+      }, this)
+    ] }, void 0, true, {
+      fileName: "/home/dabit/4daysweekjobs/resources/js/Pages/JobDetails.jsx",
+      lineNumber: 139,
+      columnNumber: 13
+    }, this)
+  ] }, void 0, true, {
+    fileName: "/home/dabit/4daysweekjobs/resources/js/Pages/JobDetails.jsx",
+    lineNumber: 60,
+    columnNumber: 9
+  }, this);
+  return /* @__PURE__ */ jsxDEV(
+    Authenticated,
+    {
+      user: auth.user,
+      header: /* @__PURE__ */ jsxDEV("h2", { className: "font-semibold text-xl text-gray-800 leading-tight", children: "Job Details" }, void 0, false, {
+        fileName: "/home/dabit/4daysweekjobs/resources/js/Pages/JobDetails.jsx",
+        lineNumber: 155,
+        columnNumber: 17
+      }, this),
+      children: [
+        /* @__PURE__ */ jsxDEV(Head, { title: "Job Details" }, void 0, false, {
+          fileName: "/home/dabit/4daysweekjobs/resources/js/Pages/JobDetails.jsx",
+          lineNumber: 160,
+          columnNumber: 13
+        }, this),
+        /* @__PURE__ */ jsxDEV("div", { className: "py-12", children: /* @__PURE__ */ jsxDEV("div", { className: "max-w-7xl mx-auto sm:px-6 lg:px-8", children: /* @__PURE__ */ jsxDEV(
+          Transition,
+          {
+            show: true,
+            enter: "transition-opacity duration-300",
+            enterFrom: "opacity-0",
+            enterTo: "opacity-100",
+            leave: "transition-opacity duration-300",
+            leaveFrom: "opacity-100",
+            leaveTo: "opacity-0",
+            children: isEditing ? renderEditForm() : renderJobDetails()
+          },
+          void 0,
+          false,
+          {
+            fileName: "/home/dabit/4daysweekjobs/resources/js/Pages/JobDetails.jsx",
+            lineNumber: 163,
+            columnNumber: 21
+          },
+          this
+        ) }, void 0, false, {
+          fileName: "/home/dabit/4daysweekjobs/resources/js/Pages/JobDetails.jsx",
+          lineNumber: 162,
+          columnNumber: 17
+        }, this) }, void 0, false, {
+          fileName: "/home/dabit/4daysweekjobs/resources/js/Pages/JobDetails.jsx",
+          lineNumber: 161,
+          columnNumber: 13
+        }, this),
+        /* @__PURE__ */ jsxDEV(Footer, {}, void 0, false, {
+          fileName: "/home/dabit/4daysweekjobs/resources/js/Pages/JobDetails.jsx",
+          lineNumber: 176,
+          columnNumber: 13
+        }, this)
+      ]
+    },
+    void 0,
+    true,
+    {
+      fileName: "/home/dabit/4daysweekjobs/resources/js/Pages/JobDetails.jsx",
+      lineNumber: 152,
+      columnNumber: 9
+    },
+    this
+  );
+}
+const InfoItem = ({ label, value }) => /* @__PURE__ */ jsxDEV("div", { className: "mb-4", children: [
+  /* @__PURE__ */ jsxDEV("span", { className: "font-semibold text-gray-700", children: [
+    label,
+    ":"
+  ] }, void 0, true, {
+    fileName: "/home/dabit/4daysweekjobs/resources/js/Pages/JobDetails.jsx",
+    lineNumber: 183,
+    columnNumber: 9
+  }, void 0),
+  " ",
+  value
+] }, void 0, true, {
+  fileName: "/home/dabit/4daysweekjobs/resources/js/Pages/JobDetails.jsx",
+  lineNumber: 182,
+  columnNumber: 5
+}, void 0);
+const InputField$1 = ({ id, label, required, value, onChange, error }) => /* @__PURE__ */ jsxDEV("div", { children: [
+  /* @__PURE__ */ jsxDEV("label", { htmlFor: id, className: "block text-gray-700 font-semibold mb-2", children: [
+    label,
+    " ",
+    required && /* @__PURE__ */ jsxDEV("span", { className: "text-red-500", children: "*" }, void 0, false, {
+      fileName: "/home/dabit/4daysweekjobs/resources/js/Pages/JobDetails.jsx",
+      lineNumber: 190,
+      columnNumber: 34
+    }, void 0)
+  ] }, void 0, true, {
+    fileName: "/home/dabit/4daysweekjobs/resources/js/Pages/JobDetails.jsx",
+    lineNumber: 189,
+    columnNumber: 9
+  }, void 0),
+  /* @__PURE__ */ jsxDEV(
+    "input",
+    {
+      type: "text",
+      id,
+      name: id,
+      value,
+      onChange,
+      className: "w-full px-4 py-2 border rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-600 transition-colors",
+      required
+    },
+    void 0,
+    false,
+    {
+      fileName: "/home/dabit/4daysweekjobs/resources/js/Pages/JobDetails.jsx",
+      lineNumber: 192,
+      columnNumber: 9
+    },
+    void 0
+  ),
+  error && /* @__PURE__ */ jsxDEV("span", { className: "text-red-600 text-sm mt-1", children: error }, void 0, false, {
+    fileName: "/home/dabit/4daysweekjobs/resources/js/Pages/JobDetails.jsx",
+    lineNumber: 201,
+    columnNumber: 19
+  }, void 0)
+] }, void 0, true, {
+  fileName: "/home/dabit/4daysweekjobs/resources/js/Pages/JobDetails.jsx",
+  lineNumber: 188,
+  columnNumber: 5
+}, void 0);
+const SelectField = ({ id, label, value, onChange, error, options, required }) => /* @__PURE__ */ jsxDEV("div", { children: [
+  /* @__PURE__ */ jsxDEV("label", { htmlFor: id, className: "block text-gray-700 font-semibold mb-2", children: [
+    label,
+    " ",
+    required && /* @__PURE__ */ jsxDEV("span", { className: "text-red-500", children: "*" }, void 0, false, {
+      fileName: "/home/dabit/4daysweekjobs/resources/js/Pages/JobDetails.jsx",
+      lineNumber: 208,
+      columnNumber: 34
+    }, void 0)
+  ] }, void 0, true, {
+    fileName: "/home/dabit/4daysweekjobs/resources/js/Pages/JobDetails.jsx",
+    lineNumber: 207,
+    columnNumber: 9
+  }, void 0),
+  /* @__PURE__ */ jsxDEV(
+    "select",
+    {
+      id,
+      name: id,
+      value,
+      onChange,
+      className: "w-full px-4 py-2 border rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-600 transition-colors",
+      required,
+      children: options.map((option) => /* @__PURE__ */ jsxDEV("option", { value: option.value, children: option.label }, option.value, false, {
+        fileName: "/home/dabit/4daysweekjobs/resources/js/Pages/JobDetails.jsx",
+        lineNumber: 219,
+        columnNumber: 17
+      }, void 0))
+    },
+    void 0,
+    false,
+    {
+      fileName: "/home/dabit/4daysweekjobs/resources/js/Pages/JobDetails.jsx",
+      lineNumber: 210,
+      columnNumber: 9
+    },
+    void 0
+  ),
+  error && /* @__PURE__ */ jsxDEV("span", { className: "text-red-600 text-sm mt-1", children: error }, void 0, false, {
+    fileName: "/home/dabit/4daysweekjobs/resources/js/Pages/JobDetails.jsx",
+    lineNumber: 224,
+    columnNumber: 19
+  }, void 0)
+] }, void 0, true, {
+  fileName: "/home/dabit/4daysweekjobs/resources/js/Pages/JobDetails.jsx",
+  lineNumber: 206,
+  columnNumber: 5
+}, void 0);
+const __vite_glob_0_8 = /* @__PURE__ */ Object.freeze(/* @__PURE__ */ Object.defineProperty({
+  __proto__: null,
+  default: JobDetails
 }, Symbol.toStringTag, { value: "Module" }));
 const PaymentError = () => {
   return /* @__PURE__ */ jsxDEV(Fragment, { children: [
@@ -1663,262 +2979,10 @@ const PaymentError = () => {
     columnNumber: 3
   }, void 0);
 };
-const __vite_glob_0_7 = /* @__PURE__ */ Object.freeze(/* @__PURE__ */ Object.defineProperty({
+const __vite_glob_0_9 = /* @__PURE__ */ Object.freeze(/* @__PURE__ */ Object.defineProperty({
   __proto__: null,
   default: PaymentError
 }, Symbol.toStringTag, { value: "Module" }));
-const Header = ({ isLoggedIn, user }) => {
-  const [showPostJobButton, setShowPostJobButton] = useState(false);
-  const [mobileMenuOpen, setMobileMenuOpen] = useState(false);
-  useEffect(() => {
-    const handleScroll = () => {
-      setShowPostJobButton(window.scrollY > 50);
-    };
-    window.addEventListener("scroll", handleScroll);
-    return () => window.removeEventListener("scroll", handleScroll);
-  }, []);
-  return /* @__PURE__ */ jsxDEV("header", { className: "fixed w-full bg-gradient-to-r from-blue-500 to-blue-600 z-40 ", children: [
-    /* @__PURE__ */ jsxDEV("div", { className: "container mx-auto px-4 sm:px-6 flex justify-between items-center py-4", children: [
-      /* @__PURE__ */ jsxDEV(Link, { href: "/", className: "text-xl sm:text-3xl font-bold text-white hover:text-gray-200 transition-colors", children: "4 Days Week Tech Jobs" }, void 0, false, {
-        fileName: "/home/dabit/4daysweekjobs/resources/js/Components/Header.jsx",
-        lineNumber: 23,
-        columnNumber: 17
-      }, void 0),
-      /* @__PURE__ */ jsxDEV("div", { className: "flex items-center space-x-4", children: [
-        /* @__PURE__ */ jsxDEV(
-          "div",
-          {
-            className: `transition-opacity duration-500 ${showPostJobButton ? "opacity-100" : "opacity-0"} hidden sm:block`,
-            children: /* @__PURE__ */ jsxDEV(
-              Link,
-              {
-                href: "/post-job",
-                className: "bg-white text-blue-500 px-3 py-1 sm:px-4 sm:py-2 rounded-full hover:bg-blue-500 hover:text-white hover:shadow-lg transition-transform transform hover:scale-105 flex items-center space-x-2 font-semibold text-sm sm:text-base",
-                children: [
-                  /* @__PURE__ */ jsxDEV(FontAwesomeIcon, { icon: faBriefcase }, void 0, false, {
-                    fileName: "/home/dabit/4daysweekjobs/resources/js/Components/Header.jsx",
-                    lineNumber: 36,
-                    columnNumber: 29
-                  }, void 0),
-                  /* @__PURE__ */ jsxDEV("span", { className: "hidden sm:inline", children: "Post a Job" }, void 0, false, {
-                    fileName: "/home/dabit/4daysweekjobs/resources/js/Components/Header.jsx",
-                    lineNumber: 37,
-                    columnNumber: 29
-                  }, void 0)
-                ]
-              },
-              void 0,
-              true,
-              {
-                fileName: "/home/dabit/4daysweekjobs/resources/js/Components/Header.jsx",
-                lineNumber: 32,
-                columnNumber: 25
-              },
-              void 0
-            )
-          },
-          void 0,
-          false,
-          {
-            fileName: "/home/dabit/4daysweekjobs/resources/js/Components/Header.jsx",
-            lineNumber: 27,
-            columnNumber: 21
-          },
-          void 0
-        ),
-        /* @__PURE__ */ jsxDEV("div", { className: "hidden sm:flex items-center space-x-4", children: isLoggedIn ? /* @__PURE__ */ jsxDEV(Dropdown, { children: [
-          /* @__PURE__ */ jsxDEV(Dropdown.Trigger, { children: /* @__PURE__ */ jsxDEV("span", { className: "inline-flex rounded-md", children: /* @__PURE__ */ jsxDEV(
-            "button",
-            {
-              type: "button",
-              className: "inline-flex items-center px-3 py-2 border border-transparent text-sm leading-4 font-medium rounded-md text-gray-500 bg-white hover:text-gray-700 focus:outline-none transition ease-in-out duration-150",
-              children: [
-                user.name,
-                /* @__PURE__ */ jsxDEV(
-                  "svg",
-                  {
-                    className: "ml-2 -mr-0.5 h-4 w-4",
-                    xmlns: "http://www.w3.org/2000/svg",
-                    viewBox: "0 0 20 20",
-                    fill: "currentColor",
-                    children: /* @__PURE__ */ jsxDEV(
-                      "path",
-                      {
-                        fillRule: "evenodd",
-                        d: "M5.293 7.293a1 1 0 011.414 0L10 10.586l3.293-3.293a1 1 0 111.414 1.414l-4 4a1 1 0 01-1.414 0l-4-4a1 1 0 010-1.414z",
-                        clipRule: "evenodd"
-                      },
-                      void 0,
-                      false,
-                      {
-                        fileName: "/home/dabit/4daysweekjobs/resources/js/Components/Header.jsx",
-                        lineNumber: 56,
-                        columnNumber: 49
-                      },
-                      void 0
-                    )
-                  },
-                  void 0,
-                  false,
-                  {
-                    fileName: "/home/dabit/4daysweekjobs/resources/js/Components/Header.jsx",
-                    lineNumber: 50,
-                    columnNumber: 45
-                  },
-                  void 0
-                )
-              ]
-            },
-            void 0,
-            true,
-            {
-              fileName: "/home/dabit/4daysweekjobs/resources/js/Components/Header.jsx",
-              lineNumber: 45,
-              columnNumber: 41
-            },
-            void 0
-          ) }, void 0, false, {
-            fileName: "/home/dabit/4daysweekjobs/resources/js/Components/Header.jsx",
-            lineNumber: 44,
-            columnNumber: 37
-          }, void 0) }, void 0, false, {
-            fileName: "/home/dabit/4daysweekjobs/resources/js/Components/Header.jsx",
-            lineNumber: 43,
-            columnNumber: 33
-          }, void 0),
-          /* @__PURE__ */ jsxDEV(Dropdown.Content, { children: [
-            /* @__PURE__ */ jsxDEV(Dropdown.Link, { href: route("profile.edit"), children: "Profile" }, void 0, false, {
-              fileName: "/home/dabit/4daysweekjobs/resources/js/Components/Header.jsx",
-              lineNumber: 66,
-              columnNumber: 37
-            }, void 0),
-            /* @__PURE__ */ jsxDEV(Dropdown.Link, { href: route("logout"), method: "post", as: "button", children: "Log Out" }, void 0, false, {
-              fileName: "/home/dabit/4daysweekjobs/resources/js/Components/Header.jsx",
-              lineNumber: 67,
-              columnNumber: 37
-            }, void 0)
-          ] }, void 0, true, {
-            fileName: "/home/dabit/4daysweekjobs/resources/js/Components/Header.jsx",
-            lineNumber: 65,
-            columnNumber: 33
-          }, void 0)
-        ] }, void 0, true, {
-          fileName: "/home/dabit/4daysweekjobs/resources/js/Components/Header.jsx",
-          lineNumber: 42,
-          columnNumber: 29
-        }, void 0) : /* @__PURE__ */ jsxDEV(Fragment, { children: [
-          /* @__PURE__ */ jsxDEV(Link, { href: "/login", className: "text-white hover:text-gray-200 transition-colors", children: "Login" }, void 0, false, {
-            fileName: "/home/dabit/4daysweekjobs/resources/js/Components/Header.jsx",
-            lineNumber: 72,
-            columnNumber: 33
-          }, void 0),
-          /* @__PURE__ */ jsxDEV(Link, { href: "/register", className: "text-white hover:text-gray-200 transition-colors", children: "Signup" }, void 0, false, {
-            fileName: "/home/dabit/4daysweekjobs/resources/js/Components/Header.jsx",
-            lineNumber: 73,
-            columnNumber: 33
-          }, void 0)
-        ] }, void 0, true, {
-          fileName: "/home/dabit/4daysweekjobs/resources/js/Components/Header.jsx",
-          lineNumber: 71,
-          columnNumber: 29
-        }, void 0) }, void 0, false, {
-          fileName: "/home/dabit/4daysweekjobs/resources/js/Components/Header.jsx",
-          lineNumber: 40,
-          columnNumber: 21
-        }, void 0),
-        /* @__PURE__ */ jsxDEV(
-          "button",
-          {
-            className: "sm:hidden text-white",
-            onClick: () => setMobileMenuOpen(!mobileMenuOpen),
-            children: /* @__PURE__ */ jsxDEV(FontAwesomeIcon, { icon: faBars, size: "lg" }, void 0, false, {
-              fileName: "/home/dabit/4daysweekjobs/resources/js/Components/Header.jsx",
-              lineNumber: 81,
-              columnNumber: 25
-            }, void 0)
-          },
-          void 0,
-          false,
-          {
-            fileName: "/home/dabit/4daysweekjobs/resources/js/Components/Header.jsx",
-            lineNumber: 77,
-            columnNumber: 21
-          },
-          void 0
-        )
-      ] }, void 0, true, {
-        fileName: "/home/dabit/4daysweekjobs/resources/js/Components/Header.jsx",
-        lineNumber: 26,
-        columnNumber: 17
-      }, void 0)
-    ] }, void 0, true, {
-      fileName: "/home/dabit/4daysweekjobs/resources/js/Components/Header.jsx",
-      lineNumber: 22,
-      columnNumber: 13
-    }, void 0),
-    mobileMenuOpen && /* @__PURE__ */ jsxDEV("div", { className: "sm:hidden bg-blue-600 py-2", children: /* @__PURE__ */ jsxDEV("div", { className: "container mx-auto px-4", children: [
-      /* @__PURE__ */ jsxDEV(
-        Link,
-        {
-          href: "/post-job",
-          className: "block bg-white text-blue-500 px-4 py-2 rounded-full hover:bg-blue-500 hover:text-white text-center mb-2 transition-colors",
-          children: "Post a Job"
-        },
-        void 0,
-        false,
-        {
-          fileName: "/home/dabit/4daysweekjobs/resources/js/Components/Header.jsx",
-          lineNumber: 88,
-          columnNumber: 25
-        },
-        void 0
-      ),
-      isLoggedIn ? /* @__PURE__ */ jsxDEV(Fragment, { children: [
-        /* @__PURE__ */ jsxDEV(Link, { href: route("profile.edit"), className: "block text-white py-2 transition-colors hover:text-gray-200", children: "Profile" }, void 0, false, {
-          fileName: "/home/dabit/4daysweekjobs/resources/js/Components/Header.jsx",
-          lineNumber: 96,
-          columnNumber: 33
-        }, void 0),
-        /* @__PURE__ */ jsxDEV(Link, { href: route("logout"), method: "post", as: "button", className: "block text-white py-2 w-full text-left transition-colors hover:text-gray-200", children: "Log Out" }, void 0, false, {
-          fileName: "/home/dabit/4daysweekjobs/resources/js/Components/Header.jsx",
-          lineNumber: 97,
-          columnNumber: 33
-        }, void 0)
-      ] }, void 0, true, {
-        fileName: "/home/dabit/4daysweekjobs/resources/js/Components/Header.jsx",
-        lineNumber: 95,
-        columnNumber: 29
-      }, void 0) : /* @__PURE__ */ jsxDEV(Fragment, { children: [
-        /* @__PURE__ */ jsxDEV(Link, { href: "/login", className: "block text-white py-2 transition-colors hover:text-gray-200", children: "Login" }, void 0, false, {
-          fileName: "/home/dabit/4daysweekjobs/resources/js/Components/Header.jsx",
-          lineNumber: 101,
-          columnNumber: 33
-        }, void 0),
-        /* @__PURE__ */ jsxDEV(Link, { href: "/register", className: "block text-white py-2 transition-colors hover:text-gray-200", children: "Signup" }, void 0, false, {
-          fileName: "/home/dabit/4daysweekjobs/resources/js/Components/Header.jsx",
-          lineNumber: 102,
-          columnNumber: 33
-        }, void 0)
-      ] }, void 0, true, {
-        fileName: "/home/dabit/4daysweekjobs/resources/js/Components/Header.jsx",
-        lineNumber: 100,
-        columnNumber: 29
-      }, void 0)
-    ] }, void 0, true, {
-      fileName: "/home/dabit/4daysweekjobs/resources/js/Components/Header.jsx",
-      lineNumber: 87,
-      columnNumber: 21
-    }, void 0) }, void 0, false, {
-      fileName: "/home/dabit/4daysweekjobs/resources/js/Components/Header.jsx",
-      lineNumber: 86,
-      columnNumber: 17
-    }, void 0)
-  ] }, void 0, true, {
-    fileName: "/home/dabit/4daysweekjobs/resources/js/Components/Header.jsx",
-    lineNumber: 21,
-    columnNumber: 9
-  }, void 0);
-};
 const PaymentSuccess = ({ isLoggedIn, user }) => /* @__PURE__ */ jsxDEV(Fragment, { children: [
   /* @__PURE__ */ jsxDEV(Head, { title: "4 days week tech jobs - Success!" }, void 0, false, {
     fileName: "/home/dabit/4daysweekjobs/resources/js/Pages/Payments/Success.jsx",
@@ -1976,7 +3040,7 @@ const PaymentSuccess = ({ isLoggedIn, user }) => /* @__PURE__ */ jsxDEV(Fragment
   lineNumber: 7,
   columnNumber: 5
 }, void 0);
-const __vite_glob_0_8 = /* @__PURE__ */ Object.freeze(/* @__PURE__ */ Object.defineProperty({
+const __vite_glob_0_10 = /* @__PURE__ */ Object.freeze(/* @__PURE__ */ Object.defineProperty({
   __proto__: null,
   default: PaymentSuccess
 }, Symbol.toStringTag, { value: "Module" }));
@@ -2007,100 +3071,129 @@ const JobCard = ({ post }) => {
           false,
           {
             fileName: "/home/dabit/4daysweekjobs/resources/js/Components/JobCard.jsx",
-            lineNumber: 25,
+            lineNumber: 31,
             columnNumber: 17
           },
           void 0
-        ) : /* @__PURE__ */ jsxDEV("div", { className: "rounded-full w-16 h-16 mr-4 bg-gray-300 flex items-center justify-center", children: /* @__PURE__ */ jsxDEV(FontAwesomeIcon, { icon: faBuilding, className: "text-gray-600 text-2xl", title: "No Company Logo" }, void 0, false, {
+        ) : /* @__PURE__ */ jsxDEV("div", { className: "rounded-full w-16 h-16 mr-4 bg-gray-300 flex items-center justify-center", children: /* @__PURE__ */ jsxDEV(
+          FontAwesomeIcon,
+          {
+            icon: faBuilding,
+            className: "text-gray-600 text-2xl",
+            title: "No Company Logo"
+          },
+          void 0,
+          false,
+          {
+            fileName: "/home/dabit/4daysweekjobs/resources/js/Components/JobCard.jsx",
+            lineNumber: 39,
+            columnNumber: 21
+          },
+          void 0
+        ) }, void 0, false, {
           fileName: "/home/dabit/4daysweekjobs/resources/js/Components/JobCard.jsx",
-          lineNumber: 33,
-          columnNumber: 21
-        }, void 0) }, void 0, false, {
-          fileName: "/home/dabit/4daysweekjobs/resources/js/Components/JobCard.jsx",
-          lineNumber: 32,
+          lineNumber: 38,
           columnNumber: 17
         }, void 0),
         /* @__PURE__ */ jsxDEV("div", { className: "flex-grow", children: /* @__PURE__ */ jsxDEV("div", { className: "flex justify-between items-center mb-2", children: [
           /* @__PURE__ */ jsxDEV("div", { children: [
-            /* @__PURE__ */ jsxDEV("p", { className: "text-sm text-gray-600", children: (_a = post == null ? void 0 : post.company) == null ? void 0 : _a.name }, void 0, false, {
+            /* @__PURE__ */ jsxDEV("p", { className: "text-sm text-gray-600", children: ((_a = post == null ? void 0 : post.company) == null ? void 0 : _a.name) || (post == null ? void 0 : post.company_name) }, void 0, false, {
               fileName: "/home/dabit/4daysweekjobs/resources/js/Components/JobCard.jsx",
-              lineNumber: 39,
+              lineNumber: 49,
               columnNumber: 25
             }, void 0),
             /* @__PURE__ */ jsxDEV("h3", { className: "text-xl font-semibold text-gray-800", children: post.title }, void 0, false, {
               fileName: "/home/dabit/4daysweekjobs/resources/js/Components/JobCard.jsx",
-              lineNumber: 40,
+              lineNumber: 52,
               columnNumber: 25
             }, void 0),
             /* @__PURE__ */ jsxDEV("div", { className: "flex flex-col sm:flex-row mt-2 space-y-2 sm:space-y-0 sm:space-x-2", children: [
               post.salary_range && /* @__PURE__ */ jsxDEV("div", { children: /* @__PURE__ */ jsxDEV("span", { className: "inline-block bg-[#14B8A6] text-white text-xs px-2 py-1 rounded-full flex items-center space-x-1", children: [
-                /* @__PURE__ */ jsxDEV(FontAwesomeIcon, { icon: faMoneyBillWave }, void 0, false, {
-                  fileName: "/home/dabit/4daysweekjobs/resources/js/Components/JobCard.jsx",
-                  lineNumber: 47,
-                  columnNumber: 41
-                }, void 0),
+                /* @__PURE__ */ jsxDEV(
+                  FontAwesomeIcon,
+                  {
+                    icon: faMoneyBillWave
+                  },
+                  void 0,
+                  false,
+                  {
+                    fileName: "/home/dabit/4daysweekjobs/resources/js/Components/JobCard.jsx",
+                    lineNumber: 59,
+                    columnNumber: 41
+                  },
+                  void 0
+                ),
                 /* @__PURE__ */ jsxDEV("span", { children: post.salary_range }, void 0, false, {
                   fileName: "/home/dabit/4daysweekjobs/resources/js/Components/JobCard.jsx",
-                  lineNumber: 48,
+                  lineNumber: 62,
                   columnNumber: 41
                 }, void 0)
               ] }, void 0, true, {
                 fileName: "/home/dabit/4daysweekjobs/resources/js/Components/JobCard.jsx",
-                lineNumber: 46,
+                lineNumber: 58,
                 columnNumber: 37
               }, void 0) }, void 0, false, {
                 fileName: "/home/dabit/4daysweekjobs/resources/js/Components/JobCard.jsx",
-                lineNumber: 45,
+                lineNumber: 57,
                 columnNumber: 33
               }, void 0),
               post.location && /* @__PURE__ */ jsxDEV("div", { children: /* @__PURE__ */ jsxDEV("span", { className: "inline-block bg-[#EAB308] text-gray-800 text-xs px-2 py-1 rounded-full flex items-center space-x-1", children: [
-                /* @__PURE__ */ jsxDEV(FontAwesomeIcon, { icon: faMapMarkerAlt }, void 0, false, {
-                  fileName: "/home/dabit/4daysweekjobs/resources/js/Components/JobCard.jsx",
-                  lineNumber: 55,
-                  columnNumber: 41
-                }, void 0),
+                /* @__PURE__ */ jsxDEV(
+                  FontAwesomeIcon,
+                  {
+                    icon: faMapMarkerAlt
+                  },
+                  void 0,
+                  false,
+                  {
+                    fileName: "/home/dabit/4daysweekjobs/resources/js/Components/JobCard.jsx",
+                    lineNumber: 69,
+                    columnNumber: 41
+                  },
+                  void 0
+                ),
                 /* @__PURE__ */ jsxDEV("span", { children: post.location }, void 0, false, {
                   fileName: "/home/dabit/4daysweekjobs/resources/js/Components/JobCard.jsx",
-                  lineNumber: 56,
+                  lineNumber: 72,
                   columnNumber: 41
                 }, void 0)
               ] }, void 0, true, {
                 fileName: "/home/dabit/4daysweekjobs/resources/js/Components/JobCard.jsx",
-                lineNumber: 54,
+                lineNumber: 68,
                 columnNumber: 37
               }, void 0) }, void 0, false, {
                 fileName: "/home/dabit/4daysweekjobs/resources/js/Components/JobCard.jsx",
-                lineNumber: 53,
+                lineNumber: 67,
                 columnNumber: 33
               }, void 0),
               post.modality && /* @__PURE__ */ jsxDEV("div", { children: /* @__PURE__ */ jsxDEV("span", { className: "inline-block bg-[#EC4899] text-white text-xs px-2 py-1 rounded-full flex items-center space-x-1", children: [
                 /* @__PURE__ */ jsxDEV(FontAwesomeIcon, { icon: faLaptopHouse }, void 0, false, {
                   fileName: "/home/dabit/4daysweekjobs/resources/js/Components/JobCard.jsx",
-                  lineNumber: 63,
+                  lineNumber: 79,
                   columnNumber: 41
                 }, void 0),
                 /* @__PURE__ */ jsxDEV("span", { children: post.modality }, void 0, false, {
                   fileName: "/home/dabit/4daysweekjobs/resources/js/Components/JobCard.jsx",
-                  lineNumber: 64,
+                  lineNumber: 80,
                   columnNumber: 41
                 }, void 0)
               ] }, void 0, true, {
                 fileName: "/home/dabit/4daysweekjobs/resources/js/Components/JobCard.jsx",
-                lineNumber: 62,
+                lineNumber: 78,
                 columnNumber: 37
               }, void 0) }, void 0, false, {
                 fileName: "/home/dabit/4daysweekjobs/resources/js/Components/JobCard.jsx",
-                lineNumber: 61,
+                lineNumber: 77,
                 columnNumber: 33
               }, void 0)
             ] }, void 0, true, {
               fileName: "/home/dabit/4daysweekjobs/resources/js/Components/JobCard.jsx",
-              lineNumber: 43,
+              lineNumber: 55,
               columnNumber: 25
             }, void 0)
           ] }, void 0, true, {
             fileName: "/home/dabit/4daysweekjobs/resources/js/Components/JobCard.jsx",
-            lineNumber: 38,
+            lineNumber: 48,
             columnNumber: 21
           }, void 0),
           /* @__PURE__ */ jsxDEV("div", { className: "flex items-center text-gray-600 space-x-4", children: isHovered ? /* @__PURE__ */ jsxDEV(
@@ -2111,12 +3204,12 @@ const JobCard = ({ post }) => {
               children: [
                 /* @__PURE__ */ jsxDEV("span", { children: "Apply" }, void 0, false, {
                   fileName: "/home/dabit/4daysweekjobs/resources/js/Components/JobCard.jsx",
-                  lineNumber: 76,
+                  lineNumber: 92,
                   columnNumber: 33
                 }, void 0),
                 /* @__PURE__ */ jsxDEV(FontAwesomeIcon, { icon: faExternalLinkAlt }, void 0, false, {
                   fileName: "/home/dabit/4daysweekjobs/resources/js/Components/JobCard.jsx",
-                  lineNumber: 77,
+                  lineNumber: 93,
                   columnNumber: 33
                 }, void 0)
               ]
@@ -2125,26 +3218,26 @@ const JobCard = ({ post }) => {
             true,
             {
               fileName: "/home/dabit/4daysweekjobs/resources/js/Components/JobCard.jsx",
-              lineNumber: 72,
+              lineNumber: 88,
               columnNumber: 29
             },
             void 0
           ) : /* @__PURE__ */ jsxDEV("p", { className: "text-sm text-gray-500", children: daysSincePosted }, void 0, false, {
             fileName: "/home/dabit/4daysweekjobs/resources/js/Components/JobCard.jsx",
-            lineNumber: 80,
+            lineNumber: 96,
             columnNumber: 29
           }, void 0) }, void 0, false, {
             fileName: "/home/dabit/4daysweekjobs/resources/js/Components/JobCard.jsx",
-            lineNumber: 70,
+            lineNumber: 86,
             columnNumber: 21
           }, void 0)
         ] }, void 0, true, {
           fileName: "/home/dabit/4daysweekjobs/resources/js/Components/JobCard.jsx",
-          lineNumber: 37,
+          lineNumber: 47,
           columnNumber: 17
         }, void 0) }, void 0, false, {
           fileName: "/home/dabit/4daysweekjobs/resources/js/Components/JobCard.jsx",
-          lineNumber: 36,
+          lineNumber: 46,
           columnNumber: 13
         }, void 0)
       ]
@@ -2153,7 +3246,7 @@ const JobCard = ({ post }) => {
     true,
     {
       fileName: "/home/dabit/4daysweekjobs/resources/js/Components/JobCard.jsx",
-      lineNumber: 19,
+      lineNumber: 25,
       columnNumber: 9
     },
     void 0
@@ -2162,27 +3255,38 @@ const JobCard = ({ post }) => {
 const Signup = ({ handleChangeInput, errors }) => /* @__PURE__ */ jsxDEV("div", { className: "my-8 p-6 bg-gradient-to-r from-blue-50 to-blue-60 border  rounded-lg shadow-sm", children: [
   /* @__PURE__ */ jsxDEV("h3", { className: "text-2xl font-semibold text-blue-700 mb-4", children: "Sign Up" }, void 0, false, {
     fileName: "/home/dabit/4daysweekjobs/resources/js/Pages/Signup.jsx",
-    lineNumber: 5,
-    columnNumber: 3
+    lineNumber: 3,
+    columnNumber: 9
   }, void 0),
   /* @__PURE__ */ jsxDEV("p", { className: "text-sm text-gray-600 mb-4", children: "This is required to edit your posts, if necessary. We will not use your email to send you spam." }, void 0, false, {
     fileName: "/home/dabit/4daysweekjobs/resources/js/Pages/Signup.jsx",
-    lineNumber: 6,
-    columnNumber: 3
+    lineNumber: 4,
+    columnNumber: 9
   }, void 0),
   /* @__PURE__ */ jsxDEV("div", { className: "mb-4", children: [
-    /* @__PURE__ */ jsxDEV("label", { htmlFor: "email", className: "block text-gray-700 font-bold mb-2", children: [
-      "Email",
-      /* @__PURE__ */ jsxDEV("span", { className: "text-red-500", children: "*" }, void 0, false, {
+    /* @__PURE__ */ jsxDEV(
+      "label",
+      {
+        htmlFor: "email",
+        className: "block text-gray-700 font-bold mb-2",
+        children: [
+          "Email",
+          /* @__PURE__ */ jsxDEV("span", { className: "text-red-500", children: "*" }, void 0, false, {
+            fileName: "/home/dabit/4daysweekjobs/resources/js/Pages/Signup.jsx",
+            lineNumber: 13,
+            columnNumber: 22
+          }, void 0)
+        ]
+      },
+      void 0,
+      true,
+      {
         fileName: "/home/dabit/4daysweekjobs/resources/js/Pages/Signup.jsx",
-        lineNumber: 12,
-        columnNumber: 10
-      }, void 0)
-    ] }, void 0, true, {
-      fileName: "/home/dabit/4daysweekjobs/resources/js/Pages/Signup.jsx",
-      lineNumber: 11,
-      columnNumber: 4
-    }, void 0),
+        lineNumber: 9,
+        columnNumber: 13
+      },
+      void 0
+    ),
     /* @__PURE__ */ jsxDEV(
       "input",
       {
@@ -2198,34 +3302,45 @@ const Signup = ({ handleChangeInput, errors }) => /* @__PURE__ */ jsxDEV("div", 
       false,
       {
         fileName: "/home/dabit/4daysweekjobs/resources/js/Pages/Signup.jsx",
-        lineNumber: 14,
-        columnNumber: 4
+        lineNumber: 15,
+        columnNumber: 13
       },
       void 0
     ),
     errors.email ? /* @__PURE__ */ jsxDEV("span", { className: "text-red-600", children: errors.email }, void 0, false, {
       fileName: "/home/dabit/4daysweekjobs/resources/js/Pages/Signup.jsx",
-      lineNumber: 24,
-      columnNumber: 5
+      lineNumber: 25,
+      columnNumber: 17
     }, void 0) : null
   ] }, void 0, true, {
     fileName: "/home/dabit/4daysweekjobs/resources/js/Pages/Signup.jsx",
-    lineNumber: 10,
-    columnNumber: 3
+    lineNumber: 8,
+    columnNumber: 9
   }, void 0),
   /* @__PURE__ */ jsxDEV("div", { className: "mb-4", children: [
-    /* @__PURE__ */ jsxDEV("label", { htmlFor: "username", className: "block text-gray-700 font-bold mb-2", children: [
-      "Username",
-      /* @__PURE__ */ jsxDEV("span", { className: "text-red-500", children: "*" }, void 0, false, {
+    /* @__PURE__ */ jsxDEV(
+      "label",
+      {
+        htmlFor: "username",
+        className: "block text-gray-700 font-bold mb-2",
+        children: [
+          "Username",
+          /* @__PURE__ */ jsxDEV("span", { className: "text-red-500", children: "*" }, void 0, false, {
+            fileName: "/home/dabit/4daysweekjobs/resources/js/Pages/Signup.jsx",
+            lineNumber: 33,
+            columnNumber: 25
+          }, void 0)
+        ]
+      },
+      void 0,
+      true,
+      {
         fileName: "/home/dabit/4daysweekjobs/resources/js/Pages/Signup.jsx",
         lineNumber: 29,
         columnNumber: 13
-      }, void 0)
-    ] }, void 0, true, {
-      fileName: "/home/dabit/4daysweekjobs/resources/js/Pages/Signup.jsx",
-      lineNumber: 28,
-      columnNumber: 4
-    }, void 0),
+      },
+      void 0
+    ),
     /* @__PURE__ */ jsxDEV(
       "input",
       {
@@ -2241,35 +3356,46 @@ const Signup = ({ handleChangeInput, errors }) => /* @__PURE__ */ jsxDEV("div", 
       false,
       {
         fileName: "/home/dabit/4daysweekjobs/resources/js/Pages/Signup.jsx",
-        lineNumber: 31,
-        columnNumber: 4
+        lineNumber: 35,
+        columnNumber: 13
       },
       void 0
     ),
     errors.username ? /* @__PURE__ */ jsxDEV("span", { className: "text-red-600", children: errors.username }, void 0, false, {
       fileName: "/home/dabit/4daysweekjobs/resources/js/Pages/Signup.jsx",
-      lineNumber: 41,
-      columnNumber: 5
+      lineNumber: 45,
+      columnNumber: 17
     }, void 0) : null
   ] }, void 0, true, {
     fileName: "/home/dabit/4daysweekjobs/resources/js/Pages/Signup.jsx",
-    lineNumber: 27,
-    columnNumber: 3
+    lineNumber: 28,
+    columnNumber: 9
   }, void 0),
   /* @__PURE__ */ jsxDEV("div", { className: "flex !flex-row", children: [
     /* @__PURE__ */ jsxDEV("div", { className: "mb-4 flex-1", children: [
-      /* @__PURE__ */ jsxDEV("label", { htmlFor: "password", className: "block text-gray-700 font-bold mb-2", children: [
-        "Password",
-        /* @__PURE__ */ jsxDEV("span", { className: "text-red-500", children: "*" }, void 0, false, {
+      /* @__PURE__ */ jsxDEV(
+        "label",
+        {
+          htmlFor: "password",
+          className: "block text-gray-700 font-bold mb-2",
+          children: [
+            "Password",
+            /* @__PURE__ */ jsxDEV("span", { className: "text-red-500", children: "*" }, void 0, false, {
+              fileName: "/home/dabit/4daysweekjobs/resources/js/Pages/Signup.jsx",
+              lineNumber: 54,
+              columnNumber: 29
+            }, void 0)
+          ]
+        },
+        void 0,
+        true,
+        {
           fileName: "/home/dabit/4daysweekjobs/resources/js/Pages/Signup.jsx",
-          lineNumber: 47,
-          columnNumber: 29
-        }, void 0)
-      ] }, void 0, true, {
-        fileName: "/home/dabit/4daysweekjobs/resources/js/Pages/Signup.jsx",
-        lineNumber: 46,
-        columnNumber: 17
-      }, void 0),
+          lineNumber: 50,
+          columnNumber: 17
+        },
+        void 0
+      ),
       /* @__PURE__ */ jsxDEV(
         "input",
         {
@@ -2285,19 +3411,19 @@ const Signup = ({ handleChangeInput, errors }) => /* @__PURE__ */ jsxDEV("div", 
         false,
         {
           fileName: "/home/dabit/4daysweekjobs/resources/js/Pages/Signup.jsx",
-          lineNumber: 49,
+          lineNumber: 56,
           columnNumber: 17
         },
         void 0
       ),
       errors.password ? /* @__PURE__ */ jsxDEV("span", { className: "text-red-600", children: errors.password }, void 0, false, {
         fileName: "/home/dabit/4daysweekjobs/resources/js/Pages/Signup.jsx",
-        lineNumber: 59,
+        lineNumber: 68,
         columnNumber: 21
       }, void 0) : null
     ] }, void 0, true, {
       fileName: "/home/dabit/4daysweekjobs/resources/js/Pages/Signup.jsx",
-      lineNumber: 45,
+      lineNumber: 49,
       columnNumber: 13
     }, void 0),
     /* @__PURE__ */ jsxDEV("div", { className: "mb-4 ml-3 flex-1", children: [
@@ -2310,7 +3436,7 @@ const Signup = ({ handleChangeInput, errors }) => /* @__PURE__ */ jsxDEV("div", 
             "Repeat password",
             /* @__PURE__ */ jsxDEV("span", { className: "text-red-500", children: "*" }, void 0, false, {
               fileName: "/home/dabit/4daysweekjobs/resources/js/Pages/Signup.jsx",
-              lineNumber: 68,
+              lineNumber: 77,
               columnNumber: 21
             }, void 0)
           ]
@@ -2319,7 +3445,7 @@ const Signup = ({ handleChangeInput, errors }) => /* @__PURE__ */ jsxDEV("div", 
         true,
         {
           fileName: "/home/dabit/4daysweekjobs/resources/js/Pages/Signup.jsx",
-          lineNumber: 63,
+          lineNumber: 72,
           columnNumber: 17
         },
         void 0
@@ -2332,39 +3458,42 @@ const Signup = ({ handleChangeInput, errors }) => /* @__PURE__ */ jsxDEV("div", 
           name: "password_confirmation",
           className: "w-full px-4 py-2 rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-600",
           required: true,
-          onChange: (e) => handleChangeInput("password_confirmation", e.target.value),
+          onChange: (e) => handleChangeInput(
+            "password_confirmation",
+            e.target.value
+          ),
           placeholder: "Password"
         },
         void 0,
         false,
         {
           fileName: "/home/dabit/4daysweekjobs/resources/js/Pages/Signup.jsx",
-          lineNumber: 70,
+          lineNumber: 79,
           columnNumber: 17
         },
         void 0
       ),
       errors.password ? /* @__PURE__ */ jsxDEV("span", { className: "text-red-600", children: errors.password }, void 0, false, {
         fileName: "/home/dabit/4daysweekjobs/resources/js/Pages/Signup.jsx",
-        lineNumber: 82,
+        lineNumber: 94,
         columnNumber: 21
       }, void 0) : null
     ] }, void 0, true, {
       fileName: "/home/dabit/4daysweekjobs/resources/js/Pages/Signup.jsx",
-      lineNumber: 62,
+      lineNumber: 71,
       columnNumber: 13
     }, void 0)
   ] }, void 0, true, {
     fileName: "/home/dabit/4daysweekjobs/resources/js/Pages/Signup.jsx",
-    lineNumber: 44,
+    lineNumber: 48,
     columnNumber: 9
   }, void 0)
 ] }, void 0, true, {
   fileName: "/home/dabit/4daysweekjobs/resources/js/Pages/Signup.jsx",
-  lineNumber: 4,
-  columnNumber: 2
+  lineNumber: 2,
+  columnNumber: 5
 }, void 0);
-const __vite_glob_0_14 = /* @__PURE__ */ Object.freeze(/* @__PURE__ */ Object.defineProperty({
+const __vite_glob_0_16 = /* @__PURE__ */ Object.freeze(/* @__PURE__ */ Object.defineProperty({
   __proto__: null,
   default: Signup
 }, Symbol.toStringTag, { value: "Module" }));
@@ -2381,7 +3510,8 @@ const JobPosting = ({ isLoggedIn, user }) => {
     four_day_arrangement: "",
     email: "",
     password: "",
-    password_confirmation: ""
+    password_confirmation: "",
+    technologies: []
   });
   const handleChangeInput = (field, value) => {
     setData({ ...data, [field]: value });
@@ -2391,25 +3521,166 @@ const JobPosting = ({ isLoggedIn, user }) => {
     post(route("jobs.store"));
   };
   return /* @__PURE__ */ jsxDEV(Fragment, { children: [
-    /* @__PURE__ */ jsxDEV(Head, { title: "Publish a new job - 4 day week jobs" }, void 0, false, {
-      fileName: "/home/dabit/4daysweekjobs/resources/js/Pages/PostJob.jsx",
-      lineNumber: 34,
-      columnNumber: 13
-    }, void 0),
-    /* @__PURE__ */ jsxDEV(Header, { isLoggedIn, user }, void 0, false, {
+    /* @__PURE__ */ jsxDEV(Head, { children: [
+      /* @__PURE__ */ jsxDEV("title", { children: "Post a 4-Day Week Tech Job | 4daystechjobs" }, void 0, false, {
+        fileName: "/home/dabit/4daysweekjobs/resources/js/Pages/PostJob.jsx",
+        lineNumber: 36,
+        columnNumber: 17
+      }, void 0),
+      /* @__PURE__ */ jsxDEV(
+        "meta",
+        {
+          name: "description",
+          content: "Advertise your 4-day week tech job openings to attract top talent. Reach developers and tech professionals seeking work-life balance with our specialized job board."
+        },
+        void 0,
+        false,
+        {
+          fileName: "/home/dabit/4daysweekjobs/resources/js/Pages/PostJob.jsx",
+          lineNumber: 37,
+          columnNumber: 17
+        },
+        void 0
+      ),
+      /* @__PURE__ */ jsxDEV(
+        "meta",
+        {
+          property: "og:title",
+          content: "Post a 4-Day Week Tech Job | 4daystechjobs"
+        },
+        void 0,
+        false,
+        {
+          fileName: "/home/dabit/4daysweekjobs/resources/js/Pages/PostJob.jsx",
+          lineNumber: 43,
+          columnNumber: 17
+        },
+        void 0
+      ),
+      /* @__PURE__ */ jsxDEV(
+        "meta",
+        {
+          property: "og:description",
+          content: "Find the best tech talent for your 4-day week positions. Post your job openings on the leading job board for work-life balance in tech."
+        },
+        void 0,
+        false,
+        {
+          fileName: "/home/dabit/4daysweekjobs/resources/js/Pages/PostJob.jsx",
+          lineNumber: 47,
+          columnNumber: 17
+        },
+        void 0
+      ),
+      /* @__PURE__ */ jsxDEV("meta", { property: "og:type", content: "website" }, void 0, false, {
+        fileName: "/home/dabit/4daysweekjobs/resources/js/Pages/PostJob.jsx",
+        lineNumber: 51,
+        columnNumber: 17
+      }, void 0),
+      /* @__PURE__ */ jsxDEV(
+        "meta",
+        {
+          property: "og:url",
+          content: "https://4daystechjobs.com/post-job"
+        },
+        void 0,
+        false,
+        {
+          fileName: "/home/dabit/4daysweekjobs/resources/js/Pages/PostJob.jsx",
+          lineNumber: 52,
+          columnNumber: 17
+        },
+        void 0
+      ),
+      /* @__PURE__ */ jsxDEV("meta", { name: "twitter:card", content: "summary_large_image" }, void 0, false, {
+        fileName: "/home/dabit/4daysweekjobs/resources/js/Pages/PostJob.jsx",
+        lineNumber: 58,
+        columnNumber: 17
+      }, void 0),
+      /* @__PURE__ */ jsxDEV(
+        "meta",
+        {
+          name: "twitter:title",
+          content: "Post a 4-Day Week Tech Job | 4daystechjobs"
+        },
+        void 0,
+        false,
+        {
+          fileName: "/home/dabit/4daysweekjobs/resources/js/Pages/PostJob.jsx",
+          lineNumber: 59,
+          columnNumber: 17
+        },
+        void 0
+      ),
+      /* @__PURE__ */ jsxDEV(
+        "meta",
+        {
+          name: "twitter:description",
+          content: "Reach tech professionals seeking work-life balance. Post your 4-day week job openings on our specialized job board."
+        },
+        void 0,
+        false,
+        {
+          fileName: "/home/dabit/4daysweekjobs/resources/js/Pages/PostJob.jsx",
+          lineNumber: 63,
+          columnNumber: 17
+        },
+        void 0
+      ),
+      /* @__PURE__ */ jsxDEV(
+        "meta",
+        {
+          name: "keywords",
+          content: "4-day week jobs, tech jobs, work-life balance, job posting, tech recruitment, flexible work"
+        },
+        void 0,
+        false,
+        {
+          fileName: "/home/dabit/4daysweekjobs/resources/js/Pages/PostJob.jsx",
+          lineNumber: 69,
+          columnNumber: 17
+        },
+        void 0
+      ),
+      /* @__PURE__ */ jsxDEV("meta", { name: "robots", content: "index, follow" }, void 0, false, {
+        fileName: "/home/dabit/4daysweekjobs/resources/js/Pages/PostJob.jsx",
+        lineNumber: 73,
+        columnNumber: 17
+      }, void 0),
+      /* @__PURE__ */ jsxDEV(
+        "link",
+        {
+          rel: "canonical",
+          href: "https://4daystechjobs.com/post-job"
+        },
+        void 0,
+        false,
+        {
+          fileName: "/home/dabit/4daysweekjobs/resources/js/Pages/PostJob.jsx",
+          lineNumber: 74,
+          columnNumber: 17
+        },
+        void 0
+      )
+    ] }, void 0, true, {
       fileName: "/home/dabit/4daysweekjobs/resources/js/Pages/PostJob.jsx",
       lineNumber: 35,
       columnNumber: 13
     }, void 0),
+    /* @__PURE__ */ jsxDEV(Header, { isLoggedIn, user }, void 0, false, {
+      fileName: "/home/dabit/4daysweekjobs/resources/js/Pages/PostJob.jsx",
+      lineNumber: 79,
+      columnNumber: 13
+    }, void 0),
     /* @__PURE__ */ jsxDEV("section", { className: "pt-20 md:pt-28 lg:pt-32 bg-gray-100 min-h-screen pb-20", children: /* @__PURE__ */ jsxDEV("div", { className: "container mx-auto px-4 sm:px-6 max-w-4xl", children: [
-      /* @__PURE__ */ jsxDEV("h2", { className: "text-3xl sm:text-5xl font-bold mb-8 text-gray-800 text-center", children: "Post a Job" }, void 0, false, {
+      /* @__PURE__ */ jsxDEV("h1", { className: "text-3xl sm:text-5xl font-bold mb-8 text-gray-800 text-center", children: "Post a Job" }, void 0, false, {
         fileName: "/home/dabit/4daysweekjobs/resources/js/Pages/PostJob.jsx",
-        lineNumber: 38,
+        lineNumber: 82,
         columnNumber: 21
       }, void 0),
       /* @__PURE__ */ jsxDEV("p", { className: "text-lg mb-12 text-center text-gray-600", children: "Use the form below to post a new job opening at your company. Please fill out all required fields and provide as much detail as possible to attract the best candidates." }, void 0, false, {
         fileName: "/home/dabit/4daysweekjobs/resources/js/Pages/PostJob.jsx",
-        lineNumber: 41,
+        lineNumber: 85,
         columnNumber: 21
       }, void 0),
       /* @__PURE__ */ jsxDEV("div", { className: "bg-white p-8 rounded-lg shadow-lg", children: /* @__PURE__ */ jsxDEV(
@@ -2429,14 +3700,17 @@ const JobPosting = ({ isLoggedIn, user }) => {
                   required: true,
                   placeholder: "Frontend Developer with React",
                   value: data.title,
-                  onChange: (e) => handleChangeInput("title", e.target.value),
+                  onChange: (e) => handleChangeInput(
+                    "title",
+                    e.target.value
+                  ),
                   error: errors.title
                 },
                 void 0,
                 false,
                 {
                   fileName: "/home/dabit/4daysweekjobs/resources/js/Pages/PostJob.jsx",
-                  lineNumber: 52,
+                  lineNumber: 99,
                   columnNumber: 33
                 },
                 void 0
@@ -2449,21 +3723,24 @@ const JobPosting = ({ isLoggedIn, user }) => {
                   required: true,
                   placeholder: "https://apply.example.com",
                   value: data.apply_url,
-                  onChange: (e) => handleChangeInput("apply_url", e.target.value),
+                  onChange: (e) => handleChangeInput(
+                    "apply_url",
+                    e.target.value
+                  ),
                   error: errors.apply_url
                 },
                 void 0,
                 false,
                 {
                   fileName: "/home/dabit/4daysweekjobs/resources/js/Pages/PostJob.jsx",
-                  lineNumber: 62,
+                  lineNumber: 114,
                   columnNumber: 33
                 },
                 void 0
               )
             ] }, void 0, true, {
               fileName: "/home/dabit/4daysweekjobs/resources/js/Pages/PostJob.jsx",
-              lineNumber: 51,
+              lineNumber: 98,
               columnNumber: 29
             }, void 0),
             /* @__PURE__ */ jsxDEV("div", { className: "grid grid-cols-1 md:grid-cols-2 gap-6", children: [
@@ -2474,11 +3751,12 @@ const JobPosting = ({ isLoggedIn, user }) => {
                     htmlFor: "four_day_week_type",
                     className: "block text-gray-700 font-bold mb-2",
                     children: [
-                      "4-Day Week Arrangement ",
+                      "4-Day Week Arrangement",
+                      " ",
                       /* @__PURE__ */ jsxDEV("span", { className: "text-red-500", children: "*" }, void 0, false, {
                         fileName: "/home/dabit/4daysweekjobs/resources/js/Pages/PostJob.jsx",
-                        lineNumber: 79,
-                        columnNumber: 64
+                        lineNumber: 137,
+                        columnNumber: 41
                       }, void 0)
                     ]
                   },
@@ -2486,7 +3764,7 @@ const JobPosting = ({ isLoggedIn, user }) => {
                   true,
                   {
                     fileName: "/home/dabit/4daysweekjobs/resources/js/Pages/PostJob.jsx",
-                    lineNumber: 75,
+                    lineNumber: 132,
                     columnNumber: 37
                   },
                   void 0
@@ -2498,51 +3776,54 @@ const JobPosting = ({ isLoggedIn, user }) => {
                     name: "four_day_week_type",
                     className: "w-full px-4 py-2 border rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-600",
                     required: true,
-                    onChange: (e) => handleChangeInput("four_day_arrangement", e.target.value),
+                    onChange: (e) => handleChangeInput(
+                      "four_day_arrangement",
+                      e.target.value
+                    ),
                     children: [
                       /* @__PURE__ */ jsxDEV("option", { value: "", children: "Select an option" }, void 0, false, {
                         fileName: "/home/dabit/4daysweekjobs/resources/js/Pages/PostJob.jsx",
-                        lineNumber: 88,
+                        lineNumber: 151,
                         columnNumber: 41
                       }, void 0),
                       /* @__PURE__ */ jsxDEV("option", { value: "standard", children: "Standard 4-day week (32 hours, no salary reduction)" }, void 0, false, {
                         fileName: "/home/dabit/4daysweekjobs/resources/js/Pages/PostJob.jsx",
-                        lineNumber: 89,
+                        lineNumber: 154,
                         columnNumber: 41
                       }, void 0),
                       /* @__PURE__ */ jsxDEV("option", { value: "compressed", children: "Compressed 4-day week (40 hours in 4 days)" }, void 0, false, {
                         fileName: "/home/dabit/4daysweekjobs/resources/js/Pages/PostJob.jsx",
-                        lineNumber: 90,
+                        lineNumber: 158,
                         columnNumber: 41
                       }, void 0),
                       /* @__PURE__ */ jsxDEV("option", { value: "80_percent", children: "80% time for 80% pay (32 hours, pro-rata salary)" }, void 0, false, {
                         fileName: "/home/dabit/4daysweekjobs/resources/js/Pages/PostJob.jsx",
-                        lineNumber: 91,
+                        lineNumber: 162,
                         columnNumber: 41
                       }, void 0),
                       /* @__PURE__ */ jsxDEV("option", { value: "9_day_fortnight", children: "9-day fortnight (every other Friday off)" }, void 0, false, {
                         fileName: "/home/dabit/4daysweekjobs/resources/js/Pages/PostJob.jsx",
-                        lineNumber: 92,
+                        lineNumber: 166,
                         columnNumber: 41
                       }, void 0),
                       /* @__PURE__ */ jsxDEV("option", { value: "flexible", children: "Flexible 4-day week (employee chooses their day off)" }, void 0, false, {
                         fileName: "/home/dabit/4daysweekjobs/resources/js/Pages/PostJob.jsx",
-                        lineNumber: 93,
+                        lineNumber: 170,
                         columnNumber: 41
                       }, void 0),
                       /* @__PURE__ */ jsxDEV("option", { value: "seasonal", children: "Seasonal 4-day week (e.g., summer months only)" }, void 0, false, {
                         fileName: "/home/dabit/4daysweekjobs/resources/js/Pages/PostJob.jsx",
-                        lineNumber: 94,
+                        lineNumber: 174,
                         columnNumber: 41
                       }, void 0),
                       /* @__PURE__ */ jsxDEV("option", { value: "gradual", children: "Gradual transition to 4-day week" }, void 0, false, {
                         fileName: "/home/dabit/4daysweekjobs/resources/js/Pages/PostJob.jsx",
-                        lineNumber: 95,
+                        lineNumber: 178,
                         columnNumber: 41
                       }, void 0),
                       /* @__PURE__ */ jsxDEV("option", { value: "trial", children: "Trial 4-day week (company is testing the concept)" }, void 0, false, {
                         fileName: "/home/dabit/4daysweekjobs/resources/js/Pages/PostJob.jsx",
-                        lineNumber: 96,
+                        lineNumber: 181,
                         columnNumber: 41
                       }, void 0)
                     ]
@@ -2551,19 +3832,19 @@ const JobPosting = ({ isLoggedIn, user }) => {
                   true,
                   {
                     fileName: "/home/dabit/4daysweekjobs/resources/js/Pages/PostJob.jsx",
-                    lineNumber: 81,
+                    lineNumber: 139,
                     columnNumber: 37
                   },
                   void 0
                 ),
                 errors.four_day_arrangement && /* @__PURE__ */ jsxDEV("span", { className: "text-red-600", children: errors.four_day_arrangement }, void 0, false, {
                   fileName: "/home/dabit/4daysweekjobs/resources/js/Pages/PostJob.jsx",
-                  lineNumber: 99,
+                  lineNumber: 187,
                   columnNumber: 41
                 }, void 0)
               ] }, void 0, true, {
                 fileName: "/home/dabit/4daysweekjobs/resources/js/Pages/PostJob.jsx",
-                lineNumber: 74,
+                lineNumber: 131,
                 columnNumber: 33
               }, void 0),
               /* @__PURE__ */ jsxDEV(
@@ -2573,21 +3854,24 @@ const JobPosting = ({ isLoggedIn, user }) => {
                   label: "Salary Range",
                   placeholder: "$100,000-$200,000, 50.000€-70.000€",
                   value: data.salary_range,
-                  onChange: (e) => handleChangeInput("salary_range", e.target.value),
+                  onChange: (e) => handleChangeInput(
+                    "salary_range",
+                    e.target.value
+                  ),
                   error: errors.salary_range
                 },
                 void 0,
                 false,
                 {
                   fileName: "/home/dabit/4daysweekjobs/resources/js/Pages/PostJob.jsx",
-                  lineNumber: 103,
+                  lineNumber: 193,
                   columnNumber: 33
                 },
                 void 0
               )
             ] }, void 0, true, {
               fileName: "/home/dabit/4daysweekjobs/resources/js/Pages/PostJob.jsx",
-              lineNumber: 73,
+              lineNumber: 130,
               columnNumber: 29
             }, void 0),
             /* @__PURE__ */ jsxDEV("div", { className: "grid grid-cols-1 md:grid-cols-2 gap-6", children: [
@@ -2598,46 +3882,63 @@ const JobPosting = ({ isLoggedIn, user }) => {
                   label: "Location",
                   placeholder: "New York City, USA",
                   value: data.location,
-                  onChange: (e) => handleChangeInput("location", e.target.value),
+                  onChange: (e) => handleChangeInput(
+                    "location",
+                    e.target.value
+                  ),
                   error: errors.location
                 },
                 void 0,
                 false,
                 {
                   fileName: "/home/dabit/4daysweekjobs/resources/js/Pages/PostJob.jsx",
-                  lineNumber: 114,
+                  lineNumber: 209,
                   columnNumber: 33
                 },
                 void 0
               ),
               /* @__PURE__ */ jsxDEV("div", { children: [
-                /* @__PURE__ */ jsxDEV("label", { htmlFor: "modality", className: "block text-gray-700 font-bold mb-2", children: "Modality" }, void 0, false, {
-                  fileName: "/home/dabit/4daysweekjobs/resources/js/Pages/PostJob.jsx",
-                  lineNumber: 124,
-                  columnNumber: 37
-                }, void 0),
+                /* @__PURE__ */ jsxDEV(
+                  "label",
+                  {
+                    htmlFor: "modality",
+                    className: "block text-gray-700 font-bold mb-2",
+                    children: "Modality"
+                  },
+                  void 0,
+                  false,
+                  {
+                    fileName: "/home/dabit/4daysweekjobs/resources/js/Pages/PostJob.jsx",
+                    lineNumber: 224,
+                    columnNumber: 37
+                  },
+                  void 0
+                ),
                 /* @__PURE__ */ jsxDEV(
                   "select",
                   {
                     id: "modality",
                     name: "modality",
                     value: data.modality,
-                    onChange: (e) => handleChangeInput("modality", e.target.value),
+                    onChange: (e) => handleChangeInput(
+                      "modality",
+                      e.target.value
+                    ),
                     className: "w-full px-4 py-2 border rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-600",
                     children: [
                       /* @__PURE__ */ jsxDEV("option", { value: "remote", children: "Remote" }, void 0, false, {
                         fileName: "/home/dabit/4daysweekjobs/resources/js/Pages/PostJob.jsx",
-                        lineNumber: 134,
+                        lineNumber: 242,
                         columnNumber: 41
                       }, void 0),
                       /* @__PURE__ */ jsxDEV("option", { value: "hybrid", children: "Hybrid" }, void 0, false, {
                         fileName: "/home/dabit/4daysweekjobs/resources/js/Pages/PostJob.jsx",
-                        lineNumber: 135,
+                        lineNumber: 243,
                         columnNumber: 41
                       }, void 0),
                       /* @__PURE__ */ jsxDEV("option", { value: "office", children: "Office" }, void 0, false, {
                         fileName: "/home/dabit/4daysweekjobs/resources/js/Pages/PostJob.jsx",
-                        lineNumber: 136,
+                        lineNumber: 244,
                         columnNumber: 41
                       }, void 0)
                     ]
@@ -2646,24 +3947,24 @@ const JobPosting = ({ isLoggedIn, user }) => {
                   true,
                   {
                     fileName: "/home/dabit/4daysweekjobs/resources/js/Pages/PostJob.jsx",
-                    lineNumber: 127,
+                    lineNumber: 230,
                     columnNumber: 37
                   },
                   void 0
                 ),
                 errors.modality && /* @__PURE__ */ jsxDEV("span", { className: "text-red-600 text-sm", children: errors.modality }, void 0, false, {
                   fileName: "/home/dabit/4daysweekjobs/resources/js/Pages/PostJob.jsx",
-                  lineNumber: 138,
-                  columnNumber: 57
+                  lineNumber: 247,
+                  columnNumber: 41
                 }, void 0)
               ] }, void 0, true, {
                 fileName: "/home/dabit/4daysweekjobs/resources/js/Pages/PostJob.jsx",
-                lineNumber: 123,
+                lineNumber: 223,
                 columnNumber: 33
               }, void 0)
             ] }, void 0, true, {
               fileName: "/home/dabit/4daysweekjobs/resources/js/Pages/PostJob.jsx",
-              lineNumber: 113,
+              lineNumber: 208,
               columnNumber: 29
             }, void 0),
             /* @__PURE__ */ jsxDEV("div", { className: "grid grid-cols-1 md:grid-cols-2 gap-6", children: [
@@ -2675,76 +3976,103 @@ const JobPosting = ({ isLoggedIn, user }) => {
                   required: true,
                   placeholder: "Your awesome company",
                   value: data.company_name,
-                  onChange: (e) => handleChangeInput("company_name", e.target.value),
+                  onChange: (e) => handleChangeInput(
+                    "company_name",
+                    e.target.value
+                  ),
                   error: errors.company_name
                 },
                 void 0,
                 false,
                 {
                   fileName: "/home/dabit/4daysweekjobs/resources/js/Pages/PostJob.jsx",
-                  lineNumber: 143,
+                  lineNumber: 255,
                   columnNumber: 33
                 },
                 void 0
               ),
               /* @__PURE__ */ jsxDEV("div", { children: [
-                /* @__PURE__ */ jsxDEV("label", { htmlFor: "company_logo", className: "block text-gray-700 font-bold mb-2", children: "Company Logo" }, void 0, false, {
-                  fileName: "/home/dabit/4daysweekjobs/resources/js/Pages/PostJob.jsx",
-                  lineNumber: 154,
-                  columnNumber: 37
-                }, void 0),
+                /* @__PURE__ */ jsxDEV(
+                  "label",
+                  {
+                    htmlFor: "company_logo",
+                    className: "block text-gray-700 font-bold mb-2",
+                    children: "Company Logo"
+                  },
+                  void 0,
+                  false,
+                  {
+                    fileName: "/home/dabit/4daysweekjobs/resources/js/Pages/PostJob.jsx",
+                    lineNumber: 271,
+                    columnNumber: 37
+                  },
+                  void 0
+                ),
                 /* @__PURE__ */ jsxDEV(
                   "input",
                   {
                     type: "file",
                     id: "company_logo",
                     name: "company_logo",
-                    onChange: (event) => handleChangeInput("company_logo", event.target.files[0]),
+                    onChange: (event) => handleChangeInput(
+                      "company_logo",
+                      event.target.files[0]
+                    ),
                     className: "w-full px-4 py-2 border rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-600"
                   },
                   void 0,
                   false,
                   {
                     fileName: "/home/dabit/4daysweekjobs/resources/js/Pages/PostJob.jsx",
-                    lineNumber: 157,
+                    lineNumber: 277,
                     columnNumber: 37
                   },
                   void 0
                 ),
                 errors.company_logo && /* @__PURE__ */ jsxDEV("span", { className: "text-red-600 text-sm", children: errors.company_logo }, void 0, false, {
                   fileName: "/home/dabit/4daysweekjobs/resources/js/Pages/PostJob.jsx",
-                  lineNumber: 165,
+                  lineNumber: 290,
                   columnNumber: 41
                 }, void 0)
               ] }, void 0, true, {
                 fileName: "/home/dabit/4daysweekjobs/resources/js/Pages/PostJob.jsx",
-                lineNumber: 153,
+                lineNumber: 270,
                 columnNumber: 33
               }, void 0)
             ] }, void 0, true, {
               fileName: "/home/dabit/4daysweekjobs/resources/js/Pages/PostJob.jsx",
-              lineNumber: 142,
+              lineNumber: 254,
               columnNumber: 29
             }, void 0),
-            !isLoggedIn && /* @__PURE__ */ jsxDEV(Signup, { errors, handleChangeInput }, void 0, false, {
-              fileName: "/home/dabit/4daysweekjobs/resources/js/Pages/PostJob.jsx",
-              lineNumber: 171,
-              columnNumber: 33
-            }, void 0),
+            !isLoggedIn && /* @__PURE__ */ jsxDEV(
+              Signup,
+              {
+                errors,
+                handleChangeInput
+              },
+              void 0,
+              false,
+              {
+                fileName: "/home/dabit/4daysweekjobs/resources/js/Pages/PostJob.jsx",
+                lineNumber: 298,
+                columnNumber: 33
+              },
+              void 0
+            ),
             /* @__PURE__ */ jsxDEV("div", { className: "mt-8", children: [
               /* @__PURE__ */ jsxDEV("h3", { className: "text-lg font-semibold mb-2", children: "Preview:" }, void 0, false, {
                 fileName: "/home/dabit/4daysweekjobs/resources/js/Pages/PostJob.jsx",
-                lineNumber: 175,
+                lineNumber: 305,
                 columnNumber: 33
               }, void 0),
               /* @__PURE__ */ jsxDEV(JobCard, { post: data }, void 0, false, {
                 fileName: "/home/dabit/4daysweekjobs/resources/js/Pages/PostJob.jsx",
-                lineNumber: 176,
+                lineNumber: 308,
                 columnNumber: 33
               }, void 0)
             ] }, void 0, true, {
               fileName: "/home/dabit/4daysweekjobs/resources/js/Pages/PostJob.jsx",
-              lineNumber: 174,
+              lineNumber: 304,
               columnNumber: 29
             }, void 0),
             /* @__PURE__ */ jsxDEV("div", { className: "text-center mt-8", children: /* @__PURE__ */ jsxDEV(
@@ -2759,13 +4087,13 @@ const JobPosting = ({ isLoggedIn, user }) => {
               false,
               {
                 fileName: "/home/dabit/4daysweekjobs/resources/js/Pages/PostJob.jsx",
-                lineNumber: 180,
+                lineNumber: 312,
                 columnNumber: 33
               },
               void 0
             ) }, void 0, false, {
               fileName: "/home/dabit/4daysweekjobs/resources/js/Pages/PostJob.jsx",
-              lineNumber: 179,
+              lineNumber: 311,
               columnNumber: 29
             }, void 0)
           ]
@@ -2774,42 +4102,56 @@ const JobPosting = ({ isLoggedIn, user }) => {
         true,
         {
           fileName: "/home/dabit/4daysweekjobs/resources/js/Pages/PostJob.jsx",
-          lineNumber: 45,
+          lineNumber: 92,
           columnNumber: 25
         },
         void 0
       ) }, void 0, false, {
         fileName: "/home/dabit/4daysweekjobs/resources/js/Pages/PostJob.jsx",
-        lineNumber: 44,
+        lineNumber: 91,
         columnNumber: 21
       }, void 0)
     ] }, void 0, true, {
       fileName: "/home/dabit/4daysweekjobs/resources/js/Pages/PostJob.jsx",
-      lineNumber: 37,
+      lineNumber: 81,
       columnNumber: 17
     }, void 0) }, void 0, false, {
       fileName: "/home/dabit/4daysweekjobs/resources/js/Pages/PostJob.jsx",
-      lineNumber: 36,
+      lineNumber: 80,
+      columnNumber: 13
+    }, void 0),
+    /* @__PURE__ */ jsxDEV(Footer, {}, void 0, false, {
+      fileName: "/home/dabit/4daysweekjobs/resources/js/Pages/PostJob.jsx",
+      lineNumber: 326,
       columnNumber: 13
     }, void 0)
   ] }, void 0, true, {
     fileName: "/home/dabit/4daysweekjobs/resources/js/Pages/PostJob.jsx",
-    lineNumber: 33,
+    lineNumber: 34,
     columnNumber: 9
   }, void 0);
 };
-const InputField = ({ id, label, required, placeholder, value, onChange, error, className = "" }) => /* @__PURE__ */ jsxDEV("div", { className, children: [
+const InputField = ({
+  id,
+  label,
+  required,
+  placeholder,
+  value,
+  onChange,
+  error,
+  className = ""
+}) => /* @__PURE__ */ jsxDEV("div", { className, children: [
   /* @__PURE__ */ jsxDEV("label", { htmlFor: id, className: "block text-gray-700 font-bold mb-2", children: [
     label,
     " ",
     required && /* @__PURE__ */ jsxDEV("span", { className: "text-red-500", children: "*" }, void 0, false, {
       fileName: "/home/dabit/4daysweekjobs/resources/js/Pages/PostJob.jsx",
-      lineNumber: 199,
+      lineNumber: 343,
       columnNumber: 34
     }, void 0)
   ] }, void 0, true, {
     fileName: "/home/dabit/4daysweekjobs/resources/js/Pages/PostJob.jsx",
-    lineNumber: 198,
+    lineNumber: 342,
     columnNumber: 9
   }, void 0),
   /* @__PURE__ */ jsxDEV(
@@ -2828,22 +4170,22 @@ const InputField = ({ id, label, required, placeholder, value, onChange, error, 
     false,
     {
       fileName: "/home/dabit/4daysweekjobs/resources/js/Pages/PostJob.jsx",
-      lineNumber: 201,
+      lineNumber: 345,
       columnNumber: 9
     },
     void 0
   ),
   error && /* @__PURE__ */ jsxDEV("span", { className: "text-red-600 text-sm", children: error }, void 0, false, {
     fileName: "/home/dabit/4daysweekjobs/resources/js/Pages/PostJob.jsx",
-    lineNumber: 211,
+    lineNumber: 355,
     columnNumber: 19
   }, void 0)
 ] }, void 0, true, {
   fileName: "/home/dabit/4daysweekjobs/resources/js/Pages/PostJob.jsx",
-  lineNumber: 197,
+  lineNumber: 341,
   columnNumber: 5
 }, void 0);
-const __vite_glob_0_9 = /* @__PURE__ */ Object.freeze(/* @__PURE__ */ Object.defineProperty({
+const __vite_glob_0_11 = /* @__PURE__ */ Object.freeze(/* @__PURE__ */ Object.defineProperty({
   __proto__: null,
   default: JobPosting
 }, Symbol.toStringTag, { value: "Module" }));
@@ -3143,7 +4485,7 @@ function DeleteUserForm({ className = "" }) {
     columnNumber: 3
   }, this);
 }
-const __vite_glob_0_11 = /* @__PURE__ */ Object.freeze(/* @__PURE__ */ Object.defineProperty({
+const __vite_glob_0_13 = /* @__PURE__ */ Object.freeze(/* @__PURE__ */ Object.defineProperty({
   __proto__: null,
   default: DeleteUserForm
 }, Symbol.toStringTag, { value: "Module" }));
@@ -3352,7 +4694,7 @@ function UpdatePasswordForm({ className = "" }) {
     columnNumber: 3
   }, this);
 }
-const __vite_glob_0_12 = /* @__PURE__ */ Object.freeze(/* @__PURE__ */ Object.defineProperty({
+const __vite_glob_0_14 = /* @__PURE__ */ Object.freeze(/* @__PURE__ */ Object.defineProperty({
   __proto__: null,
   default: UpdatePasswordForm
 }, Symbol.toStringTag, { value: "Module" }));
@@ -3541,7 +4883,7 @@ function UpdateProfileInformation({
     columnNumber: 3
   }, this);
 }
-const __vite_glob_0_13 = /* @__PURE__ */ Object.freeze(/* @__PURE__ */ Object.defineProperty({
+const __vite_glob_0_15 = /* @__PURE__ */ Object.freeze(/* @__PURE__ */ Object.defineProperty({
   __proto__: null,
   default: UpdateProfileInformation
 }, Symbol.toStringTag, { value: "Module" }));
@@ -3621,32 +4963,330 @@ function Edit({ auth, mustVerifyEmail, status }) {
     this
   );
 }
-const __vite_glob_0_10 = /* @__PURE__ */ Object.freeze(/* @__PURE__ */ Object.defineProperty({
+const __vite_glob_0_12 = /* @__PURE__ */ Object.freeze(/* @__PURE__ */ Object.defineProperty({
   __proto__: null,
   default: Edit
 }, Symbol.toStringTag, { value: "Module" }));
+const TechnologySelector = ({ technologies, onChange, error }) => {
+  return /* @__PURE__ */ jsxDEV("div", { children: [
+    /* @__PURE__ */ jsxDEV(
+      "label",
+      {
+        htmlFor: "technologies",
+        className: "block text-gray-700 font-bold mb-2",
+        children: "Technologies (up to 4)"
+      },
+      void 0,
+      false,
+      {
+        fileName: "/home/dabit/4daysweekjobs/resources/js/Pages/TechnologiesSelector.jsx",
+        lineNumber: 4,
+        columnNumber: 13
+      },
+      void 0
+    ),
+    /* @__PURE__ */ jsxDEV(
+      "select",
+      {
+        id: "technologies",
+        multiple: true,
+        value: technologies,
+        onChange,
+        className: "w-full px-4 py-2 border rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-600",
+        children: [
+          /* @__PURE__ */ jsxDEV("option", { value: "react", children: "React" }, void 0, false, {
+            fileName: "/home/dabit/4daysweekjobs/resources/js/Pages/TechnologiesSelector.jsx",
+            lineNumber: 17,
+            columnNumber: 17
+          }, void 0),
+          /* @__PURE__ */ jsxDEV("option", { value: "vue", children: "Vue" }, void 0, false, {
+            fileName: "/home/dabit/4daysweekjobs/resources/js/Pages/TechnologiesSelector.jsx",
+            lineNumber: 18,
+            columnNumber: 17
+          }, void 0),
+          /* @__PURE__ */ jsxDEV("option", { value: "angular", children: "Angular" }, void 0, false, {
+            fileName: "/home/dabit/4daysweekjobs/resources/js/Pages/TechnologiesSelector.jsx",
+            lineNumber: 19,
+            columnNumber: 17
+          }, void 0),
+          /* @__PURE__ */ jsxDEV("option", { value: "nodejs", children: "Node.js" }, void 0, false, {
+            fileName: "/home/dabit/4daysweekjobs/resources/js/Pages/TechnologiesSelector.jsx",
+            lineNumber: 20,
+            columnNumber: 17
+          }, void 0),
+          /* @__PURE__ */ jsxDEV("option", { value: "python", children: "Python" }, void 0, false, {
+            fileName: "/home/dabit/4daysweekjobs/resources/js/Pages/TechnologiesSelector.jsx",
+            lineNumber: 21,
+            columnNumber: 17
+          }, void 0),
+          /* @__PURE__ */ jsxDEV("option", { value: "java", children: "Java" }, void 0, false, {
+            fileName: "/home/dabit/4daysweekjobs/resources/js/Pages/TechnologiesSelector.jsx",
+            lineNumber: 22,
+            columnNumber: 17
+          }, void 0),
+          /* @__PURE__ */ jsxDEV("option", { value: "ruby", children: "Ruby" }, void 0, false, {
+            fileName: "/home/dabit/4daysweekjobs/resources/js/Pages/TechnologiesSelector.jsx",
+            lineNumber: 23,
+            columnNumber: 17
+          }, void 0),
+          /* @__PURE__ */ jsxDEV("option", { value: "php", children: "PHP" }, void 0, false, {
+            fileName: "/home/dabit/4daysweekjobs/resources/js/Pages/TechnologiesSelector.jsx",
+            lineNumber: 24,
+            columnNumber: 17
+          }, void 0)
+        ]
+      },
+      void 0,
+      true,
+      {
+        fileName: "/home/dabit/4daysweekjobs/resources/js/Pages/TechnologiesSelector.jsx",
+        lineNumber: 10,
+        columnNumber: 13
+      },
+      void 0
+    ),
+    error && /* @__PURE__ */ jsxDEV("span", { className: "text-red-600 text-sm", children: error }, void 0, false, {
+      fileName: "/home/dabit/4daysweekjobs/resources/js/Pages/TechnologiesSelector.jsx",
+      lineNumber: 26,
+      columnNumber: 23
+    }, void 0)
+  ] }, void 0, true, {
+    fileName: "/home/dabit/4daysweekjobs/resources/js/Pages/TechnologiesSelector.jsx",
+    lineNumber: 3,
+    columnNumber: 9
+  }, void 0);
+};
+const __vite_glob_0_17 = /* @__PURE__ */ Object.freeze(/* @__PURE__ */ Object.defineProperty({
+  __proto__: null,
+  default: TechnologySelector
+}, Symbol.toStringTag, { value: "Module" }));
 function Index({ auth, posts, isLoggedIn }) {
+  const metaDescription = "Discover 4-day work week tech jobs. Explore career opportunities with extended weekends at innovative companies. Find work-life balance in the tech industry.";
+  const canonicalUrl = "https://4daystechjobs.com";
+  const description = "Elevate your work-life balance with a 4-day work week in tech. Find remote jobs worldwide offering full pay for 32-hour weeks. Join the future of work today!";
+  const siteUrl = canonicalUrl;
   return /* @__PURE__ */ jsxDEV(Fragment, { children: [
-    /* @__PURE__ */ jsxDEV(Head, { title: "4 days week tech jobs" }, void 0, false, {
+    /* @__PURE__ */ jsxDEV(Head, { children: [
+      /* @__PURE__ */ jsxDEV("title", { children: "4-Day Work Week Tech Jobs | Find Balance in Your Career" }, void 0, false, {
+        fileName: "/home/dabit/4daysweekjobs/resources/js/Pages/Welcome.jsx",
+        lineNumber: 19,
+        columnNumber: 17
+      }, this),
+      /* @__PURE__ */ jsxDEV("meta", { name: "description", content: metaDescription }, void 0, false, {
+        fileName: "/home/dabit/4daysweekjobs/resources/js/Pages/Welcome.jsx",
+        lineNumber: 22,
+        columnNumber: 17
+      }, this),
+      /* @__PURE__ */ jsxDEV(
+        "meta",
+        {
+          name: "keywords",
+          content: "4-day work week, tech jobs, work-life balance, software engineering, IT careers, flexible work, 32-hour week"
+        },
+        void 0,
+        false,
+        {
+          fileName: "/home/dabit/4daysweekjobs/resources/js/Pages/Welcome.jsx",
+          lineNumber: 23,
+          columnNumber: 17
+        },
+        this
+      ),
+      /* @__PURE__ */ jsxDEV("link", { rel: "canonical", href: canonicalUrl }, void 0, false, {
+        fileName: "/home/dabit/4daysweekjobs/resources/js/Pages/Welcome.jsx",
+        lineNumber: 27,
+        columnNumber: 17
+      }, this),
+      /* @__PURE__ */ jsxDEV(
+        "meta",
+        {
+          property: "og:title",
+          content: "4-Day Work Week Tech Jobs | Find Balance in Your Career"
+        },
+        void 0,
+        false,
+        {
+          fileName: "/home/dabit/4daysweekjobs/resources/js/Pages/Welcome.jsx",
+          lineNumber: 30,
+          columnNumber: 17
+        },
+        this
+      ),
+      /* @__PURE__ */ jsxDEV("meta", { property: "og:description", content: metaDescription }, void 0, false, {
+        fileName: "/home/dabit/4daysweekjobs/resources/js/Pages/Welcome.jsx",
+        lineNumber: 34,
+        columnNumber: 17
+      }, this),
+      /* @__PURE__ */ jsxDEV("meta", { property: "og:type", content: "website" }, void 0, false, {
+        fileName: "/home/dabit/4daysweekjobs/resources/js/Pages/Welcome.jsx",
+        lineNumber: 35,
+        columnNumber: 17
+      }, this),
+      /* @__PURE__ */ jsxDEV("meta", { property: "og:url", content: canonicalUrl }, void 0, false, {
+        fileName: "/home/dabit/4daysweekjobs/resources/js/Pages/Welcome.jsx",
+        lineNumber: 36,
+        columnNumber: 17
+      }, this),
+      /* @__PURE__ */ jsxDEV(
+        "meta",
+        {
+          property: "og:image",
+          content: `${canonicalUrl}/og-image.jpg`
+        },
+        void 0,
+        false,
+        {
+          fileName: "/home/dabit/4daysweekjobs/resources/js/Pages/Welcome.jsx",
+          lineNumber: 37,
+          columnNumber: 17
+        },
+        this
+      ),
+      /* @__PURE__ */ jsxDEV("meta", { name: "twitter:card", content: "summary_large_image" }, void 0, false, {
+        fileName: "/home/dabit/4daysweekjobs/resources/js/Pages/Welcome.jsx",
+        lineNumber: 43,
+        columnNumber: 17
+      }, this),
+      /* @__PURE__ */ jsxDEV(
+        "meta",
+        {
+          name: "twitter:title",
+          content: "4-Day Work Week Tech Jobs | Find Balance in Your Career"
+        },
+        void 0,
+        false,
+        {
+          fileName: "/home/dabit/4daysweekjobs/resources/js/Pages/Welcome.jsx",
+          lineNumber: 44,
+          columnNumber: 17
+        },
+        this
+      ),
+      /* @__PURE__ */ jsxDEV("meta", { name: "twitter:description", content: metaDescription }, void 0, false, {
+        fileName: "/home/dabit/4daysweekjobs/resources/js/Pages/Welcome.jsx",
+        lineNumber: 48,
+        columnNumber: 17
+      }, this),
+      /* @__PURE__ */ jsxDEV(
+        "meta",
+        {
+          name: "twitter:image",
+          content: `${canonicalUrl}/twitter-image.jpg`
+        },
+        void 0,
+        false,
+        {
+          fileName: "/home/dabit/4daysweekjobs/resources/js/Pages/Welcome.jsx",
+          lineNumber: 49,
+          columnNumber: 17
+        },
+        this
+      ),
+      /* @__PURE__ */ jsxDEV(
+        "meta",
+        {
+          name: "robots",
+          content: "index, follow, max-image-preview:large, max-snippet:-1, max-video-preview:-1"
+        },
+        void 0,
+        false,
+        {
+          fileName: "/home/dabit/4daysweekjobs/resources/js/Pages/Welcome.jsx",
+          lineNumber: 55,
+          columnNumber: 17
+        },
+        this
+      ),
+      /* @__PURE__ */ jsxDEV("meta", { name: "googlebot", content: "index, follow" }, void 0, false, {
+        fileName: "/home/dabit/4daysweekjobs/resources/js/Pages/Welcome.jsx",
+        lineNumber: 59,
+        columnNumber: 17
+      }, this),
+      /* @__PURE__ */ jsxDEV("meta", { name: "bingbot", content: "index, follow" }, void 0, false, {
+        fileName: "/home/dabit/4daysweekjobs/resources/js/Pages/Welcome.jsx",
+        lineNumber: 60,
+        columnNumber: 17
+      }, this),
+      /* @__PURE__ */ jsxDEV("meta", { name: "application-name", content: "4-Day Week Tech Jobs" }, void 0, false, {
+        fileName: "/home/dabit/4daysweekjobs/resources/js/Pages/Welcome.jsx",
+        lineNumber: 61,
+        columnNumber: 17
+      }, this),
+      /* @__PURE__ */ jsxDEV(
+        "meta",
+        {
+          name: "apple-mobile-web-app-title",
+          content: "4-Day Week Tech Jobs"
+        },
+        void 0,
+        false,
+        {
+          fileName: "/home/dabit/4daysweekjobs/resources/js/Pages/Welcome.jsx",
+          lineNumber: 62,
+          columnNumber: 17
+        },
+        this
+      ),
+      /* @__PURE__ */ jsxDEV("meta", { name: "author", content: "Your Company Name" }, void 0, false, {
+        fileName: "/home/dabit/4daysweekjobs/resources/js/Pages/Welcome.jsx",
+        lineNumber: 66,
+        columnNumber: 17
+      }, this),
+      /* @__PURE__ */ jsxDEV(
+        "meta",
+        {
+          name: "viewport",
+          content: "width=device-width, initial-scale=1.0"
+        },
+        void 0,
+        false,
+        {
+          fileName: "/home/dabit/4daysweekjobs/resources/js/Pages/Welcome.jsx",
+          lineNumber: 67,
+          columnNumber: 17
+        },
+        this
+      ),
+      /* @__PURE__ */ jsxDEV("script", { type: "application/ld+json", children: JSON.stringify({
+        "@context": "https://schema.org",
+        "@type": "JobPosting",
+        name: "4 Day Work Week Tech Jobs",
+        description,
+        datePosted: (/* @__PURE__ */ new Date()).toISOString(),
+        employmentType: "FULL_TIME",
+        jobLocationType: "TELECOMMUTE",
+        hiringOrganization: {
+          "@type": "Organization",
+          name: "YourSite.io",
+          sameAs: siteUrl
+        },
+        jobBenefits: "4 day work week, Full pay for 32 hours",
+        workHours: "32 hours per week"
+      }) }, void 0, false, {
+        fileName: "/home/dabit/4daysweekjobs/resources/js/Pages/Welcome.jsx",
+        lineNumber: 73,
+        columnNumber: 17
+      }, this)
+    ] }, void 0, true, {
       fileName: "/home/dabit/4daysweekjobs/resources/js/Pages/Welcome.jsx",
-      lineNumber: 11,
-      columnNumber: 4
+      lineNumber: 18,
+      columnNumber: 13
     }, this),
     /* @__PURE__ */ jsxDEV(Header, { user: auth.user, isLoggedIn }, void 0, false, {
       fileName: "/home/dabit/4daysweekjobs/resources/js/Pages/Welcome.jsx",
-      lineNumber: 12,
-      columnNumber: 4
+      lineNumber: 92,
+      columnNumber: 13
     }, this),
     /* @__PURE__ */ jsxDEV("section", { className: "bg-gradient-to-r from-blue-500 to-blue-600 text-white pb-20 pt-20", children: /* @__PURE__ */ jsxDEV("div", { className: "container max-w-5xl px-6 text-center", children: [
       /* @__PURE__ */ jsxDEV("h1", { className: "text-5xl font-bold mb-2", children: "Tech Careers with 3-Day Weekends" }, void 0, false, {
         fileName: "/home/dabit/4daysweekjobs/resources/js/Pages/Welcome.jsx",
-        lineNumber: 15,
-        columnNumber: 6
+        lineNumber: 95,
+        columnNumber: 21
       }, this),
       /* @__PURE__ */ jsxDEV("p", { className: "text-2xl mb-8", children: "Explore Jobs at Companies Pioneering the 4-Day Work Week" }, void 0, false, {
         fileName: "/home/dabit/4daysweekjobs/resources/js/Pages/Welcome.jsx",
-        lineNumber: 16,
-        columnNumber: 6
+        lineNumber: 98,
+        columnNumber: 21
       }, this),
       /* @__PURE__ */ jsxDEV(
         Link,
@@ -3656,12 +5296,12 @@ function Index({ auth, posts, isLoggedIn }) {
           children: [
             /* @__PURE__ */ jsxDEV(FontAwesomeIcon, { icon: faBriefcase }, void 0, false, {
               fileName: "/home/dabit/4daysweekjobs/resources/js/Pages/Welcome.jsx",
-              lineNumber: 23,
+              lineNumber: 105,
               columnNumber: 25
             }, this),
             /* @__PURE__ */ jsxDEV("span", { className: "ml-3", children: "Post a Job" }, void 0, false, {
               fileName: "/home/dabit/4daysweekjobs/resources/js/Pages/Welcome.jsx",
-              lineNumber: 24,
+              lineNumber: 106,
               columnNumber: 25
             }, this)
           ]
@@ -3670,45 +5310,46 @@ function Index({ auth, posts, isLoggedIn }) {
         true,
         {
           fileName: "/home/dabit/4daysweekjobs/resources/js/Pages/Welcome.jsx",
-          lineNumber: 19,
-          columnNumber: 6
+          lineNumber: 101,
+          columnNumber: 21
         },
         this
       )
     ] }, void 0, true, {
       fileName: "/home/dabit/4daysweekjobs/resources/js/Pages/Welcome.jsx",
-      lineNumber: 14,
-      columnNumber: 5
+      lineNumber: 94,
+      columnNumber: 17
     }, this) }, void 0, false, {
       fileName: "/home/dabit/4daysweekjobs/resources/js/Pages/Welcome.jsx",
-      lineNumber: 13,
-      columnNumber: 4
+      lineNumber: 93,
+      columnNumber: 13
     }, this),
     /* @__PURE__ */ jsxDEV("section", { id: "jobs", className: "py-12 bg-gray-50", children: /* @__PURE__ */ jsxDEV("div", { className: "container max-w-4xl ", children: [
-      /* @__PURE__ */ jsxDEV("h2", { className: "text-3xl font-bold mb-6 text-gray-700 text-center", children: posts.data.length ? "Latest Jobs" : "No jobs were found" }, void 0, false, {
+      /* @__PURE__ */ jsxDEV("h2", { className: "text-3xl font-bold mb-6 text-gray-700 text-center", children: posts.data.length ? "Latest Jobs" : "No jobs found" }, void 0, false, {
         fileName: "/home/dabit/4daysweekjobs/resources/js/Pages/Welcome.jsx",
-        lineNumber: 30,
-        columnNumber: 6
+        lineNumber: 112,
+        columnNumber: 21
       }, this),
       /* @__PURE__ */ jsxDEV("div", { className: "flex flex-col min-h-screen", children: posts.data.map((post) => /* @__PURE__ */ jsxDEV(JobCard, { post }, post.id, false, {
         fileName: "/home/dabit/4daysweekjobs/resources/js/Pages/Welcome.jsx",
-        lineNumber: 35,
-        columnNumber: 8
+        lineNumber: 117,
+        columnNumber: 29
       }, this)) }, void 0, false, {
         fileName: "/home/dabit/4daysweekjobs/resources/js/Pages/Welcome.jsx",
-        lineNumber: 33,
-        columnNumber: 6
+        lineNumber: 115,
+        columnNumber: 21
       }, this),
       /* @__PURE__ */ jsxDEV("div", { className: "flex items-center justify-between mt-6", children: [
         /* @__PURE__ */ jsxDEV("span", { children: [
           "Showing page ",
           posts.current_page,
-          " of ",
+          " of",
+          " ",
           posts.last_page
         ] }, void 0, true, {
           fileName: "/home/dabit/4daysweekjobs/resources/js/Pages/Welcome.jsx",
-          lineNumber: 39,
-          columnNumber: 7
+          lineNumber: 121,
+          columnNumber: 25
         }, this),
         /* @__PURE__ */ jsxDEV("div", { className: "flex space-x-4", children: [
           posts.prev_page_url && /* @__PURE__ */ jsxDEV(
@@ -3722,8 +5363,8 @@ function Index({ auth, posts, isLoggedIn }) {
             false,
             {
               fileName: "/home/dabit/4daysweekjobs/resources/js/Pages/Welcome.jsx",
-              lineNumber: 44,
-              columnNumber: 9
+              lineNumber: 127,
+              columnNumber: 33
             },
             this
           ),
@@ -3738,37 +5379,42 @@ function Index({ auth, posts, isLoggedIn }) {
             false,
             {
               fileName: "/home/dabit/4daysweekjobs/resources/js/Pages/Welcome.jsx",
-              lineNumber: 52,
-              columnNumber: 9
+              lineNumber: 138,
+              columnNumber: 33
             },
             this
           )
         ] }, void 0, true, {
           fileName: "/home/dabit/4daysweekjobs/resources/js/Pages/Welcome.jsx",
-          lineNumber: 42,
-          columnNumber: 7
+          lineNumber: 125,
+          columnNumber: 25
         }, this)
       ] }, void 0, true, {
         fileName: "/home/dabit/4daysweekjobs/resources/js/Pages/Welcome.jsx",
-        lineNumber: 38,
-        columnNumber: 6
+        lineNumber: 120,
+        columnNumber: 21
       }, this)
     ] }, void 0, true, {
       fileName: "/home/dabit/4daysweekjobs/resources/js/Pages/Welcome.jsx",
-      lineNumber: 29,
-      columnNumber: 5
+      lineNumber: 111,
+      columnNumber: 17
     }, this) }, void 0, false, {
       fileName: "/home/dabit/4daysweekjobs/resources/js/Pages/Welcome.jsx",
-      lineNumber: 28,
-      columnNumber: 4
+      lineNumber: 110,
+      columnNumber: 13
+    }, this),
+    /* @__PURE__ */ jsxDEV(Footer, {}, void 0, false, {
+      fileName: "/home/dabit/4daysweekjobs/resources/js/Pages/Welcome.jsx",
+      lineNumber: 152,
+      columnNumber: 13
     }, this)
   ] }, void 0, true, {
     fileName: "/home/dabit/4daysweekjobs/resources/js/Pages/Welcome.jsx",
-    lineNumber: 10,
-    columnNumber: 3
+    lineNumber: 17,
+    columnNumber: 9
   }, this);
 }
-const __vite_glob_0_15 = /* @__PURE__ */ Object.freeze(/* @__PURE__ */ Object.defineProperty({
+const __vite_glob_0_18 = /* @__PURE__ */ Object.freeze(/* @__PURE__ */ Object.defineProperty({
   __proto__: null,
   default: Index
 }, Symbol.toStringTag, { value: "Module" }));
@@ -3777,13 +5423,17 @@ createServer(
     page,
     render: ReactDOMServer.renderToString,
     resolve: (name) => {
-      const pages = /* @__PURE__ */ Object.assign({ "./Pages/Auth/ConfirmPassword.jsx": __vite_glob_0_0, "./Pages/Auth/ForgotPassword.jsx": __vite_glob_0_1, "./Pages/Auth/Login.jsx": __vite_glob_0_2, "./Pages/Auth/Register.jsx": __vite_glob_0_3, "./Pages/Auth/ResetPassword.jsx": __vite_glob_0_4, "./Pages/Auth/VerifyEmail.jsx": __vite_glob_0_5, "./Pages/Dashboard.jsx": __vite_glob_0_6, "./Pages/Payments/Error.jsx": __vite_glob_0_7, "./Pages/Payments/Success.jsx": __vite_glob_0_8, "./Pages/PostJob.jsx": __vite_glob_0_9, "./Pages/Profile/Edit.jsx": __vite_glob_0_10, "./Pages/Profile/Partials/DeleteUserForm.jsx": __vite_glob_0_11, "./Pages/Profile/Partials/UpdatePasswordForm.jsx": __vite_glob_0_12, "./Pages/Profile/Partials/UpdateProfileInformationForm.jsx": __vite_glob_0_13, "./Pages/Signup.jsx": __vite_glob_0_14, "./Pages/Welcome.jsx": __vite_glob_0_15 });
+      const pages = /* @__PURE__ */ Object.assign({ "./Pages/AboutUs.jsx": __vite_glob_0_0, "./Pages/Auth/ConfirmPassword.jsx": __vite_glob_0_1, "./Pages/Auth/ForgotPassword.jsx": __vite_glob_0_2, "./Pages/Auth/Login.jsx": __vite_glob_0_3, "./Pages/Auth/Register.jsx": __vite_glob_0_4, "./Pages/Auth/ResetPassword.jsx": __vite_glob_0_5, "./Pages/Auth/VerifyEmail.jsx": __vite_glob_0_6, "./Pages/Dashboard.jsx": __vite_glob_0_7, "./Pages/JobDetails.jsx": __vite_glob_0_8, "./Pages/Payments/Error.jsx": __vite_glob_0_9, "./Pages/Payments/Success.jsx": __vite_glob_0_10, "./Pages/PostJob.jsx": __vite_glob_0_11, "./Pages/Profile/Edit.jsx": __vite_glob_0_12, "./Pages/Profile/Partials/DeleteUserForm.jsx": __vite_glob_0_13, "./Pages/Profile/Partials/UpdatePasswordForm.jsx": __vite_glob_0_14, "./Pages/Profile/Partials/UpdateProfileInformationForm.jsx": __vite_glob_0_15, "./Pages/Signup.jsx": __vite_glob_0_16, "./Pages/TechnologiesSelector.jsx": __vite_glob_0_17, "./Pages/Welcome.jsx": __vite_glob_0_18 });
       return pages[`./Pages/${name}.jsx`];
     },
-    setup: ({ App, props }) => /* @__PURE__ */ jsxDEV(App, { ...props }, void 0, false, {
-      fileName: "/home/dabit/4daysweekjobs/resources/js/ssr.jsx",
-      lineNumber: 14,
-      columnNumber: 32
-    }, void 0)
+    setup: ({ el, App, props }) => {
+      ReactGA.initialize("G-V4GZWF4FY2");
+      const root = createRoot(el);
+      root.render(/* @__PURE__ */ jsxDEV(App, { ...props }, void 0, false, {
+        fileName: "/home/dabit/4daysweekjobs/resources/js/ssr.jsx",
+        lineNumber: 18,
+        columnNumber: 25
+      }, void 0));
+    }
   })
 );

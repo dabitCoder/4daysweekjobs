@@ -1,4 +1,3 @@
-import React from "react";
 import { Head, Link } from "@inertiajs/react";
 import JobCard from "@/Components/JobCard.jsx";
 import Header from "@/Components/Header.jsx";
@@ -95,7 +94,7 @@ export default function Index({ auth, posts, isLoggedIn }) {
                 <div className="container max-w-5xl px-6 text-center">
                     <h1 className="text-5xl font-bold mb-2">
                         Tech Careers with 3-Day Weekends
-                </h1>
+                    </h1>
                     <p className="text-2xl mb-8">
                         Explore Jobs at Companies Pioneering the 4-Day Work Week
                     </p>

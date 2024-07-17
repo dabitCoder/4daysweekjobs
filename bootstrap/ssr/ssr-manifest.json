@@ -2,6 +2,7 @@
   "resources/js/Components/Checkbox.jsx": [],
   "resources/js/Components/DangerButton.jsx": [],
   "resources/js/Components/Dropdown.jsx": [],
+  "resources/js/Components/Footer.jsx": [],
   "resources/js/Components/Header.jsx": [],
   "resources/js/Components/InputError.jsx": [],
   "resources/js/Components/InputLabel.jsx": [],
@@ -14,6 +15,7 @@
   "resources/js/Components/TextInput.jsx": [],
   "resources/js/Layouts/AuthenticatedLayout.jsx": [],
   "resources/js/Layouts/GuestLayout.jsx": [],
+  "resources/js/Pages/AboutUs.jsx": [],
   "resources/js/Pages/Auth/ConfirmPassword.jsx": [],
   "resources/js/Pages/Auth/ForgotPassword.jsx": [],
   "resources/js/Pages/Auth/Login.jsx": [],
@@ -21,6 +23,7 @@
   "resources/js/Pages/Auth/ResetPassword.jsx": [],
   "resources/js/Pages/Auth/VerifyEmail.jsx": [],
   "resources/js/Pages/Dashboard.jsx": [],
+  "resources/js/Pages/JobDetails.jsx": [],
   "resources/js/Pages/Payments/Error.jsx": [],
   "resources/js/Pages/Payments/Success.jsx": [],
   "resources/js/Pages/PostJob.jsx": [],
@@ -29,6 +32,7 @@
   "resources/js/Pages/Profile/Partials/UpdatePasswordForm.jsx": [],
   "resources/js/Pages/Profile/Partials/UpdateProfileInformationForm.jsx": [],
   "resources/js/Pages/Signup.jsx": [],
+  "resources/js/Pages/TechnologiesSelector.jsx": [],
   "resources/js/Pages/Welcome.jsx": [],
   "resources/js/ssr.jsx": []
 }

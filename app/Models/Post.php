@@ -36,4 +36,9 @@ class Post extends Model
     {
         return self::where('creator_id', $id)->orderBy('created_at', 'desc')->get();
     }
+
+    public function technologies()
+    {
+        return $this->belongsToMany(Technology::class);
+    }
 }
