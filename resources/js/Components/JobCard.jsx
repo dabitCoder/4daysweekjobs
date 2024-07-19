@@ -3,7 +3,6 @@ import {
     faMapMarkerAlt,
     faLaptopHouse,
     faCalendarAlt,
-    faTag,
     faExternalLinkAlt,
     faMoneyBillWave
 } from "@fortawesome/free-solid-svg-icons";
@@ -66,7 +65,7 @@ const getTechColor = (techName) => {
     return colors[techName] || colors.default;
 };
 
-const JobCard = ({ post }) => {
+const JobCard = ({ post, technologies = [] }) => {
     const daysSincePosted = dayjs().to(dayjs(post.created_at));
 
     const structuredData = {
@@ -75,7 +74,6 @@ const JobCard = ({ post }) => {
         "title": post.title,
         "description": post.description,
         "datePosted": post.created_at,
-        "employmentType": "FULL_TIME",
         "hiringOrganization": {
             "@type": "Organization",
             "name": post?.company?.name || post?.company_name,
@@ -167,12 +165,24 @@ const JobCard = ({ post }) => {
             {post.technologies && post.technologies.length > 0 && (
                 <div className="mt-3">
                     {post.technologies.map((tech, index) => {
-                        const { bg, text } = getTechColor(tech.name);
-                        return (
-                            <span key={index} className={`inline-flex items-center ${bg} ${text} text-xs px-2 py-1 rounded mr-2 mb-2`}>
+                        if (tech.id) {
+                            const {bg, text} = getTechColor(tech.name);
+                            return (
+                                <span key={index}
+                                      className={`inline-flex items-center ${bg} ${text} text-xs px-2 py-1 rounded mr-2 mb-2`}>
                                 {tech.name}
                             </span>
-                        );
+                            );
+                        } else if (Number(tech)){
+                            const selectedTech = technologies.find(technology => tech === technology.id)
+                            const {bg, text} = getTechColor(selectedTech.name);
+                            return (
+                                <span key={index}
+                                      className={`inline-flex items-center ${bg} ${text} text-xs px-2 py-1 rounded mr-2 mb-2`}>
+                                {selectedTech.name}
+                                </span>
+                            )
+                        } else return null
                     })}
                 </div>
             )}

@@ -316,7 +316,7 @@ const JobPosting = ({ isLoggedIn, user, technologies }) => {
                                 <h3 className="text-lg font-semibold mb-2">
                                     Preview:
                                 </h3>
-                                <JobCard post={data} />
+                                <JobCard post={data} technologies={technologies}/>
                             </div>
 
                             <div className="text-center mt-8">
