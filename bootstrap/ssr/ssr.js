@@ -4979,7 +4979,7 @@ const TechnologySelector = ({ technologies, onChange, error }) => {
       void 0,
       false,
       {
-        fileName: "/home/dabit/4daysweekjobs/resources/js/Pages/TechnologiesSelector.jsx",
+        fileName: "/home/dabit/4daysweekjobs/resources/js/Pages/TechnologySelector.jsx",
         lineNumber: 4,
         columnNumber: 13
       },
@@ -4995,42 +4995,42 @@ const TechnologySelector = ({ technologies, onChange, error }) => {
         className: "w-full px-4 py-2 border rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-600",
         children: [
           /* @__PURE__ */ jsxDEV("option", { value: "react", children: "React" }, void 0, false, {
-            fileName: "/home/dabit/4daysweekjobs/resources/js/Pages/TechnologiesSelector.jsx",
+            fileName: "/home/dabit/4daysweekjobs/resources/js/Pages/TechnologySelector.jsx",
             lineNumber: 17,
             columnNumber: 17
           }, void 0),
           /* @__PURE__ */ jsxDEV("option", { value: "vue", children: "Vue" }, void 0, false, {
-            fileName: "/home/dabit/4daysweekjobs/resources/js/Pages/TechnologiesSelector.jsx",
+            fileName: "/home/dabit/4daysweekjobs/resources/js/Pages/TechnologySelector.jsx",
             lineNumber: 18,
             columnNumber: 17
           }, void 0),
           /* @__PURE__ */ jsxDEV("option", { value: "angular", children: "Angular" }, void 0, false, {
-            fileName: "/home/dabit/4daysweekjobs/resources/js/Pages/TechnologiesSelector.jsx",
+            fileName: "/home/dabit/4daysweekjobs/resources/js/Pages/TechnologySelector.jsx",
             lineNumber: 19,
             columnNumber: 17
           }, void 0),
           /* @__PURE__ */ jsxDEV("option", { value: "nodejs", children: "Node.js" }, void 0, false, {
-            fileName: "/home/dabit/4daysweekjobs/resources/js/Pages/TechnologiesSelector.jsx",
+            fileName: "/home/dabit/4daysweekjobs/resources/js/Pages/TechnologySelector.jsx",
             lineNumber: 20,
             columnNumber: 17
           }, void 0),
           /* @__PURE__ */ jsxDEV("option", { value: "python", children: "Python" }, void 0, false, {
-            fileName: "/home/dabit/4daysweekjobs/resources/js/Pages/TechnologiesSelector.jsx",
+            fileName: "/home/dabit/4daysweekjobs/resources/js/Pages/TechnologySelector.jsx",
             lineNumber: 21,
             columnNumber: 17
           }, void 0),
           /* @__PURE__ */ jsxDEV("option", { value: "java", children: "Java" }, void 0, false, {
-            fileName: "/home/dabit/4daysweekjobs/resources/js/Pages/TechnologiesSelector.jsx",
+            fileName: "/home/dabit/4daysweekjobs/resources/js/Pages/TechnologySelector.jsx",
             lineNumber: 22,
             columnNumber: 17
           }, void 0),
           /* @__PURE__ */ jsxDEV("option", { value: "ruby", children: "Ruby" }, void 0, false, {
-            fileName: "/home/dabit/4daysweekjobs/resources/js/Pages/TechnologiesSelector.jsx",
+            fileName: "/home/dabit/4daysweekjobs/resources/js/Pages/TechnologySelector.jsx",
             lineNumber: 23,
             columnNumber: 17
           }, void 0),
           /* @__PURE__ */ jsxDEV("option", { value: "php", children: "PHP" }, void 0, false, {
-            fileName: "/home/dabit/4daysweekjobs/resources/js/Pages/TechnologiesSelector.jsx",
+            fileName: "/home/dabit/4daysweekjobs/resources/js/Pages/TechnologySelector.jsx",
             lineNumber: 24,
             columnNumber: 17
           }, void 0)
@@ -5039,19 +5039,19 @@ const TechnologySelector = ({ technologies, onChange, error }) => {
       void 0,
       true,
       {
-        fileName: "/home/dabit/4daysweekjobs/resources/js/Pages/TechnologiesSelector.jsx",
+        fileName: "/home/dabit/4daysweekjobs/resources/js/Pages/TechnologySelector.jsx",
         lineNumber: 10,
         columnNumber: 13
       },
       void 0
     ),
     error && /* @__PURE__ */ jsxDEV("span", { className: "text-red-600 text-sm", children: error }, void 0, false, {
-      fileName: "/home/dabit/4daysweekjobs/resources/js/Pages/TechnologiesSelector.jsx",
+      fileName: "/home/dabit/4daysweekjobs/resources/js/Pages/TechnologySelector.jsx",
       lineNumber: 26,
       columnNumber: 23
     }, void 0)
   ] }, void 0, true, {
-    fileName: "/home/dabit/4daysweekjobs/resources/js/Pages/TechnologiesSelector.jsx",
+    fileName: "/home/dabit/4daysweekjobs/resources/js/Pages/TechnologySelector.jsx",
     lineNumber: 3,
     columnNumber: 9
   }, void 0);

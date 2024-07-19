@@ -5,6 +5,7 @@ namespace App\Http\Controllers;
 use App\Enums\Modality;
 use App\Models\Company;
 use App\Models\Post;
+use App\Models\Technologies;
 use App\Rules\MoneyRange;
 use App\Services\UserManager;
 use Exception;
@@ -16,11 +17,12 @@ use Inertia\Inertia;
 
 class PostController extends Controller
 {
-    public function index(Request $request): \Illuminate\Http\JsonResponse
+    public function index(Request $request)
     {
         try {
             $posts = new Post();
             $user = $request->user();
+            Log::info("Fetching user jobs for user ID: {$user->id}");
             $jobs = $posts->getUserJobs($user->id);
             return response()->json($jobs);
         } catch (Exception $ex) {
@@ -34,6 +36,7 @@ class PostController extends Controller
         try {
             $validatedJob = $this->validateJob($request);
             $user = $this->getUser($request);
+            Log::info("Storing new job for user ID: {$user->id}");
             $validatedJob['creator_id'] = $user->id;
             $validatedJob['job_uuid'] = uuid_create();
 
@@ -43,9 +46,13 @@ class PostController extends Controller
                     ['creator_id' => $user->id]
                 );
                 $validatedJob['company_id'] = $newCompany->id;
+                Log::info("Company '{$validatedJob['company_name']}' created/updated with ID: {$newCompany->id}");
             }
 
             $newJob = Post::create($validatedJob);
+            Log::info("New job created with ID: {$newJob->id}");
+            $newJob->technologies()->attach($validatedJob['technologies']);
+            Log::info("Attached technologies to job ID: {$newJob->id}");
 
             if ($request->hasFile('company_logo')) {
                 $this->cacheCompanyLogo($newJob->id, $request->file('company_logo'));
@@ -57,50 +64,69 @@ class PostController extends Controller
                 'allow_promotion_codes' => true,
                 'metadata' => ['job_id' => $newJob->id],
             ]);
+            Log::info("Redirecting to Stripe checkout for job ID: {$newJob->id}");
             return Inertia::location($checkout->url);
         } catch (ValidationException $e) {
-            Log::error('Error validating post data: ' . $e->getMessage());
-            return back()->withErrors($e->errors())->withInput();
+            Log::error('Validation error while storing post: ' . $e->getMessage());
+            return Inertia::render('JobForm', [
+                'errors' => $e->errors(),
+                'input' => $request->all()
+            ]);
         } catch (Exception $e) {
             Log::error('Error creating post: ' . $e->getMessage());
-            return response()->json(['message' => 'An error occurred while creating the post'], 500);
+            return Inertia::render('Error', ['message' => 'An error occurred while creating the post']);
         }
     }
 
     protected function getUser(Request $request)
     {
-        if ($request->user()) {
-            return $request->user();
-        } else {
-            $userData = [
-                'email' => $request->email,
-                'name' => $request->username,
-                'password' => $request->password,
-                'password_confirmation' => $request->password_confirmation,
-            ];
+        try {
+            if ($request->user()) {
+                Log::info("User is authenticated, user ID: {$request->user()->id}");
+                return $request->user();
+            } else {
+                $userData = [
+                    'email' => $request->email,
+                    'name' => $request->username,
+                    'password' => $request->password,
+                    'password_confirmation' => $request->password_confirmation,
+                ];
 
-            $validatedUser = UserManager::validateUser($userData);
+                $validatedUser = UserManager::validateUser($userData);
+                Log::info("User validation result: " . json_encode($validatedUser));
 
-            if ($validatedUser) {
-                $user = UserManager::createUser($userData);
-                auth()->login($user);
-                return $user;
+                if ($validatedUser) {
+                    $user = UserManager::createUser($userData);
+                    auth()->login($user);
+                    Log::info("User created and logged in, user ID: {$user->id}");
+                    return $user;
+                }
             }
+        } catch (Exception $e) {
+            Log::error('Error in getUser method: ' . $e->getMessage());
+            throw $e;  // Re-throw the exception to handle it in the calling method
         }
     }
 
     protected function validateJob(Request $request)
     {
-        return $request->validate([
-            'title' => 'required|string|max:255',
-            'modality' => 'required|string|in:Remote,Hybrid,Office,remote,hybrid,office',
-            'location' => 'nullable|string|max:60',
-            'apply_url' => 'required|url',
-            'salary_range' => ['nullable', new MoneyRange],
-            'company_name' => 'required|string|max:255',
-            'company_logo' => 'nullable|image|mimes:jpeg,png,jpg,svg|max:5100',
-            'four_day_arrangement' => 'required|string'
-        ]);
+        try {
+            Log::info('Validating job data');
+            return $request->validate([
+                'title' => 'required|string|max:255',
+                'modality' => 'required|string|in:Remote,Hybrid,Office,remote,hybrid,office',
+                'location' => 'nullable|string|max:60',
+                'apply_url' => 'required|url',
+                'salary_range' => ['nullable', new MoneyRange],
+                'company_name' => 'required|string|max:255',
+                'company_logo' => 'nullable|image|mimes:jpeg,png,jpg,svg|max:5100',
+                'four_day_arrangement' => 'required|string',
+                'technologies' => 'required|array|min:1|max:4',
+            ]);
+        } catch (ValidationException $e) {
+            Log::error('Validation failed: ' . json_encode($e->errors()));
+            throw $e;  // Re-throw to handle it in the calling method
+        }
     }
 
     private function cacheCompanyLogo($jobId, $image): void
@@ -120,24 +146,29 @@ class PostController extends Controller
     {
         try {
             if (!$request->user()) {
-                return response()->json(['message' => 'Unauthorized'], 401);
+                Log::warning("Unauthorized access attempt to job ID: {$id}");
+                return Inertia::render('Error', ['message' => 'Unauthorized']);
             }
 
+            $technologies = Technologies::all();
             $post = Post::where('job_uuid', $id)
-                ->with(['company'])
+                ->with(['company', 'technologies'])
                 ->where('creator_id', $request->user()->id)
                 ->first();
 
             if (!$post) {
-                return response()->json(['message' => 'Job not found or unauthorized'], 404);
+                Log::warning("Job not found or unauthorized access attempt for job ID: {$id}");
+                return Inertia::render('Error', ['message' => 'Job not found or unauthorized']);
             }
 
+            Log::info("Job details retrieved for job ID: {$id}");
             return Inertia::render('JobDetails', [
-                'job' => $post
+                'job' => $post,
+                'technologies' => $technologies
             ]);
         } catch (Exception $e) {
-            Log::error("Error getting job by job_uuid: " . $e->getMessage());
-            return response()->json(['message' => 'An error occurred while fetching the job details'], 500);
+            Log::error('Error fetching job details: ' . $e->getMessage());
+            return Inertia::render('Error', ['message' => 'An error occurred while fetching the job details']);
         }
     }
 
@@ -149,22 +180,23 @@ class PostController extends Controller
     public function update(Request $request, string $id)
     {
         try {
-            // Verificar que el usuario esté autenticado
             if (!$request->user()) {
+                Log::warning("Unauthorized update attempt for job ID: {$id}");
                 return Inertia::render('Error', ['message' => 'Unauthorized']);
             }
-
 
             $post = Post::where('job_uuid', $id)
                 ->where('creator_id', $request->user()->id)
                 ->first();
 
             if (!$post) {
+                Log::warning("Job not found or unauthorized update attempt for job ID: {$id}");
                 return Inertia::render('Error', ['message' => 'Job not found or unauthorized']);
             }
 
             $validatedData = $this->validateJob($request);
 
+            Log::info("Validated data: " . json_encode($validatedData));
 
             if ($validatedData['company_name'] && $validatedData['company_name'] !== $post->company->name) {
                 $company = Company::updateOrCreate(
@@ -172,25 +204,36 @@ class PostController extends Controller
                     ['creator_id' => $request->user()->id]
                 );
                 $validatedData['company_id'] = $company->id;
+                Log::info("Company '{$validatedData['company_name']}' updated/created with ID: {$company->id}");
             }
 
             $post->update($validatedData);
+            Log::info("Job updated successfully, job ID: {$post->id}");
+
+            $post->technologies()->sync($validatedData['technologies']);
+            Log::info("Technologies synced for job ID: {$post->id}");
 
             if ($request->hasFile('company_logo')) {
                 $this->cacheCompanyLogo($post->id, $request->file('company_logo'));
             }
 
-            // Devolver la respuesta
+            // Reload the post with its technologies and company
+            $updatedPost = $post->fresh()->load('company', 'technologies');
+            Log::info("Job reloaded successfully, job ID: {$updatedPost->id}");
+
             return Inertia::render('JobDetails', [
-                'job' => $post->fresh()->load('company'),
+                'job' => $updatedPost,
                 'message' => 'Job updated successfully'
             ]);
         } catch (ValidationException $e) {
-            Log::error('Error validating post data: ' . $e->getMessage());
-            return back()->withErrors($e->errors())->withInput();
+            Log::error('Validation error while updating post: ' . $e->getMessage());
+            return Inertia::render('JobForm', [
+                'errors' => $e->errors(),
+                'input' => $request->all()
+            ]);
         } catch (Exception $e) {
             Log::error('Error updating post: ' . $e->getMessage());
-            return response()->json(['message' => 'An error occurred while updating the post'], 500);
+            return Inertia::render('Error', ['message' => 'An error occurred while updating the post']);
         }
     }
 }

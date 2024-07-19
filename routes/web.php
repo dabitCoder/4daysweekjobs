@@ -5,6 +5,7 @@ use App\Http\Controllers\HomeController;
 use App\Http\Controllers\PostController;
 use App\Http\Controllers\ProfileController;
 use App\Http\Controllers\DashboardController;
+use App\Models\Technologies;
 use Illuminate\Support\Facades\Route;
 use Inertia\Inertia;
 
@@ -12,18 +13,22 @@ use Inertia\Inertia;
 Route::get('/', [HomeController::class, 'index'])->name('home');
 
 Route::get('/post-job', function () {
+    $technologies = Technologies::all();
+
     return Inertia::render('PostJob', [
         'isLoggedIn' => auth()->check(),
-        'user' => auth()->user()
+        'user' => auth()->user(),
+        'technologies' => $technologies
     ]);
 })->name('job_form');
 
-Route::post('/jobs', [PostController::class, 'store'])->name('jobs.store');
-Route::get('/jobs/{id}', [PostController::class, 'index'])->name('jobs.index');
-Route::get('/jobs/{id}/edit', [PostController::class, 'edit'])->name('jobs.show');
-Route::get('/job/{id}', [PostController::class, 'show'])->name('jobs.show');
-Route::put('/jobs/{id}', [PostController::class, 'update'])->name('jobs.update');
-
+Route::prefix('jobs')->name('jobs.')->group(function () {
+    Route::post('/', [PostController::class, 'store'])->name('store');
+    Route::get('/', [PostController::class, 'index'])->name('index');
+    Route::get('/{id}', [PostController::class, 'show'])->name('show');
+    Route::get('/{id}/edit', [PostController::class, 'edit'])->name('edit');
+    Route::put('/{id}', [PostController::class, 'update'])->name('update');
+});
 
 Route::get('/checkout/error', [CheckoutController::class, 'payment_error'])->name('payment.error');
 Route::get('/checkout/success', [CheckoutController::class, 'payment_success'])->name('payment.success');

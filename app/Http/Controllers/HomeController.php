@@ -13,7 +13,7 @@ class HomeController extends Controller
 {
     public function index()
     {
-        $latestPosts = Post::with(['company'])->where('is_active', true)->orderBy('created_at', 'desc')->paginate(3);
+        $latestPosts = Post::with(['company', 'technologies'])->where('is_active', true)->orderBy('created_at', 'desc')->paginate(10);
 
         $latestPosts->getCollection()->transform(function ($post) {
             $imageBase64 = Cache::get('company_logo_' . $post->id);

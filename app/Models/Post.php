@@ -39,6 +39,6 @@ class Post extends Model
 
     public function technologies()
     {
-        return $this->belongsToMany(Technology::class);
+        return $this->belongsToMany(Technologies::class, 'post_technology', 'post_id', 'technology_id');
     }
 }

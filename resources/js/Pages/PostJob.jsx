@@ -3,8 +3,9 @@ import JobCard from "@/Components/JobCard.jsx";
 import Signup from "@/Pages/Signup.jsx";
 import Header from "@/Components/Header.jsx";
 import Footer from "@/Components/Footer";
+import TechnologySelector from "@/Components/TechnologySelector.jsx";
 
-const JobPosting = ({ isLoggedIn, user }) => {
+const JobPosting = ({ isLoggedIn, user, technologies }) => {
     const { data, setData, post, processing, errors } = useForm({
         title: "",
         modality: "remote",
@@ -18,10 +19,15 @@ const JobPosting = ({ isLoggedIn, user }) => {
         email: "",
         password: "",
         password_confirmation: "",
+        technologies: []
     });
 
     const handleChangeInput = (field, value) => {
         setData({ ...data, [field]: value });
+    };
+
+    const handleTechnologyChange = (selectedIds) => {
+        setData({ ...data, technologies: selectedIds });
     };
 
     const onSubmit = async (e) => {
@@ -203,7 +209,13 @@ const JobPosting = ({ isLoggedIn, user }) => {
                                     error={errors.salary_range}
                                 />
                             </div>
-
+                            <div>
+                                <TechnologySelector
+                                    value={data.technologies}
+                                    technologies={technologies}
+                                    onChange={handleTechnologyChange}
+                                    error={errors.technologies} />
+                            </div>
                             <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
                                 <InputField
                                     id="location"

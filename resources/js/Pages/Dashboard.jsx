@@ -5,7 +5,6 @@ import PrimaryButton from "@/Components/PrimaryButton.jsx";
 import Footer from "@/Components/Footer";
 
 export default function Dashboard({auth, jobs}) {
-    console.log(jobs)
     return (
         <AuthenticatedLayout
             user={auth.user}
