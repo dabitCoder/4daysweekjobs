@@ -93,6 +93,9 @@ const JobPosting = ({ isLoggedIn, user, technologies }) => {
                         as much detail as possible to attract the best
                         candidates.
                     </p>
+                    <p className="text-lg mb-12 text-center text-gray-600">
+                        Post and support will be available for 90 days from payment/posting.
+                    </p>
                     <div className="bg-white p-8 rounded-lg shadow-lg">
                         <form
                             encType="multipart/form-data"
@@ -283,7 +286,7 @@ const JobPosting = ({ isLoggedIn, user, technologies }) => {
                                         htmlFor="company_logo"
                                         className="block text-gray-700 font-bold mb-2"
                                     >
-                                        Company Logo
+                                        Company Logo (will show once published)
                                     </label>
                                     <input
                                         type="file"
