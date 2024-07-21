@@ -41,6 +41,12 @@ const Footer = () => {
                                     Post a Job
                                 </Link>
                             </li>
+                            <li>
+                                <Link href="/privacy-policy"                                     className="hover:text-blue-500"
+                                >
+                                    Privacy Policy
+                                </Link>
+                            </li>
                         </ul>
                     </div>
                     <div className="w-full md:w-1/3">
