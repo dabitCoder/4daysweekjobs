@@ -45,4 +45,8 @@ Route::middleware('auth')->group(function () {
 Route::inertia('/about', 'AboutUs');
 Route::inertia('/privacy-policy', 'Privacy');
 
+Route::fallback(function () {
+    return inertia('NotFound');
+});
+
 require __DIR__ . '/auth.php';

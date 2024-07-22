@@ -28,8 +28,12 @@ export default function Register() {
 
 	return (
 		<GuestLayout>
-			<Head title="Register" />
-
+            <Head>
+                <title>Register - 4 day week jobs</title>
+                <meta name="description" content="Create your account on 4 day week jobs to access exclusive job listings and manage your job search." />
+                <link rel="canonical" href="https://www.4daystechjobs.com/register" />
+                <meta name="robots" content="noindex,nofollow" />
+            </Head>
 			<form onSubmit={submit}>
 				<div>
 					<InputLabel htmlFor="name" value="Name" />
