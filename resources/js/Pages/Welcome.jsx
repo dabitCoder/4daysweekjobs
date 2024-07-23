@@ -76,8 +76,6 @@ export default function Index({ auth, posts, isLoggedIn }) {
                     <div className="container max-w-4xl">
                         <h2 className="text-3xl font-bold mb-6 text-gray-700 text-center">
                             {posts.data.length ? "Latest Jobs" : <div className="text-center py-12">
-                                <img src="/bg-15.png" alt="No jobs available"
-                                     className="mx-auto mb-6 w-48"/>
                                 <h2 className="text-3xl font-bold mb-4 text-gray-700">No Jobs Posted Yet</h2>
                                 <p className="text-xl text-gray-600 mb-6">
                                     We're working hard to bring you the best 4-day work week tech jobs.
@@ -89,6 +87,8 @@ export default function Index({ auth, posts, isLoggedIn }) {
                                         Post a job now
                                     </Link>
                                 </p>
+                                <img src="/bg-15.png" alt="No jobs available"
+                                     className="mx-auto mb-6 w-48"/>
                             </div>}
                         </h2>
                         <div className="flex flex-col min-h-screen">
