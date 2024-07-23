@@ -8,3 +8,5 @@ enum Modality: string
     case HYBRID = 'Hybrid';
     case OFFICE = 'Office';
 }
+
+

@@ -28,15 +28,18 @@ export default function Login({ status, canResetPassword }) {
 
 	return (
 		<GuestLayout>
-            <Head>
-                <title>Log in - 4 day week jobs</title>
-                {/* Añadir metadescripción para mejorar SEO */}
-                <meta name="description" content="Log in to your 4 day week jobs account to access job listings and manage your profile." />
-                {/* Añadir etiqueta canónica */}
-                <link rel="canonical" href="https://www.4daystechjobs.com/login" />
-                {/* Prevenir indexación de esta página */}
-                <meta name="robots" content="noindex,nofollow" />
-            </Head>
+			<Head>
+				<title>Log in - 4 day week jobs</title>
+				{/* Añadir metadescripción para mejorar SEO */}
+				<meta
+					name="description"
+					content="Log in to your 4 day week jobs account to access job listings and manage your profile."
+				/>
+				{/* Añadir etiqueta canónica */}
+				<link rel="canonical" href="https://www.4daystechjobs.com/login" />
+				{/* Prevenir indexación de esta página */}
+				<meta name="robots" content="noindex,nofollow" />
+			</Head>
 			{status && (
 				<div className="mb-4 font-medium text-sm text-green-600">{status}</div>
 			)}

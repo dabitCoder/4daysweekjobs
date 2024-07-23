@@ -2,6 +2,7 @@
 
 namespace App\Models;
 
+use App\Enums\ContractType;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 
@@ -19,7 +20,12 @@ class Post extends Model
         'creator_id',
         'company_id',
         'location',
-        'four_day_arrangement'
+        'four_day_arrangement',
+        'contract_type'
+    ];
+
+    protected $casts = [
+        'contract_type' => ContractType::class
     ];
 
     public function user()

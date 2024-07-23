@@ -17,12 +17,18 @@ export default function ForgotPassword({ status }) {
 
 	return (
 		<GuestLayout>
-            <Head>
-                <title>Forgot Password - 4 day week jobs</title>
-                <meta name="description" content="Reset your password for 4 day week jobs. We'll send you a link to create a new password." />
-                <link rel="canonical" href="https://www.4daystechjobs.com/forgot-password" />
-                <meta name="robots" content="noindex,nofollow" />
-            </Head>
+			<Head>
+				<title>Forgot Password - 4 day week jobs</title>
+				<meta
+					name="description"
+					content="Reset your password for 4 day week jobs. We'll send you a link to create a new password."
+				/>
+				<link
+					rel="canonical"
+					href="https://www.4daystechjobs.com/forgot-password"
+				/>
+				<meta name="robots" content="noindex,nofollow" />
+			</Head>
 			<div className="mb-4 text-sm text-gray-600">
 				Forgot your password? No problem. Just let us know your email address
 				and we will email you a password reset link that will allow you to

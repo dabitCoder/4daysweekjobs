@@ -19,7 +19,8 @@ const JobPosting = ({ isLoggedIn, user, technologies }) => {
         email: "",
         password: "",
         password_confirmation: "",
-        technologies: []
+        technologies: [],
+        contract_type: "",
     });
 
     const handleChangeInput = (field, value) => {
@@ -120,12 +121,7 @@ const JobPosting = ({ isLoggedIn, user, technologies }) => {
                                     required={true}
                                     placeholder="Frontend Developer with React"
                                     value={data.title}
-                                    onChange={(e) =>
-                                        handleChangeInput(
-                                            "title",
-                                            e.target.value
-                                        )
-                                    }
+                                    onChange={(e) => handleChangeInput("title", e.target.value)}
                                     error={errors.title}
                                 />
 
@@ -135,91 +131,8 @@ const JobPosting = ({ isLoggedIn, user, technologies }) => {
                                     required={true}
                                     placeholder="https://apply.example.com"
                                     value={data.apply_url}
-                                    onChange={(e) =>
-                                        handleChangeInput(
-                                            "apply_url",
-                                            e.target.value
-                                        )
-                                    }
+                                    onChange={(e) => handleChangeInput("apply_url", e.target.value)}
                                     error={errors.apply_url}
-                                />
-                            </div>
-
-                            <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
-                                <div>
-                                    <label
-                                        htmlFor="four_day_week_type"
-                                        className="block text-gray-700 font-bold mb-2"
-                                    >
-                                        4-Day Week Arrangement{" "}
-                                        <span className="text-red-500">*</span>
-                                    </label>
-                                    <select
-                                        id="four_day_week_type"
-                                        name="four_day_week_type"
-                                        className="w-full px-4 py-2 border rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-600"
-                                        required
-                                        onChange={(e) =>
-                                            handleChangeInput(
-                                                "four_day_arrangement",
-                                                e.target.value
-                                            )
-                                        }
-                                    >
-                                        <option value="">
-                                            Select an option
-                                        </option>
-                                        <option value="standard">
-                                            Standard 4-day week (32 hours, no
-                                            salary reduction)
-                                        </option>
-                                        <option value="compressed">
-                                            Compressed 4-day week (40 hours in 4
-                                            days)
-                                        </option>
-                                        <option value="80_percent">
-                                            80% time for 80% pay (32 hours,
-                                            pro-rata salary)
-                                        </option>
-                                        <option value="9_day_fortnight">
-                                            9-day fortnight (every other Friday
-                                            off)
-                                        </option>
-                                        <option value="flexible">
-                                            Flexible 4-day week (employee
-                                            chooses their day off)
-                                        </option>
-                                        <option value="seasonal">
-                                            Seasonal 4-day week (e.g., summer
-                                            months only)
-                                        </option>
-                                        <option value="gradual">
-                                            Gradual transition to 4-day week
-                                        </option>
-                                        <option value="trial">
-                                            Trial 4-day week (company is testing
-                                            the concept)
-                                        </option>
-                                    </select>
-                                    {errors.four_day_arrangement && (
-                                        <span className="text-red-600">
-                                            {errors.four_day_arrangement}
-                                        </span>
-                                    )}
-                                </div>
-
-                                <InputField
-                                    id="salary_range"
-                                    label="Salary Range"
-                                    placeholder="$100,000-$200,000, 50.000€-70.000€"
-                                    value={data.salary_range}
-                                    onChange={(e) =>
-                                        handleChangeInput(
-                                            "salary_range",
-                                            e.target.value
-                                        )
-                                    }
-                                    error={errors.salary_range}
                                 />
                             </div>
                             <div>
@@ -227,97 +140,107 @@ const JobPosting = ({ isLoggedIn, user, technologies }) => {
                                     value={data.technologies}
                                     technologies={technologies}
                                     onChange={handleTechnologyChange}
-                                    error={errors.technologies} />
+                                    error={errors.technologies}
+                                />
                             </div>
+
                             <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
+                                <SelectField
+                                    id="four_day_arrangement"
+                                    label="4-Day Week Arrangement"
+                                    required={true}
+                                    value={data.four_day_arrangement}
+                                    onChange={(e) => handleChangeInput("four_day_arrangement", e.target.value)}
+                                    error={errors.four_day_arrangement}
+                                    options={[
+                                        { value: "", label: "Select an option" },
+                                        { value: "standard", label: "Standard 4-day week (32 hours, no salary reduction)" },
+                                        { value: "compressed", label: "Compressed 4-day week (40 hours in 4 days)" },
+                                        { value: "80_percent", label: "80% time for 80% pay (32 hours, pro-rata salary)" },
+                                        { value: "9_day_fortnight", label: "9-day fortnight (every other Friday off)" },
+                                        { value: "flexible", label: "Flexible 4-day week (employee chooses their day off)" },
+                                        { value: "seasonal", label: "Seasonal 4-day week (e.g., summer months only)" },
+                                        { value: "gradual", label: "Gradual transition to 4-day week" },
+                                        { value: "trial", label: "Trial 4-day week (company is testing the concept)" },
+                                    ]}
+                                />
+
+                                <SelectField
+                                    id="contract_type"
+                                    label="Contract Type"
+                                    required={true}
+                                    value={data.contract_type}
+                                    onChange={(e) => handleChangeInput("contract_type", e.target.value)}
+                                    error={errors.contract_type}
+                                    options={[
+                                        { value: "", label: "Select contract type" },
+                                        { value: "full_time", label: "Full Time" },
+                                        { value: "contractor", label: "Contractor" },
+                                        { value: "part_time", label: "Part Time" },
+                                        { value: "temporary", label: "Temporary" },
+                                        { value: "other", label: "Other" },
+                                    ]}
+                                />
+                            </div>
+
+                            <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
+                                <InputField
+                                    id="salary_range"
+                                    label="Salary Range"
+                                    placeholder="$100,000-$200,000, 50.000€-70.000€"
+                                    value={data.salary_range}
+                                    onChange={(e) => handleChangeInput("salary_range", e.target.value)}
+                                    error={errors.salary_range}
+                                />
+
                                 <InputField
                                     id="location"
                                     label="Location"
                                     placeholder="New York City, USA"
                                     value={data.location}
-                                    onChange={(e) =>
-                                        handleChangeInput(
-                                            "location",
-                                            e.target.value
-                                        )
-                                    }
+                                    onChange={(e) => handleChangeInput("location", e.target.value)}
                                     error={errors.location}
                                 />
-
-                                <div>
-                                    <label
-                                        htmlFor="modality"
-                                        className="block text-gray-700 font-bold mb-2"
-                                    >
-                                        Modality
-                                    </label>
-                                    <select
-                                        id="modality"
-                                        name="modality"
-                                        value={data.modality}
-                                        onChange={(e) =>
-                                            handleChangeInput(
-                                                "modality",
-                                                e.target.value
-                                            )
-                                        }
-                                        className="w-full px-4 py-2 border rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-600"
-                                    >
-                                        <option value="remote">Remote</option>
-                                        <option value="hybrid">Hybrid</option>
-                                        <option value="office">Office</option>
-                                    </select>
-                                    {errors.modality && (
-                                        <span className="text-red-600 text-sm">
-                                            {errors.modality}
-                                        </span>
-                                    )}
-                                </div>
                             </div>
 
                             <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
+                                <SelectField
+                                    id="modality"
+                                    label="Modality"
+                                    value={data.modality}
+                                    onChange={(e) => handleChangeInput("modality", e.target.value)}
+                                    error={errors.modality}
+                                    options={[
+                                        { value: "remote", label: "Remote" },
+                                        { value: "hybrid", label: "Hybrid" },
+                                        { value: "office", label: "Office" },
+                                    ]}
+                                />
+
                                 <InputField
                                     id="company_name"
                                     label="Company Name"
                                     required={true}
                                     placeholder="Your awesome company"
                                     value={data.company_name}
-                                    onChange={(e) =>
-                                        handleChangeInput(
-                                            "company_name",
-                                            e.target.value
-                                        )
-                                    }
+                                    onChange={(e) => handleChangeInput("company_name", e.target.value)}
                                     error={errors.company_name}
                                 />
-
-                                <div>
-                                    <label
-                                        htmlFor="company_logo"
-                                        className="block text-gray-700 font-bold mb-2"
-                                    >
-                                        Company Logo (will show once published)
-                                    </label>
-                                    <input
-                                        type="file"
-                                        id="company_logo"
-                                        name="company_logo"
-                                        onChange={(event) =>
-                                            handleChangeInput(
-                                                "company_logo",
-                                                event.target.files[0]
-                                            )
-                                        }
-                                        className="w-full px-4 py-2 border rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-600"
-                                    />
-                                    {errors.company_logo && (
-                                        <span className="text-red-600 text-sm">
-                                            {errors.company_logo}
-                                        </span>
-                                    )}
-                                </div>
                             </div>
 
+                            <div>
+                                <label htmlFor="company_logo" className="block text-gray-700 font-bold mb-2">
+                                    Company Logo (will show once published)
+                                </label>
+                                <input
+                                    type="file"
+                                    id="company_logo"
+                                    name="company_logo"
+                                    onChange={(event) => handleChangeInput("company_logo", event.target.files[0])}
+                                    className="w-full px-4 py-2 border rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-600"
+                                />
+                                {errors.company_logo && <span className="text-red-600 text-sm">{errors.company_logo}</span>}
+                            </div>
                             {!isLoggedIn && (
                                 <Signup
                                     errors={errors}
@@ -326,9 +249,7 @@ const JobPosting = ({ isLoggedIn, user, technologies }) => {
                             )}
 
                             <div className="mt-8">
-                                <h3 className="text-lg font-semibold mb-2">
-                                    Preview:
-                                </h3>
+                                <h3 className="text-lg font-semibold mb-2">Preview:</h3>
                                 <JobCard post={data} technologies={technologies}/>
                             </div>
 
@@ -338,9 +259,7 @@ const JobPosting = ({ isLoggedIn, user, technologies }) => {
                                     disabled={processing}
                                     className="bg-gradient-to-r from-blue-500 to-blue-600 text-white px-6 py-3 rounded-full text-lg font-semibold hover:bg-blue-700 focus:outline-none focus:ring-2 focus:ring-blue-600 w-full sm:w-auto"
                                 >
-                                    {processing
-                                        ? "Processing..."
-                                        : "Checkout + Post Job"}
+                                    {processing ? "Processing..." : "Checkout + Post Job"}
                                 </button>
                             </div>
                         </form>
@@ -352,16 +271,7 @@ const JobPosting = ({ isLoggedIn, user, technologies }) => {
     );
 };
 
-const InputField = ({
-    id,
-    label,
-    required,
-    placeholder,
-    value,
-    onChange,
-    error,
-    className = "",
-}) => (
+const InputField = ({ id, label, required, placeholder, value, onChange, error, className = "" }) => (
     <div className={className}>
         <label htmlFor={id} className="block text-gray-700 font-bold mb-2">
             {label} {required && <span className="text-red-500">*</span>}
@@ -376,6 +286,29 @@ const InputField = ({
             className="w-full px-4 py-2 border rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-600"
             required={required}
         />
+        {error && <span className="text-red-600 text-sm">{error}</span>}
+    </div>
+);
+
+const SelectField = ({ id, label, required, value, onChange, error, options }) => (
+    <div>
+        <label htmlFor={id} className="block text-gray-700 font-bold mb-2">
+            {label} {required && <span className="text-red-500">*</span>}
+        </label>
+        <select
+            id={id}
+            name={id}
+            value={value}
+            onChange={onChange}
+            className="w-full px-4 py-2 border rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-600"
+            required={required}
+        >
+            {options.map((option) => (
+                <option key={option.value} value={option.value}>
+                    {option.label}
+                </option>
+            ))}
+        </select>
         {error && <span className="text-red-600 text-sm">{error}</span>}
     </div>
 );

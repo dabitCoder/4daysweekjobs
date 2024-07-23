@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers;
 
+use App\Enums\ContractType;
 use App\Enums\Modality;
 use App\Models\Company;
 use App\Models\Post;
@@ -12,6 +13,7 @@ use Exception;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Cache;
 use Illuminate\Support\Facades\Log;
+use Illuminate\Validation\Rule;
 use Illuminate\Validation\ValidationException;
 use Inertia\Inertia;
 
@@ -122,10 +124,11 @@ class PostController extends Controller
                 'company_logo' => 'nullable|image|mimes:jpeg,png,jpg,svg|max:5100',
                 'four_day_arrangement' => 'required|string',
                 'technologies' => 'required|array|min:1|max:4',
+                'contract_type' => ['nullable', 'string', Rule::enum(ContractType::class)],
             ]);
         } catch (ValidationException $e) {
             Log::error('Validation failed: ' . json_encode($e->errors()));
-            throw $e;  // Re-throw to handle it in the calling method
+            throw $e;
         }
     }
 
