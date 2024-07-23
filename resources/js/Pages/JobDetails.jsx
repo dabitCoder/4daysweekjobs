@@ -5,7 +5,60 @@ import PrimaryButton from "@/Components/PrimaryButton.jsx";
 import Footer from "@/Components/Footer";
 import { Transition } from "@headlessui/react";
 import TechnologySelector from "@/Components/TechnologySelector.jsx";
-import {getTechColor} from "@/getTechColor.js";
+
+const getTechColor = (techName) => {
+    const colors = {
+        default: { bg: "bg-gray-100", text: "text-gray-700" },
+        PHP: { bg: "bg-purple-100", text: "text-purple-700" },
+        Laravel: { bg: "bg-indigo-100", text: "text-indigo-700" },
+        Codeigniter: { bg: "bg-red-100", text: "text-red-700" },
+        "Node.js": { bg: "bg-green-100", text: "text-green-700" },
+        "Nest.js": { bg: "bg-teal-100", text: "text-teal-700" },
+        "Next.js": { bg: "bg-black", text: "text-white" },
+        Angular: { bg: "bg-red-100", text: "text-red-700" },
+        React: { bg: "bg-blue-100", text: "text-blue-700" },
+        Vue: { bg: "bg-green-100", text: "text-green-700" },
+        Go: { bg: "bg-blue-100", text: "text-blue-700" },
+        "ASP.Net": { bg: "bg-purple-100", text: "text-purple-700" },
+        Python: { bg: "bg-green-100", text: "text-green-700" },
+        Django: { bg: "bg-green-100", text: "text-green-700" },
+        Symphony: { bg: "bg-blue-100", text: "text-blue-700" },
+        C: { bg: "bg-gray-100", text: "text-gray-700" },
+        "C++": { bg: "bg-blue-100", text: "text-blue-700" },
+        "C#": { bg: "bg-green-100", text: "text-green-700" },
+        HTML: { bg: "bg-orange-100", text: "text-orange-700" },
+        CSS: { bg: "bg-blue-100", text: "text-blue-700" },
+        "Vanilla JS": { bg: "bg-yellow-100", text: "text-yellow-700" },
+        Java: { bg: "bg-red-100", text: "text-red-700" },
+        Kotlin: { bg: "bg-purple-100", text: "text-purple-700" },
+        Elixir: { bg: "bg-purple-100", text: "text-purple-700" },
+        Rust: { bg: "bg-orange-100", text: "text-orange-700" },
+        Swift: { bg: "bg-orange-100", text: "text-orange-700" },
+        "React Native": { bg: "bg-blue-100", text: "text-blue-700" },
+        TypeScript: { bg: "bg-blue-100", text: "text-blue-700" },
+        Scala: { bg: "bg-red-100", text: "text-red-700" },
+        Perl: { bg: "bg-purple-100", text: "text-purple-700" },
+        Ruby: { bg: "bg-red-100", text: "text-red-700" },
+        "Spring Boot": { bg: "bg-green-100", text: "text-green-700" },
+        "Ruby on Rails": { bg: "bg-red-100", text: "text-red-700" },
+        Flask: { bg: "bg-black-100", text: "text-black-700" },
+        FastAPI: { bg: "bg-blue-100", text: "text-blue-700" },
+        Svelte: { bg: "bg-orange-100", text: "text-orange-700" },
+        Flutter: { bg: "bg-blue-100", text: "text-blue-700" },
+        Bootstrap: { bg: "bg-purple-100", text: "text-purple-700" },
+        Tailwind: { bg: "bg-teal-100", text: "text-teal-700" },
+        Electron: { bg: "bg-gray-100", text: "text-gray-700" },
+        MySQL: { bg: "bg-blue-100", text: "text-blue-700" },
+        PostgreSQL: { bg: "bg-blue-100", text: "text-blue-700" },
+        MongoDB: { bg: "bg-green-100", text: "text-green-700" },
+        Redis: { bg: "bg-red-100", text: "text-red-700" },
+        Elasticsearch: { bg: "bg-yellow-100", text: "text-yellow-700" },
+        WebAssembly: { bg: "bg-blue-100", text: "text-blue-700" },
+        Docker: { bg: "bg-blue-100", text: "text-blue-700" },
+        Kubernetes: { bg: "bg-blue-200", text: "text-blue-800" },
+    };
+    return colors[techName] || colors.default;
+};
 
 export default function JobDetails({ auth, job, technologies }) {
 	const [isEditing, setIsEditing] = useState(false);
