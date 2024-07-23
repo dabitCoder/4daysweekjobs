@@ -6,84 +6,46 @@ import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import Footer from "@/Components/Footer";
 
 export default function Index({ auth, posts, isLoggedIn }) {
-    const metaDescription =
-        "Discover 4-day work week tech jobs. Explore career opportunities with extended weekends at innovative companies. Find work-life balance in the tech industry.";
-    const canonicalUrl = "https://4daystechjobs.com";
-    const description =
-        "Elevate your work-life balance with a 4-day work week in tech. Find remote jobs worldwide offering full pay for 32-hour weeks. Join the future of work today!";
-    const siteUrl = canonicalUrl;
-
     return (
         <>
             <Head>
-                <title>
-                    4-Day Work Week Tech Jobs | Find Balance in Your Career
-                </title>
-                <meta name="description" content={metaDescription} />
-                <meta
-                    name="keywords"
-                    content="4-day work week, tech jobs, work-life balance, software engineering, IT careers, flexible work, 32-hour week"
-                />
-                <link rel="canonical" href={canonicalUrl} />
+                <title>4-Day Work Week Tech Jobs | Find Your Dream Tech Career</title>
+                <meta name="description" content="Discover high-paying 4-day work week tech jobs. Browse software engineering, data science, and IT positions offering full salary for 32-hour weeks. Apply now!" />
+                <meta name="keywords" content="4-day work week jobs, tech careers, software engineering, data science, IT jobs, work-life balance, remote work" />
+                <link rel="canonical" href="https://4daystechjobs.com" />
 
                 {/* Open Graph tags */}
-                <meta
-                    property="og:title"
-                    content="4-Day Work Week Tech Jobs | Find Balance in Your Career"
-                />
-                <meta property="og:description" content={metaDescription} />
+                <meta property="og:title" content="4-Day Work Week Tech Jobs | Top Opportunities in Tech" />
+                <meta property="og:description" content="Explore top-tier tech positions with 4-day work weeks. Full salary, better work-life balance, and exciting career growth. Find your next role today!" />
                 <meta property="og:type" content="website" />
-                <meta property="og:url" content={canonicalUrl} />
-                <meta
-                    property="og:image"
-                    content={`${canonicalUrl}/og-image.jpg`}
-                />
+                <meta property="og:url" content="https://4daystechjobs.com" />
+                <meta property="og:image" content="https://4daystechjobs.com/og-image.jpg" />
 
                 {/* Twitter Card tags */}
                 <meta name="twitter:card" content="summary_large_image" />
-                <meta
-                    name="twitter:title"
-                    content="4-Day Work Week Tech Jobs | Find Balance in Your Career"
-                />
-                <meta name="twitter:description" content={metaDescription} />
-                <meta
-                    name="twitter:image"
-                    content={`${canonicalUrl}/twitter-image.jpg`}
-                />
+                <meta name="twitter:title" content="4-Day Work Week Tech Jobs | Innovative Careers in Tech" />
+                <meta name="twitter:description" content="Land a high-paying tech job with a 4-day work week. Browse opportunities in software development, AI, cybersecurity, and more. Apply now!" />
+                <meta name="twitter:image" content="https://4daystechjobs.com/twitter-image.jpg" />
 
                 {/* Additional SEO tags */}
-                <meta
-                    name="robots"
-                    content="index, follow, max-image-preview:large, max-snippet:-1, max-video-preview:-1"
-                />
+                <meta name="robots" content="index, follow, max-image-preview:large, max-snippet:-1, max-video-preview:-1" />
                 <meta name="googlebot" content="index, follow" />
                 <meta name="bingbot" content="index, follow" />
-                <meta name="application-name" content="4-Day Week Tech Jobs" />
-                <meta
-                    name="apple-mobile-web-app-title"
-                    content="4-Day Week Tech Jobs"
-                />
-                <meta name="author" content="Your Company Name" />
-                <meta
-                    name="viewport"
-                    content="width=device-width, initial-scale=1.0"
-                />
+                <meta name="application-name" content="4 Days Tech Jobs" />
+                <meta name="apple-mobile-web-app-title" content="4 Days Tech Jobs" />
+                <meta name="author" content="4 Days Tech Jobs" />
+                <meta name="viewport" content="width=device-width, initial-scale=1.0" />
 
                 <script type="application/ld+json">
                     {JSON.stringify({
                         "@context": "https://schema.org",
-                        "@type": "WebSite",
-                        name: "4-Day Week Tech Jobs",
-                        url: canonicalUrl,
-                        description: metaDescription,
-                        sameAs: [
-                            "https://www.x.com/4daystechjobs",
-                        ],
-                        potentialAction: {
-                            "@type": "SearchAction",
-                            target: `${canonicalUrl}/search?query={search_term_string}`,
-                            "query-input": "required name=search_term_string"
-                        }
+                        "@type": "JobPosting",
+                        "name": "4-Day Work Week Tech Jobs",
+                        "description": "Discover high-paying tech jobs with 4-day work weeks. Browse software engineering, data science, and IT positions offering full salary for 32-hour weeks.",
+                        "url": "https://4daystechjobs.com",
+                        "datePosted": new Date().toISOString(),
+                        "jobBenefits": "4-day work week, competitive salary, remote work options",
+                        "industry": "Information Technology"
                     })}
                 </script>
             </Head>

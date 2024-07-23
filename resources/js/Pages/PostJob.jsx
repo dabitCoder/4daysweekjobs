@@ -38,48 +38,58 @@ const JobPosting = ({ isLoggedIn, user, technologies }) => {
     return (
         <>
             <Head>
-                <title>Post a 4-Day Week Tech Job | 4daystechjobs</title>
+                <title>Post a 4-Day Week Tech Job | Attract Top Talent | 4daystechjobs</title>
                 <meta
                     name="description"
-                    content="Advertise your 4-day week tech job openings to attract top talent. Reach developers and tech professionals seeking work-life balance with our specialized job board."
+                    content="Advertise your 4-day work week tech jobs on 4daystechjobs. Reach skilled developers and IT professionals seeking better work-life balance. Post your job and find the perfect candidate today!"
                 />
 
                 {/* Open Graph tags for social media sharing */}
                 <meta
                     property="og:title"
-                    content="Post a 4-Day Week Tech Job | 4daystechjobs"
+                    content="Post 4-Day Week Tech Jobs | Find Top Talent | 4daystechjobs"
                 />
                 <meta
                     property="og:description"
-                    content="Find the best tech talent for your 4-day week positions. Post your job openings on the leading job board for work-life balance in tech."
+                    content="List your 4-day work week tech positions on the leading job board for work-life balance. Attract skilled developers and IT professionals to your innovative company."
                 />
                 <meta property="og:type" content="website" />
-                <meta
-                    property="og:url"
-                    content="https://4daystechjobs.com/post-job"
-                />
-
+                <meta property="og:url" content="https://4daystechjobs.com/post-job" />
                 {/* Twitter Card tags */}
                 <meta name="twitter:card" content="summary_large_image" />
                 <meta
                     name="twitter:title"
-                    content="Post a 4-Day Week Tech Job | 4daystechjobs"
+                    content="Post 4-Day Week Tech Jobs | Attract Innovators | 4daystechjobs"
                 />
                 <meta
                     name="twitter:description"
-                    content="Reach tech professionals seeking work-life balance. Post your 4-day week job openings on our specialized job board."
+                    content="Find top tech talent for your 4-day week positions. Post your job on 4daystechjobs and reach professionals seeking work-life balance in tech."
                 />
+                <meta name="twitter:image" content="https://4daystechjobs.com/twitter-image.jpg" />
 
                 {/* Additional meta tags */}
                 <meta
                     name="keywords"
-                    content="4-day week jobs, tech jobs, work-life balance, job posting, tech recruitment, flexible work"
+                    content="post tech jobs, 4-day work week, tech recruitment, software developer jobs, IT careers, work-life balance, remote tech jobs"
                 />
-                <meta name="robots" content="index, follow" />
-                <link
-                    rel="canonical"
-                    href="https://4daystechjobs.com/post-job"
-                />
+                <meta name="robots" content="index, follow, max-image-preview:large, max-snippet:-1, max-video-preview:-1" />
+                <link rel="canonical" href="https://4daystechjobs.com/post-job" />
+
+                {/* Structured data for Job Posting */}
+                <script type="application/ld+json">
+                    {JSON.stringify({
+                        "@context": "https://schema.org",
+                        "@type": "WebPage",
+                        "name": "Post a 4-Day Week Tech Job",
+                        "description": "Advertise your 4-day work week tech jobs to attract top talent. Reach developers and tech professionals seeking work-life balance with our specialized job board.",
+                        "url": "https://4daystechjobs.com/post-job",
+                        "potentialAction": {
+                            "@type": "CreateAction",
+                            "target": "https://4daystechjobs.com/post-job",
+                            "name": "Post a Job"
+                        }
+                    })}
+                </script>
             </Head>
             <Header isLoggedIn={isLoggedIn} user={user} />
             <section className="pt-20 md:pt-28 lg:pt-32 bg-gray-100 min-h-screen pb-20">
