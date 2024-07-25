@@ -66,7 +66,7 @@ const Header = ({ isLoggedIn, user }) => {
 									</span>
 								</Dropdown.Trigger>
 								<Dropdown.Content>
-									<Dropdown.Link href={route("profile.edit")}>
+									<Dropdown.Link href={route("dashboard")}>
 										Profile
 									</Dropdown.Link>
 									<Dropdown.Link
