@@ -25,7 +25,7 @@ export default function ForgotPassword({ status }) {
 				/>
 				<link
 					rel="canonical"
-					href="https://www.4daystechjobs.com/forgot-password"
+					href="https://4daystechjobs.com/forgot-password"
 				/>
 				<meta name="robots" content="noindex,nofollow" />
 			</Head>

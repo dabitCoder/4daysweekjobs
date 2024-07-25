@@ -34,7 +34,7 @@ export default function Register() {
 					name="description"
 					content="Create your account on 4 day week jobs to access exclusive job listings and manage your job search."
 				/>
-				<link rel="canonical" href="https://www.4daystechjobs.com/register" />
+				<link rel="canonical" href="https://4daystechjobs.com/register" />
 				<meta name="robots" content="noindex,nofollow" />
 			</Head>
 			<form onSubmit={submit}>

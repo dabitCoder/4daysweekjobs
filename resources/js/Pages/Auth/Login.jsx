@@ -36,7 +36,7 @@ export default function Login({ status, canResetPassword }) {
 					content="Log in to your 4 day week jobs account to access job listings and manage your profile."
 				/>
 				{/* Añadir etiqueta canónica */}
-				<link rel="canonical" href="https://www.4daystechjobs.com/login" />
+				<link rel="canonical" href="https://4daystechjobs.com/login" />
 				{/* Prevenir indexación de esta página */}
 				<meta name="robots" content="noindex,nofollow" />
 			</Head>
