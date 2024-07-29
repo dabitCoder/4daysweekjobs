@@ -5,7 +5,7 @@ import Footer from "@/Components/Footer.jsx";
 export default function Privacy({ auth, isLoggedIn }) {
 	const metaDescription =
 		"Privacy policy for 4-Day Work Week Tech Jobs. Discover our mission to revolutionize the tech industry with better work-life balance through 4-day work weeks.";
-	const canonicalUrl = "https://4daystechjobs.com/privacy";
+	const canonicalUrl = "https://4daystechjobs.com/privacy-policy";
 	const siteUrl = "https://4daystechjobs.com";
 
 	return (

@@ -46,7 +46,7 @@ Route::inertia('/about', 'AboutUs');
 Route::inertia('/privacy-policy', 'Privacy');
 
 Route::fallback(function () {
-    return inertia('NotFound');
+    return inertia('NotFound')->toResponse(request())->setStatusCode(404);
 });
 
 require __DIR__ . '/auth.php';
