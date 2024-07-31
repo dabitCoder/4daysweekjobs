@@ -15,7 +15,9 @@ const PaymentSuccess = ({ isLoggedIn, user }) => (
 				/>
 				<h2 className="text-5xl font-bold mb-4 text-gray-800">Success!</h2>
 				<p className="text-xl text-gray-600 mb-8">
-					Your job has been posted successfully.
+					Your job has been added to the system and we will proceed with the review.
+                    We will let you know when the post is available or if some information has to be changed.
+                    Thank you!
 				</p>
 				<Link
 					href="/post-job"

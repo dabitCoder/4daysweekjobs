@@ -53,13 +53,12 @@ class PostController extends Controller
 
             $newJob = Post::create($validatedJob);
             Log::info("New job created with ID: {$newJob->id}");
-            $newJob->technologies()->attach($validatedJob['technologies']);
             Log::info("Attached technologies to job ID: {$newJob->id}");
 
             if ($request->hasFile('company_logo')) {
                 $this->cacheCompanyLogo($newJob->id, $request->file('company_logo'));
             }
-
+            /**
             $checkout = $request->user()->checkout([env('STRIPE_PRODUCT_ID', 'price_1PLXPcEgjH84dgjqO9GN94Vu') => 1], [
                 'success_url' => route('payment.success') . '?session_id={CHECKOUT_SESSION_ID}',
                 'cancel_url' => route('payment.error'),
@@ -67,7 +66,20 @@ class PostController extends Controller
                 'metadata' => ['job_id' => $newJob->id],
             ]);
             Log::info("Redirecting to Stripe checkout for job ID: {$newJob->id}");
-            return Inertia::location($checkout->url);
+            return Inertia::location($checkout->url);**/
+
+            if ($newJob) {
+                $newJob->technologies()->attach($validatedJob['technologies']);
+
+                return Inertia::render('Payments/Success', [
+                    'isLoggedIn' => auth()->check(),
+                    'user' => auth()->user()
+                ]);
+            } else {
+                return Inertia::render('Payments/Error', [
+                    'isLoggedIn' => auth()->check(),
+                ]);
+            }
         } catch (ValidationException $e) {
             Log::error('Validation error while storing post: ' . $e->getMessage());
             return Inertia::render('JobForm', [

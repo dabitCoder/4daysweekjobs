@@ -105,7 +105,7 @@ const JobPosting = ({ isLoggedIn, user, technologies }) => {
                         candidates.
                     </p>
                     <p className="text-lg mb-12 text-center text-gray-600">
-                        Post and support will be available for 90 days from payment/posting.
+                        Post and support will be available for 90 days from posting.
                     </p>
                     <div className="bg-white p-8 rounded-lg shadow-lg">
                         <form
@@ -259,7 +259,7 @@ const JobPosting = ({ isLoggedIn, user, technologies }) => {
                                     disabled={processing}
                                     className="bg-gradient-to-r from-blue-500 to-blue-600 text-white px-6 py-3 rounded-full text-lg font-semibold hover:bg-blue-700 focus:outline-none focus:ring-2 focus:ring-blue-600 w-full sm:w-auto"
                                 >
-                                    {processing ? "Processing..." : "Checkout + Post Job"}
+                                    {processing ? "Processing..." : "Post Job"}
                                 </button>
                             </div>
                         </form>
