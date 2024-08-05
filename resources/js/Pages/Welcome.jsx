@@ -68,7 +68,7 @@ export default function Index({ auth, posts, isLoggedIn }) {
                             aria-label="Post a Job"
                         >
                             <FontAwesomeIcon icon={faBriefcase} />
-                            <span className="ml-3">Post a Job</span>
+                            <span className="ml-3">Post a Job for free</span>
                         </Link>
                     </div>
                 </section>
@@ -84,7 +84,7 @@ export default function Index({ auth, posts, isLoggedIn }) {
                                 <p className="text-lg text-gray-600">
                                     Are you an employer offering 4-day work week positions?
                                     <Link href="/post-job" className="text-blue-500 hover:underline ml-2">
-                                        Post a job now
+                                        Post a job now for free
                                     </Link>
                                 </p>
                                 <img src="/bg-15.png" alt="No jobs available"
